@@ -15,7 +15,7 @@ gulp.task('lint', function () {
 });
 
 var tsProject = tsc.createProject("tsconfig.json");
-gulp.task('build', function () {
+gulp.task('build', ['copy'], function () {
   return gulp.src([
     './**/**.ts',
     '!./node_modules/**'
@@ -33,6 +33,13 @@ gulp.task('build', function () {
     }))
     .pipe(gulp.dest('lib'));
 })
+
+gulp.task('copy', function () {
+  return gulp.src([
+    './**/**.config.json'
+  ])
+    .pipe(gulp.dest('lib'));
+});
 
 gulp.task('tests', ['build'], function () {
   return gulp.src('./lib/spec/*.js')

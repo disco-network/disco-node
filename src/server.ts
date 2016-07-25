@@ -1,8 +1,19 @@
-import http = require("http");
+import { ExpressBootstrapper } from "./boot";
 
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello World\n');
-}).listen(1337, '127.0.0.1');
+class Server extends ExpressBootstrapper {
 
-console.log('Server running at http://127.0.0.1:1337/');
+    public start() {
+
+        let context = this.execute();
+
+        let url = context.config.getProtocol()
+            + '://' + context.config.getHostname()
+            + ':' + context.config.getPort()
+            + context.config.getRoot();
+
+        context.logger.log('Server running at', url);
+    }
+}
+
+var server = new Server();
+server.start();

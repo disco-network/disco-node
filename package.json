@@ -2,12 +2,13 @@
   "name": "disco-node",
   "description": "An OData and SPARQL endpoint to be part of the d!sco network",
   "version": "0.0.1",
-  "author": "The d!sco Network",
+  "author": "The d!sco Network <hq@disco-network.org>",
   "repository": {
     "type": "git",
     "url": "https://github.com/disco-network/disco-node.git"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git"
   },
   "devDependencies": {
@@ -17,7 +18,9 @@
     "gulp-tslint": "^6.0.1",
     "gulp-typescript": "^2.13.6",
     "tslint": "^3.13.0",
-    "typescript": "^1.8.10"
+    "typedjson": "^0.1.5",
+    "typescript": "^1.8.10",
+    "typescript-ioc": "^0.2.3"
   },
   "main": "lib/src/app.js",
   "directories": {

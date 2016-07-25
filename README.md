@@ -36,3 +36,7 @@ npm install
 ```shell
 gulp server
 ```
+
+## License
+
+[MIT](https://github.com/disco-network/disco-node/blob/master/LICENSE)

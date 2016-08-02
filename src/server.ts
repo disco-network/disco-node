@@ -1,19 +1,37 @@
-import { ExpressBootstrapper } from "./boot";
+import { ExpressApplication } from "./system/provider/express";
 
-class Server extends ExpressBootstrapper {
+import * as util from "util";
 
-    public start() {
+class Server extends ExpressApplication {
 
-        let context = this.execute();
+    public execute() {
 
-        let url = context.config.getProtocol()
-            + '://' + context.config.getHostname()
-            + ':' + context.config.getPort()
-            + context.config.getRoot();
+        this.context.application.use('/debug', function (request, response) {
+            response.writeHead(200, { 'Content-Type': 'text/plain' });
+            response.end(util.inspect(request));
+        });
 
-        context.logger.log('Server running at', url);
+        /*
+            /api/odata/*
+
+            /api/sparql/*
+
+                let routes = [
+                    new Route('/', { controller: 'Home', action: 'index' }),
+                    new Route('/', { controller: 'Home', action: 'index' }),
+                ];
+        */
+
+        let url = this.context.config.getProtocol()
+            + '://' + this.context.config.getHostname()
+            + ':' + this.context.config.getPort()
+            + this.context.config.getRoot();
+
+        this.context.logger.log('Server running at', url);
+
+        this.context.start();
     }
 }
 
 var server = new Server();
-server.start();
+server.execute();

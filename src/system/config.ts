@@ -2,20 +2,20 @@ import {Provided, Provider} from "typescript-ioc";
 
 import {JsonObject, JsonMember, TypedJSON} from "typedjson"
 
-import fs = require("fs");
-
-const configServerProvider: Provider = {
-  get: () => {
-    let configJson = fs.readFileSync(__dirname + '/server.config.json');
-    let config = TypedJSON.parse(configJson.toString(), Config.Server);
-    return config;
-  }
-};
+import * as fs from "fs";
 
 export module Config {
 
+  const configProvider: Provider = {
+    get: (): Server => {
+      let configJson: Buffer = fs.readFileSync(__dirname + '/../settings.json');
+      let config: Server = TypedJSON.parse(configJson.toString(), Config.Server);
+      return config;
+    }
+  };
+
   @JsonObject
-  @Provided(configServerProvider)
+  @Provided(configProvider)
   export class Server {
 
     @JsonMember

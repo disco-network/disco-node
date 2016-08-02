@@ -15,14 +15,20 @@ We are using [`vscode`](https://code.visualstudio.com/) for development.
 
 You will need [`nodejs`](https://nodejs.org/), at least v4.4.7, to run [`disco-node`](https://github.com/disco-network/disco-node).
 
-We are using [`TypeScript`](https://www.typescriptlang.org/) for development.
+### For Development
+We are using [`TypeScript`](https://www.typescriptlang.org/) as programming language.
 ```
-npm install -g typescript
+npm install typescript
 ```
 
-We are using [`gulp`](https://www.gulpjs.org/) for development.
+We are using [`gulp`](https://www.gulpjs.org/) as our task runner.
 ```
-npm install -g gulp
+npm install gulp
+```
+
+We are using [`jasmine`](https://jasmine.github.io/) for unit testing.
+```
+npm install jasmine
 ```
 
 ## Installing

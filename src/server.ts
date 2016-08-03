@@ -1,12 +1,12 @@
-import { ExpressApplication } from "./system/provider/express";
+import {Bootstrapper} from "./system/core"
 
 import * as util from "util";
 
-class Server extends ExpressApplication {
+class Server extends Bootstrapper {
 
     public execute() {
 
-        this.context.application.use('/debug', function (request, response) {
+        this.context.framework.addRoutingHandler('/debug', function (request, response) {
             response.writeHead(200, { 'Content-Type': 'text/plain' });
             response.end(util.inspect(request));
         });
@@ -22,14 +22,14 @@ class Server extends ExpressApplication {
                 ];
         */
 
-        let url = this.context.config.getProtocol()
-            + '://' + this.context.config.getHostname()
-            + ':' + this.context.config.getPort()
-            + this.context.config.getRoot();
+        let url = this.context.settings.getProtocol()
+            + '://' + this.context.settings.getHostname()
+            + ':' + this.context.settings.getPort()
+            + this.context.settings.getRoot();
 
         this.context.logger.log('Server running at', url);
 
-        this.context.start();
+        this.context.framework.initialize(this.context.settings.getPort(), this.context.settings.getHostname());
     }
 }
 

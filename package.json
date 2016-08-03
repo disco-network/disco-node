@@ -12,6 +12,7 @@
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git"
   },
   "devDependencies": {
+    "del": "^2.2.1",
     "gulp": "^3.9.1",
     "gulp-jasmine": "^2.4.0",
     "gulp-sourcemaps": "^1.6.0",

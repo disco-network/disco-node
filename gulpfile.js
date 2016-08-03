@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  del = require('del'),
   jasmine = require('gulp-jasmine'),
   tslint = require('gulp-tslint'),
   tsc = require('gulp-typescript'),
@@ -44,14 +45,18 @@ gulp.task('copy', function () {
 gulp.task('tests', ['build'], function () {
   // using the spec file path is currently possible by using a custom hack in gulp-jasmin/index.js
   // 	if (opts.config) {
-	// 	 	if (typeof opts.config === 'string') {
-	// 		 	jasmine.loadConfigFile(opts.config);
-	// 	 	} else {
-	// 	 		jasmine.loadConfig(opts.config);
-	// 	 	}
-	// 	}
+  // 	 	if (typeof opts.config === 'string') {
+  // 		 	jasmine.loadConfigFile(opts.config);
+  // 	 	} else {
+  // 	 		jasmine.loadConfig(opts.config);
+  // 	 	}
+  // 	}
   return gulp.src('./')
     .pipe(jasmine({ config: './spec/support/jasmine.json', includeStackTrace: true, verbose: true }));
+});
+
+gulp.task('clean:all', function () {
+  return del(['./maps', './lib']);
 });
 
 //alternative name for the 'tests' task

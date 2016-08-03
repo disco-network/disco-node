@@ -1,25 +1,53 @@
-import {AutoWired, Inject} from "typescript-ioc";
+import {AutoWired, Inject, Container} from "typescript-ioc";
 
-import { Config } from "./config";
-import { ILogger } from "./logger";
+import {ILogger, IFramework} from "./common";
 
+import {Settings} from "./settings";
 
 @AutoWired
-export class ApplicationContext<TApplication> {
+export class ApplicationContext {
 
-  @Inject
-  public config: Config.Server;
+  private _settings: Settings;
+  public get settings(): Settings {
+    return this._settings;
+  }
 
-  @Inject
-  public logger: ILogger;
+  private _logger: ILogger;
+  public get logger(): ILogger {
+    return this._logger;
+  }
 
-  public application: TApplication;
-  public start: Function;
+  private _framework: IFramework;
+  public get framework(): IFramework {
+    return this._framework;
+  }
+
+  constructor(
+    @Inject framework: IFramework,
+    @Inject logger: ILogger,
+    @Inject settings: Settings) {
+    this._framework = framework;
+    this._logger = logger;
+    this._settings = settings;
+  }
 }
 
 @AutoWired
-export abstract class Bootstrapper<TApplication> {
+export abstract class Bootstrapper {
 
   @Inject
-  public context: ApplicationContext<TApplication>;
+  private _context: ApplicationContext;
+  public get context(): ApplicationContext {
+    return this._context;
+  }
+
+  constructor() {
+
+    let framework = require("./adapter/framework");
+    Container.bind(IFramework).to(framework.Adapter);
+
+    let logger = require("./adapter/logger");
+    Container.bind(ILogger).to(logger.Adapter);
+  }
 }
+

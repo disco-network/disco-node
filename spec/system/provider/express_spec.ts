@@ -1,6 +1,9 @@
 
-describe("The express framework provider", function() {
-  it("contains spec with an expectation", function() {
+describe("the express framework provider", function() {
+
+  it("should call express.listen on start", function() {
+
+    
     expect(true).toBe(true);
   });
 });

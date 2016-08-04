@@ -1,11 +1,12 @@
-import {AutoWired, Inject, Container} from "typescript-ioc";
+import {AutoWired, Inject, Singleton, Container, Settings, ILogger, IFramework} from "./common";
 
-import {ILogger, IFramework} from "./common";
-
-import {Settings} from "./settings";
+import * as fs from "fs";
 
 @AutoWired
+@Singleton
 export class ApplicationContext {
+
+  public routings: { [key:string]:any; } = {};
 
   private _settings: Settings;
   public get settings(): Settings {
@@ -35,19 +36,82 @@ export class ApplicationContext {
 @AutoWired
 export abstract class Bootstrapper {
 
-  @Inject
   private _context: ApplicationContext;
   public get context(): ApplicationContext {
     return this._context;
   }
 
-  constructor() {
+  private settings: Settings;
 
-    let framework = require("./adapter/framework");
-    Container.bind(IFramework).to(framework.Adapter);
+  public initialize() {
 
-    let logger = require("./adapter/logger");
-    Container.bind(ILogger).to(logger.Adapter);
+    this.initializeSettings();
+
+    this.registerAdapters();
+    this.registerControllers();
+
+    this.initializeContext();
+
+    this.execute();
   }
-}
 
+  private initializeSettings(): void {
+    this.settings = Container.get(Settings);
+  }
+
+  private registerAdapters(): void {
+
+    this.registerAdapter(IFramework, 'framework');
+    this.registerAdapter(ILogger, 'logger');
+  }
+
+  private registerAdapter(typeOfAdapter: Function, name?: string): void {
+
+    let modulePath = this.resolveAbsolutePath('./adapter', name);
+    let module: any = require(modulePath);
+    Container.bind(typeOfAdapter).to(module.Adapter);
+  }
+
+  private registerControllers(): void {
+
+    let pathToControllers: string = '../controller';
+    this.resolveModules(pathToControllers);
+  }
+
+  private resolveModules(pathFragment: string): void {
+
+    let fullModulePath: string = this.resolveAbsolutePath(pathFragment, '');
+
+    let fileStatus: fs.Stats = fs.statSync(fullModulePath);
+    if (fileStatus.isDirectory()) {
+
+      let filenamesInFolder: Array<string> = fs.readdirSync(fullModulePath);
+      for (var filename of filenamesInFolder) {
+        let fullFilePath: string = this.resolveAbsolutePath(fullModulePath, filename);
+        console.log(fullFilePath);
+
+        let module = require(fullFilePath);
+        console.log(module);
+      }
+    } else {
+      throw new Error('Modules could not be resolved by path. Path does not exists [' + pathFragment + '].');
+    }
+  }
+
+  private resolveAbsolutePath(path: string, filename: string): string {
+
+    if (path.indexOf(this.settings.basePath) === -1) {
+      path = __dirname + '/' + path;
+    }
+
+    let tempPath: string = path + '/' + filename;
+    let absoluteFilePath: string = fs.realpathSync(tempPath);
+    return absoluteFilePath;
+  }
+
+  private initializeContext(): void {
+    this._context = Container.get(ApplicationContext);
+  }
+
+  public abstract execute(): void;
+}

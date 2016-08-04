@@ -1,16 +1,16 @@
-import {Bootstrapper} from "./system/core"
+import {Bootstrapper} from "./system/core";
 
-import * as util from "util";
+//import * as util from "util";
 
 class Server extends Bootstrapper {
 
     public execute() {
 
-        this.context.framework.addRoutingHandler('/debug', function (request, response) {
+/*        this.context.framework.addRoutingHandler('/debug', function (request, response) {
             response.writeHead(200, { 'Content-Type': 'text/plain' });
             response.end(util.inspect(request));
         });
-
+*/
         /*
             /api/odata/*
 
@@ -22,16 +22,16 @@ class Server extends Bootstrapper {
                 ];
         */
 
-        let url = this.context.settings.getProtocol()
-            + '://' + this.context.settings.getHostname()
-            + ':' + this.context.settings.getPort()
-            + this.context.settings.getRoot();
+        let url = this.context.settings.protocol
+            + '://' + this.context.settings.hostname
+            + ':' + this.context.settings.port
+            + this.context.settings.root;
 
         this.context.logger.log('Server running at', url);
 
-        this.context.framework.initialize(this.context.settings.getPort(), this.context.settings.getHostname());
+        this.context.framework.initialize(this.context.settings.port, this.context.settings.hostname);
     }
 }
 
 var server = new Server();
-server.execute();
+server.initialize();

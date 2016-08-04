@@ -1,6 +1,6 @@
-import {Provided, Provider} from "typescript-ioc";
+import {Provided, Provider, Singleton} from "./common";
 
-import {JsonObject, JsonMember, TypedJSON} from "typedjson"
+import {JsonObject, JsonMember, TypedJSON} from "typedjson";
 
 import * as fs from "fs";
 
@@ -13,38 +13,58 @@ const settingsProvider: Provider = {
 };
 
 @JsonObject
+@Singleton
 @Provided(settingsProvider)
 export class Settings {
 
-  @JsonMember
-  public protocol: string;
   private defaultProtocol: string = 'http';
-
-  @JsonMember
-  private hostname: string;
   private defaultHostname: string = '127.0.0.1';
-
-  @JsonMember
-  private port: number;
   private defaultPort: number = 80;
-
-  @JsonMember
-  private root: string;
   private defaultRoot: string = '/';
+  private defaultBasePath: string = '/src';
 
-  public getProtocol(): string {
-    return this.protocol || this.defaultProtocol;
+  private _protocol: string;
+  public get protocol(): string {
+    return this._protocol || this.defaultProtocol;
+  }
+  @JsonMember
+  public set protocol(v: string) {
+    this._protocol = v;
   }
 
-  public getHostname(): string {
-    return this.hostname || this.defaultHostname;
+  private _hostname: string;
+  public get hostname(): string {
+    return this._hostname || this.defaultHostname;
+  }
+  @JsonMember
+  public set hostname(v: string) {
+    this._hostname = v;
   }
 
-  public getPort(): number {
-    return this.port || this.defaultPort;
+  private _port: number;
+  public get port(): number {
+    return this._port || this.defaultPort;
+  }
+  @JsonMember
+  public set port(v: number) {
+    this._port = v;
   }
 
-  public getRoot(): string {
-    return this.root || this.defaultRoot;
+  private _root: string;
+  public get root(): string {
+    return this._root || this.defaultRoot;
+  }
+  @JsonMember
+  public set root(v: string) {
+    this._root = v;
+  }
+
+  private _basePath: string;
+  public get basePath(): string {
+    return this._basePath || this.defaultBasePath;
+  }
+  @JsonMember
+  public set basePath(v: string) {
+    this._basePath = v;
   }
 }

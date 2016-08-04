@@ -1,8 +1,7 @@
-import {HttpVerb} from "./common";
+import {HttpVerb, ParamType} from "../router/enums";
+import * as metadata from "../router/metadata";
 
 import * as express from "express"; // TODO: remove dependency
-
-import * as metadata from "./metadata";
 
 export class InternalServer {
 	static serverClasses: Array<metadata.ServiceClass> = new Array<metadata.ServiceClass>();
@@ -174,22 +173,22 @@ export class InternalServer {
 		if (serviceClass.hasProperties()) {
 			serviceClass.properties.forEach((paramType, key) => {
 				switch (paramType) {
-					case metadata.ParamType.context:
+					case ParamType.context:
 						serviceObject[key] = context;
 						break;
-					case metadata.ParamType.context_accept_language:
+					case ParamType.context_accept_language:
 						serviceObject[key] = context.language;
 						break;
-					case metadata.ParamType.context_accept:
+					case ParamType.context_accept:
 						serviceObject[key] = context.preferredMedia;
 						break;
-					case metadata.ParamType.context_request:
+					case ParamType.context_request:
 						serviceObject[key] = context.request;
 						break;
-					case metadata.ParamType.context_response:
+					case ParamType.context_response:
 						serviceObject[key] = context.response;
 						break;
-					case metadata.ParamType.context_next:
+					case ParamType.context_next:
 						serviceObject[key] = context.next;
 						break;
 					default:

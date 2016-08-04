@@ -1,16 +1,7 @@
-import {AutoWired, Inject, Singleton, Container, Settings, ILogger, InternalServer} from "./common";
+import {InternalServer} from "./internalserver";
+import {HttpVerb} from "./enums";
 
-import * as metadata from "./metadata";
-
-export enum HttpVerb {
-  GET = 1,
-  POST,
-  PUT,
-  DELETE,
-  OPTIONS,
-  PATCH,
-  HEAD
-}
+import * as metadata from "../router/metadata";
 
 export function Route(path: string) {
   return function (...args: any[]) {

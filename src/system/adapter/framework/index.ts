@@ -1,4 +1,4 @@
-import {IFramework} from "../../common"
+import {IFramework} from "../../core/interfaces"
 
 import * as http from "http";
 import * as express from "express";

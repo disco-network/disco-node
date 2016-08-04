@@ -1,4 +1,4 @@
-import {Provided, Provider, Singleton} from "./common";
+import {Provided, Provider, Singleton} from "../adapter/factory";
 
 import {JsonObject, JsonMember, TypedJSON} from "typedjson";
 
@@ -6,7 +6,7 @@ import * as fs from "fs";
 
 const settingsProvider: Provider = {
   get: (): Settings => {
-    let configJson: Buffer = fs.readFileSync(__dirname + '/../settings.json');
+    let configJson: Buffer = fs.readFileSync(__dirname + '/../../settings.json');
     let config: Settings = TypedJSON.parse(configJson.toString(), Settings);
     return config;
   }

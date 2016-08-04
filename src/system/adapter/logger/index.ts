@@ -1,4 +1,4 @@
-import {ILogger} from "../../common"
+import {ILogger} from "../../core/interfaces"
 
 export class Adapter implements ILogger {
 

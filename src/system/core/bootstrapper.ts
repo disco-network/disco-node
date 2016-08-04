@@ -1,43 +1,18 @@
-import {AutoWired, Inject, Singleton, Container, Settings, ILogger, IFramework, InternalServer} from "./common";
+import {AutoWired, Singleton, Inject, Container} from "../adapter/factory";
+
+import {InternalServer} from "../router";
+
+import {ILogger, IFramework} from "../core/interfaces";
+import {Context} from "../core/context";
+import {Settings} from "../core/settings";
 
 import * as fs from "fs";
 
 @AutoWired
-@Singleton
-export class ApplicationContext {
-
-  public routings: { [key: string]: any; } = {};
-
-  private _settings: Settings;
-  public get settings(): Settings {
-    return this._settings;
-  }
-
-  private _logger: ILogger;
-  public get logger(): ILogger {
-    return this._logger;
-  }
-
-  private _framework: IFramework;
-  public get framework(): IFramework {
-    return this._framework;
-  }
-
-  constructor(
-    @Inject framework: IFramework,
-    @Inject logger: ILogger,
-    @Inject settings: Settings) {
-    this._framework = framework;
-    this._logger = logger;
-    this._settings = settings;
-  }
-}
-
-@AutoWired
 export abstract class Bootstrapper {
 
-  private _context: ApplicationContext;
-  public get context(): ApplicationContext {
+  private _context: Context;
+  public get context(): Context {
     return this._context;
   }
 
@@ -69,14 +44,14 @@ export abstract class Bootstrapper {
 
   private registerAdapter(typeOfAdapter: Function, name?: string): void {
 
-    let modulePath = this.resolveAbsolutePath('./adapter', name);
+    let modulePath = this.resolveAbsolutePath('../adapter', name);
     let module: any = require(modulePath);
     Container.bind(typeOfAdapter).to(module.Adapter);
   }
 
   private registerControllers(): void {
 
-    let pathToControllers: string = '../controller';
+    let pathToControllers: string = '../../controller';
     this.resolveModules(pathToControllers);
   }
 
@@ -112,7 +87,7 @@ export abstract class Bootstrapper {
   }
 
   private initializeContext(): void {
-    this._context = Container.get(ApplicationContext);
+    this._context = Container.get(Context);
   }
 
   private initializeRoutes(): void {

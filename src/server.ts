@@ -1,4 +1,4 @@
-import {Bootstrapper} from "./system/core";
+import {Bootstrapper} from "./system";
 
 //import * as util from "util";
 

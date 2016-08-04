@@ -1,4 +1,4 @@
-import {ControllerBase, Route} from "../system/common"
+import {ControllerBase, Route, HttpVerb} from "../system"
 
 export class HomeController extends ControllerBase {
 

@@ -1,4 +1,4 @@
-import {ControllerBase, Route, HttpVerb} from "../system/common"
+import {ControllerBase, Route, HttpVerb} from "../system"
 
 import * as util from "util";
 

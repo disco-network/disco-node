@@ -9,6 +9,7 @@ export abstract class ILogger {
 }
 
 export abstract class IFramework {
+  public router: any;
   abstract addRoutingHandler(name: string, handler: any): void;
   abstract initialize(port: number, hostname: string, callback?: Function): any;
 }

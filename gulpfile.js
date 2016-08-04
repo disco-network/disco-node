@@ -15,7 +15,7 @@ gulp.task('lint', function () {
     .pipe(tslint.report('verbose'));
 });
 
-var tsProject = tsc.createProject("tsconfig.json");
+var tsProject = tsc.createProject('tsconfig.json');
 gulp.task('build', ['copy'], function () {
   return gulp.src([
     './**/**.ts',

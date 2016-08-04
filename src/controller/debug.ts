@@ -4,7 +4,7 @@ import * as util from "util";
 
 export class DebugController extends ControllerBase {
 
-  @Route('/debug', HttpVerb.GET)
+  @Route('/debug')
   public Debug(): void {
     
     console.log('DebugController called!');

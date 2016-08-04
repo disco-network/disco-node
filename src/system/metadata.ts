@@ -1,0 +1,114 @@
+import {HttpVerb} from "./common";
+
+export class ServiceClass {
+	constructor(targetClass: Function) {
+		this.targetClass = targetClass;
+		this.methods = new Array<ServiceMethod>();
+	}
+
+	targetClass: Function;
+	path: string;
+	methods: Array<ServiceMethod>;
+	languages: Array<string>;
+	accepts: Array<string>;
+	properties: Array<ParamType>;
+	
+	addProperty(key: string, paramType: ParamType) {
+		if (!this.hasProperties()) {
+			this.properties = new Array<ParamType>();
+		}
+		this.properties[key] = paramType;
+	}
+
+	hasProperties(): boolean {
+		return (this.properties && this.properties.length > 0);
+	}
+}
+
+export class ServiceMethod {
+	name: string;
+	path: string;
+	resolvedPath: string;
+	httpMethod: HttpVerb;
+	parameters: Array<MethodParam> = new Array<MethodParam>();
+	mustParseCookies: boolean = false;
+	files: Array<FileParam> = new Array<FileParam>();
+	mustParseBody: boolean = false;
+	mustParseForms: boolean = false;
+	languages: Array<string>;
+	accepts: Array<string>;
+	resolvedLanguages: Array<string>;
+	resolvedAccepts: Array<string>;
+}
+
+export class FileParam {
+	constructor(name: string, singleFile: boolean) {
+		this.name = name;
+		this.singleFile = singleFile;
+	}
+
+	name: string;
+	singleFile: boolean;
+}
+
+export class MethodParam {
+	constructor(name: string, type: Function, paramType: ParamType) {
+		this.name = name;
+		this.type = type;
+		this.paramType = paramType;
+	}
+
+	name: string;
+	type: Function;
+	paramType: ParamType;
+}
+
+export enum ParamType {
+	path,
+	query,
+	header,
+	cookie,
+	form,
+	body,
+	file, 
+	files, 
+	context,
+	context_request,
+	context_response,
+	context_next, 
+	context_accept,
+	context_accept_language
+}
+
+export class ServiceContext {
+	/**
+	 * The resolved language to be used in the current request handling. 
+	 */
+	language: string;
+	/**
+	 * The preferred media type to be used in the current request handling. 
+	 */
+	preferredMedia: string;
+	/**
+	 * The request object. 
+	 */
+	request: any; // TODO: express.Request;
+	/**
+	 * The response object 
+	 */
+	response: any; // TODO: express.Response; 
+	/**
+	 * The next function. It can be used to delegate to the next middleware
+	 * registered the processing of the current request. 
+	 */
+	next: any; // TODO: express.NextFunction;
+}
+
+export abstract class ReferencedResource {
+	/**
+	 * Constructor. Receives the location of the resource.
+	 * @param location To be added to the Location header on response
+	 * @param statusCode the response status code to be sent
+	 */
+	constructor(public location: string, public statusCode: number) {}
+}

@@ -1,4 +1,4 @@
-import {AutoWired, Inject, Singleton, Container, Settings, ILogger, IFramework} from "./common";
+import {AutoWired, Inject, Singleton, Container, Settings, ILogger, IFramework, InternalServer} from "./common";
 
 import * as fs from "fs";
 
@@ -6,7 +6,7 @@ import * as fs from "fs";
 @Singleton
 export class ApplicationContext {
 
-  public routings: { [key:string]:any; } = {};
+  public routings: { [key: string]: any; } = {};
 
   private _settings: Settings;
   public get settings(): Settings {
@@ -51,6 +51,8 @@ export abstract class Bootstrapper {
     this.registerControllers();
 
     this.initializeContext();
+
+    this.initializeRoutes();
 
     this.execute();
   }
@@ -111,6 +113,12 @@ export abstract class Bootstrapper {
 
   private initializeContext(): void {
     this._context = Container.get(ApplicationContext);
+  }
+
+  private initializeRoutes(): void {
+    let router: any = this.context.framework.router;
+    let iternalServer: InternalServer = new InternalServer(router);
+    iternalServer.buildServices();
   }
 
   public abstract execute(): void;

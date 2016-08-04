@@ -1,73 +1,41 @@
-import {AutoWired, Inject, Singleton, Container, Settings, ILogger} from "./common";
-import {ApplicationContext} from "./core";
+import {AutoWired, Inject, Singleton, Container, Settings, ILogger, InternalServer} from "./common";
 
-export function Reflector() {
-  return function (...args: any[]) {
-    console.log('Reflector executed...');
-  };
-}
+import * as metadata from "./metadata";
 
 export enum HttpVerb {
   GET = 1,
   POST,
-  UPDATE,
+  PUT,
   DELETE,
   OPTIONS,
   PATCH,
   HEAD
 }
 
-export function Route(path: string, verb?: HttpVerb) {
-  console.log('Route Decorator declaration called...');
-
-  // target: any, propertyKey: string, descriptor: PropertyDescriptor
+export function Route(path: string) {
   return function (...args: any[]) {
-    //return RouteHandler.apply(this, [path, verb]);
+    if (args.length == 1) {
+      return RouteTypeDecorator.apply(this, [args[0], path]);
+    }
+    else if (args.length == 3 && typeof args[2] === "object") {
+      return RouteMethodDecorator.apply(this, [args[0], args[1], args[2], path]);
+    }
 
-
-    //let handler = new RouteHandler(path, args[0], args[1], args[2]);
-
-
-
-    return RouteHandlerX.apply(this, [path, args[0], args[1], args[2]]);
-
-    //methode['path'] = path; 
-    //context.framework.addRoutingHandler(path, methode.apply(this));
+    throw new Error("Invalid @Path Decorator declaration.");
   }
 }
 
-/**
- * Decorator processor for [[Route]] decorator on classes
- */
-function RouteHandlerX(path: string, target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  console.log('RouteHandler called...');
-  let that = this;
-
-  let context: ApplicationContext = Container.get(ApplicationContext);
-  context.routings[path] = descriptor;
-
-  context.framework.addRoutingHandler(path, (request: any, response: any, next?: any) => {
-    console.log('RequestHandler executed...');
-
-    let path = that.path;
-  });
+function RouteTypeDecorator(target: Function, path: string) {
+  let classData: metadata.ServiceClass = InternalServer.registerServiceClass(target);
+  classData.path = path;
 }
 
-export class RouteHandler {
-
-  private path: string;
-
-  constructor(path: string, target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log('RouteHandler created...');
-
-    this.path = path;
-  }
-
-  public HandleRoute(request: any, response: any, next?: any): void {
-    console.log('HandleRoute executed...');
-
-    let context: ApplicationContext = Container.get(ApplicationContext);
-    let callback: Function = context.routings[this.path];
-    callback.apply(this, [request, response, next]);
+function RouteMethodDecorator(target: any, propertyKey: string,
+  descriptor: PropertyDescriptor, path: string) {
+  let serviceMethod: metadata.ServiceMethod = InternalServer.registerServiceMethod(target, propertyKey);
+  if (serviceMethod) { // does not intercept constructor
+    serviceMethod.path = path;
+    serviceMethod.httpMethod = HttpVerb.GET;
+    serviceMethod.name = propertyKey;
   }
 }

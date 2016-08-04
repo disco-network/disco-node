@@ -6,16 +6,16 @@ import * as coreExpress from "express-serve-static-core";
 
 export class Adapter implements IFramework {
 
-  public application: coreExpress.Application;
+  public router: coreExpress.Application;
 
   constructor() {
-    this.application = express();
+    this.router = express();
   }
 
   public addRoutingHandler(name: string, handler: coreExpress.RequestHandler): void {
-    this.application.use(name, handler);
+    this.router.use(name, handler);
   }
   public initialize(port: number, hostname: string, callback?: Function): http.Server {
-    return this.application.listen(port, hostname, callback);
+    return this.router.listen(port, hostname, callback);
   }
 }

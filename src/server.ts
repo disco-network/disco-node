@@ -4,7 +4,7 @@ import {Bootstrapper} from "./system/core";
 
 class Server extends Bootstrapper {
 
-    public execute() {
+    public execute(): void {
 
 /*        this.context.framework.addRoutingHandler('/debug', function (request, response) {
             response.writeHead(200, { 'Content-Type': 'text/plain' });

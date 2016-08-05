@@ -1,10 +1,10 @@
-import {Provided, Provider, Singleton, ConfigurationProviderBase/*, ProvidedByJson*/} from "../adapter/factory";
+import {Provided, Singleton, ConfigurationProvider/*, ProvidedByJson*/} from "../adapter/factory";
 
 import {JsonObject, JsonMember} from "typedjson";
 
 @JsonObject
 @Singleton
-@Provided(new ConfigurationProviderBase(Settings))
+@Provided(new ConfigurationProvider(Settings))
 // TODO: wrap with @ProvidedByJson
 export class Settings {
 
@@ -12,7 +12,7 @@ export class Settings {
   private defaultHostname: string = '127.0.0.1';
   private defaultPort: number = 80;
   private defaultRoot: string = '/';
-  private defaultBasePath: string = '/src';
+  private defaultBasePath: string = '/lib/src';
 
   private _protocol: string;
   public get protocol(): string {

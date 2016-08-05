@@ -4,7 +4,7 @@ import {InternalServer} from "../router";
 
 import {ILogger, IFramework} from "../core/interfaces";
 import {Context} from "../core/context";
-import {Settings} from "../config/settings";
+import {Configuration} from "../config/configuration";
 
 import * as fs from "fs";
 
@@ -16,11 +16,11 @@ export abstract class Bootstrapper {
     return this._context;
   }
 
-  private settings: Settings;
+  private config: Configuration;
 
   public initialize() {
 
-    this.initializeSettings();
+    this.initializeConfiguration();
 
     this.registerAdapters();
     this.registerControllers();
@@ -32,8 +32,8 @@ export abstract class Bootstrapper {
     this.execute();
   }
 
-  private initializeSettings(): void {
-    this.settings = Container.get(Settings);
+  private initializeConfiguration(): void {
+    this.config = Container.get(Configuration);
   }
 
   private registerAdapters(): void {
@@ -77,7 +77,7 @@ export abstract class Bootstrapper {
 
   private resolveAbsolutePath(path: string, filename: string): string {
 
-    if (path.indexOf(this.settings.basePath) === -1) {
+    if (path.indexOf(this.config.settings.basePath) === -1) {
       path = __dirname + '/' + path;
     }
 

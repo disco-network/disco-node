@@ -1,2 +1,1 @@
-export * from "./settings"
-export * from "./package"
+export * from "./configuration"

@@ -7,11 +7,11 @@ import * as fs from "fs";
 
 export function ProvidedByJson(): Function {
   return function (target: Function): Function {
-    return Provided(new ConfigurationProviderBase(target))
+    return Provided(new ConfigurationProvider(target))
   };
 }
 
-export class ConfigurationProviderBase implements Provider {
+export class ConfigurationProvider implements Provider {
   private type: any;
 
   constructor(type: any) {

@@ -11,6 +11,6 @@ export class SparqlController extends ControllerBase {
     console.log('SparqlController called!');
 
     this.response.writeHead(200, { 'Content-Type': 'text/plain' });
-    this.response.end(this);
+    this.response.end('SparqlController called!');
   }
 }

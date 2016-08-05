@@ -2,7 +2,7 @@ import {AutoWired, Singleton, Inject} from "../adapter/factory";
 
 import {ILogger, IFramework} from "../core/interfaces";
 
-import {Settings} from "../core/settings";
+import {Settings} from "../config/settings";
 
 @AutoWired
 @Singleton

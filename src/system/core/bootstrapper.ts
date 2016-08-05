@@ -4,7 +4,7 @@ import {InternalServer} from "../router";
 
 import {ILogger, IFramework} from "../core/interfaces";
 import {Context} from "../core/context";
-import {Settings} from "../core/settings";
+import {Settings} from "../config/settings";
 
 import * as fs from "fs";
 

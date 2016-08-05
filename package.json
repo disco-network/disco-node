@@ -24,7 +24,7 @@
     "typescript": "^1.8.10",
     "typescript-ioc": "^0.2.3"
   },
-  "main": "lib/src/app.js",
+  "main": "lib/src/server.js",
   "directories": {
     "doc": "doc",
     "lib": "lib/src"

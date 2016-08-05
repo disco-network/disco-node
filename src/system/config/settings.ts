@@ -1,20 +1,11 @@
-import {Provided, Provider, Singleton} from "../adapter/factory";
+import {Provided, Provider, Singleton, ConfigurationProviderBase/*, ProvidedByJson*/} from "../adapter/factory";
 
-import {JsonObject, JsonMember, TypedJSON} from "typedjson";
-
-import * as fs from "fs";
-
-const settingsProvider: Provider = {
-  get: (): Settings => {
-    let configJson: Buffer = fs.readFileSync(__dirname + '/../../settings.json');
-    let config: Settings = TypedJSON.parse(configJson.toString(), Settings);
-    return config;
-  }
-};
+import {JsonObject, JsonMember} from "typedjson";
 
 @JsonObject
 @Singleton
-@Provided(settingsProvider)
+@Provided(new ConfigurationProviderBase(Settings))
+// TODO: wrap with @ProvidedByJson
 export class Settings {
 
   private defaultProtocol: string = 'http';

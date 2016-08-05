@@ -1,16 +1,8 @@
 import {Bootstrapper} from "./system";
 
-//import * as util from "util";
-
 class Server extends Bootstrapper {
 
     public execute(): void {
-
-/*        this.context.framework.addRoutingHandler('/debug', function (request, response) {
-            response.writeHead(200, { 'Content-Type': 'text/plain' });
-            response.end(util.inspect(request));
-        });
-*/
         /*
             /api/odata/*
 

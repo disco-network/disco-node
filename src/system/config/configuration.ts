@@ -1,4 +1,4 @@
-import {AutoWired, Inject, Singleton} from "../adapter/factory";
+import {AutoWired, Inject, Singleton} from "../core/factory";
 
 import {Package} from "../config/package"
 import {Settings} from "../config/settings"

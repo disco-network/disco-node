@@ -1,6 +1,6 @@
-import {AutoWired, Singleton, Inject, Container} from "../adapter/factory";
+import {Container} from "../core/factory";
 
-import {Registrar} from "../router/registrar";
+import {RouteRegistrar} from "../router/registrar";
 
 import {ILogger, IFramework} from "../core/interfaces";
 import {Context} from "../core/context";
@@ -8,7 +8,6 @@ import {Configuration} from "../config/configuration";
 
 import * as fs from "fs";
 
-@AutoWired
 export abstract class Bootstrapper {
 
   private _context: Context;
@@ -91,8 +90,8 @@ export abstract class Bootstrapper {
   }
 
   private initializeRoutes(): void {
-    let router: Registrar = new Registrar(this.context.framework.router);
-    router.registerRoutes();
+    let registrar: RouteRegistrar = Container.get(RouteRegistrar);
+    registrar.registerRoutes();
   }
 
   public abstract execute(): void;

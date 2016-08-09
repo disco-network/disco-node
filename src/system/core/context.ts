@@ -1,4 +1,4 @@
-import {AutoWired, Singleton, Inject} from "../adapter/factory";
+import {AutoWired, Singleton, Inject} from "../core/factory";
 
 import {ILogger, IFramework} from "../core/interfaces";
 

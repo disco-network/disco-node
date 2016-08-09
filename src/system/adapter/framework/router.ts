@@ -1,3 +1,5 @@
+import {AutoWired, Inject, Singleton, Provides} from "../../core/factory";
+
 import {IFramework, IRouter} from "../../core/interfaces"
 import {HttpVerb} from "../../router/enums";
 
@@ -5,11 +7,15 @@ import * as http from "http";
 import * as express from "express";
 import * as coreExpress from "express-serve-static-core";
 
+@AutoWired
+@Singleton
+@Provides(IRouter)
 export class RouterAdapter implements IRouter {
 
   public router: express.Application;
 
   constructor() {
+		console.log('RouteAdapter constructed...');
     this.router = express();
   }
 

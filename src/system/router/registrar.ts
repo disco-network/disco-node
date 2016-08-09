@@ -1,4 +1,4 @@
-import {AutoWired, Inject} from "../adapter/factory";
+import {AutoWired, Inject, Singleton} from "../core/factory";
 
 import {HttpVerb, ParamType} from "../router/enums";
 import {RouteArea, RouteHandler, RequestContext, ReferencedResource} from "../router";
@@ -8,29 +8,30 @@ import {IRouter} from "../core/interfaces";
 import * as http from "http";
 
 @AutoWired
-export class Registrar {
-	static routeAreas: Array<RouteArea> = new Array<RouteArea>();
-	static pathsResolved: boolean = false;
+@Singleton
+export class RouteRegistrar {
+	public routeAreas: Array<RouteArea> = new Array<RouteArea>();
+	public pathsResolved: boolean = false;
 
 	private router: IRouter;
 	constructor(@Inject router: IRouter) {
 		this.router = router;
 	 }
 
-	static addRouteArea(target: any): RouteArea {
-		Registrar.pathsResolved = false;
+	public addRouteArea(target: any): RouteArea {
+		this.pathsResolved = false;
 		let name: string = target.name || target.constructor.name;
-		if (!Registrar.routeAreas.hasOwnProperty(name)) {
-			Registrar.routeAreas[name] = new RouteArea(target);
+		if (!this.routeAreas.hasOwnProperty(name)) {
+			this.routeAreas[name] = new RouteArea(target);
 		}
-		let routeArea: RouteArea = Registrar.routeAreas[name];
+		let routeArea: RouteArea = this.routeAreas[name];
 		return routeArea;
 	}
 
-	static addRouteHandler(target: Function, methodName: string): RouteHandler {
+	public addRouteHandler(target: Function, methodName: string): RouteHandler {
 		if (methodName) {
-			Registrar.pathsResolved = false;
-			let routeArea: RouteArea = Registrar.addRouteArea(target);
+			this.pathsResolved = false;
+			let routeArea: RouteArea = this.addRouteArea(target);
 			if (!routeArea.handlers.hasOwnProperty(methodName)) {
 				routeArea.handlers[methodName] = new RouteHandler();
 			}
@@ -41,29 +42,29 @@ export class Registrar {
 	}
 
 	public registerRoutes() {
-		for (let area in Registrar.routeAreas) {
-			if (Registrar.routeAreas.hasOwnProperty(area)) {
-				let routeArea = Registrar.routeAreas[area]; // TODO: needed???
-				for (let handler in routeArea.handlers) {
-					if (routeArea.handlers.hasOwnProperty(handler)) {
-						let routeHandler = routeArea.handlers[handler];
+
+		for (let controller in this.routeAreas) {
+			if (this.routeAreas.hasOwnProperty(controller)) {
+				let routeArea = this.routeAreas[controller];
+				for (let method in routeArea.handlers) {
+					if (routeArea.handlers.hasOwnProperty(method)) {
+						let routeHandler = routeArea.handlers[method];
 						this.buildRoute(routeArea, routeHandler);		
 					}
 				}
 			}
 		}
-		Registrar.pathsResolved = true;
+		this.pathsResolved = true;
 	}
 
-	buildRoute(routeArea: RouteArea, routeHandler: RouteHandler) {
+	private buildRoute(routeArea: RouteArea, routeHandler: RouteHandler) {
 		let handlerCallback = (req, res, next) => {
 			this.callRouteHandler(routeArea, routeHandler, req, res, next);
 		};
 
 		if (!routeHandler.resolvedPath) {
-			Registrar.resolveProperties(routeArea, routeHandler);
+			this.resolveProperties(routeArea, routeHandler);
 		}
-
 
 		this.router.register(routeHandler.httpVerb, routeHandler.resolvedPath, handlerCallback);
 	}
@@ -76,7 +77,7 @@ export class Registrar {
 		context.next = next;
 
 		/* TODO: this.checkAcceptance(serviceMethod, context);*/
-		let serviceObject = this.createService(routeArea, context);
+		let serviceObject = this.createRouteHandler(routeArea, context);
 		let args = [];/* TODO: this.buildArgumentsList(serviceMethod, context);*/
 		let result = routeArea.targetClass.constructor.prototype[routeHandler.name].apply(serviceObject, args);
 		this.processResponseHeaders(routeHandler, context);
@@ -118,69 +119,67 @@ export class Registrar {
 		}
 	}
 
-	private processResponseHeaders(serviceMethod: RouteHandler, context: RequestContext) {
-		if (serviceMethod.resolvedLanguages) {
-			if (serviceMethod.httpVerb === HttpVerb.GET) {
+	private processResponseHeaders(routeHandler: RouteHandler, context: RequestContext) {
+		if (routeHandler.resolvedLanguages) {
+			if (routeHandler.httpVerb === HttpVerb.GET) {
 				context.response.vary("Accept-Language");
 			}
 			context.response.set("Content-Language", context.language);
 		}
-		if (serviceMethod.resolvedAccepts) {
+		if (routeHandler.resolvedAccepts) {
 			context.response.vary("Accept");
 		}
 	}
 
-	private createService(serviceClass: RouteArea, context: RequestContext) {
+	private createRouteHandler(routeArea: RouteArea, context: RequestContext) {
 
-		let serviceObject = Object.create(serviceClass.targetClass);
-    let result = serviceClass.targetClass.constructor.apply(serviceObject, [context.request, context.response, context.next]);
+		let routeHandler = Object.create(routeArea.targetClass);
+    let result = routeArea.targetClass.constructor.apply(routeHandler, [context.request, context.response, context.next]);
 
-		if (serviceClass.hasProperties()) {
-			serviceClass.properties.forEach((paramType, key) => {
+		if (routeArea.hasProperties()) {
+			routeArea.properties.forEach((paramType, key) => {
 				switch (paramType) {
 					case ParamType.context:
-						serviceObject[key] = context;
+						routeHandler[key] = context;
 						break;
 					case ParamType.context_accept_language:
-						serviceObject[key] = context.language;
+						routeHandler[key] = context.language;
 						break;
 					case ParamType.context_accept:
-						serviceObject[key] = context.preferredMedia;
+						routeHandler[key] = context.preferredMedia;
 						break;
 					case ParamType.context_request:
-						serviceObject[key] = context.request;
+						routeHandler[key] = context.request;
 						break;
 					case ParamType.context_response:
-						serviceObject[key] = context.response;
+						routeHandler[key] = context.response;
 						break;
 					case ParamType.context_next:
-						serviceObject[key] = context.next;
+						routeHandler[key] = context.next;
 						break;
 					default:
 						break;
 				}
 			})
 		}
-		return serviceObject;
+		return routeHandler;
 	}
 
-	private static resolveProperties(serviceClass: RouteArea,
-		serviceMethod: RouteHandler): void {
+	private resolveProperties(routeArea: RouteArea, routeHandler: RouteHandler): void {
 		/* TODO: InternalServer.resolveLanguages(serviceClass, serviceMethod);
 		InternalServer.resolveAccepts(serviceClass, serviceMethod);*/
-		Registrar.resolvePath(serviceClass, serviceMethod);
+		this.resolvePath(routeArea, routeHandler);
 	}
 
-	private static resolvePath(serviceClass: RouteArea,
-		serviceMethod: RouteHandler): void {
-		let classPath: string = serviceClass.path ? serviceClass.path.trim() : "";
+	private resolvePath(routeArea: RouteArea, routeHandler: RouteHandler): void {
+		let classPath: string = routeArea.path ? routeArea.path.trim() : "";
 		let resolvedPath = '';/* TODO: classPath.startsWith('/') ? classPath : '/' + classPath;
 		if (resolvedPath.endsWith('/')) {
 			resolvedPath = resolvedPath.slice(0, resolvedPath.length - 1);
 		}*/
 
-		if (serviceMethod.path) {
-			let methodPath: string = serviceMethod.path.trim();
+		if (routeHandler.path) {
+			let methodPath: string = routeHandler.path.trim();
 			resolvedPath = classPath + (/* TODO: methodPath.startsWith('/') ? methodPath : '/' + */methodPath);
 		}
 
@@ -193,7 +192,7 @@ export class Registrar {
 			throw Error("Duplicated declaration for path [" + resolvedPath + "], method ["
 				+ serviceMethod.httpMethod + "]. ");
 		}*/
-		declaredHttpMethods[serviceMethod.httpVerb];
-		serviceMethod.resolvedPath = resolvedPath;
+		declaredHttpMethods[routeHandler.httpVerb];
+		routeHandler.resolvedPath = resolvedPath;
 	}
 }

@@ -1,4 +1,6 @@
-import {Registrar} from "../router/registrar";
+import {Container} from "../core/factory";
+
+import {RouteRegistrar} from "../router/registrar";
 import {HttpVerb} from "../router/enums";
 
 import {RouteArea, RouteHandler} from "../router/metadata";
@@ -17,13 +19,14 @@ export function Route(path: string) {
 }
 
 function RouteTypeDecorator(target: Function, path: string) {
-  let routeArea: RouteArea = Registrar.addRouteArea(target);
+  let registrar = Container.get(RouteRegistrar);
+  let routeArea: RouteArea = registrar.addRouteArea(target);
   routeArea.path = path;
 }
 
-function RouteMethodDecorator(target: any, propertyKey: string,
-  descriptor: PropertyDescriptor, path: string) {
-  let routeHandler: RouteHandler = Registrar.addRouteHandler(target, propertyKey);
+function RouteMethodDecorator(target: any, propertyKey: string, descriptor: PropertyDescriptor, path: string) {
+  let registrar = Container.get(RouteRegistrar);
+  let routeHandler: RouteHandler = registrar.addRouteHandler(target, propertyKey);
   if (routeHandler) { // does not intercept constructor
     routeHandler.path = path;
     routeHandler.httpVerb = HttpVerb.GET; // ???

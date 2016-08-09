@@ -1,16 +1,16 @@
-import {ControllerBase, Route, HttpVerb} from "../system"
+import {ControllerBase, Route, HttpVerb} from "../system";
 
 import * as util from "util";
 
-@Route('/api')
+@Route("/api")
 export class SparqlController extends ControllerBase {
 
-  @Route('/sparql')
+  @Route("/sparql")
   public Sparql(): void {
-    
-    console.log('SparqlController called!');
 
-    this.response.writeHead(200, { 'Content-Type': 'text/plain' });
-    this.response.end('SparqlController called!');
+    console.log("SparqlController called!");
+
+    this.response.writeHead(200, { "Content-Type": "text/plain" });
+    this.response.end("SparqlController called!");
   }
 }

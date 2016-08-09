@@ -15,15 +15,15 @@ class Server extends Bootstrapper {
         */
 
         let url = this.context.settings.protocol
-            + '://' + this.context.settings.hostname
-            + ':' + this.context.settings.port
+            + "://" + this.context.settings.hostname
+            + ":" + this.context.settings.port
             + this.context.settings.root;
 
-        this.context.logger.log('Server running at', url);
+        this.context.logger.log("Server running at", url);
 
         this.context.framework.startWebServer(this.context.settings.port, this.context.settings.hostname);
     }
 }
 
-var server = new Server();
+let server = new Server();
 server.initialize();

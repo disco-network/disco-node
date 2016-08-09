@@ -52,7 +52,7 @@ gulp.task('tests', ['build'], function () {
   // 	 	}
   // 	}
   return gulp.src('./')
-    .pipe(jasmine({ config: './spec/support/jasmine.json', includeStackTrace: true, verbose: true }));
+    .pipe(jasmine({ config: require('./spec/support/jasmine.json'), includeStackTrace: true, verbose: true }));
 });
 
 gulp.task('clean:all', function () {

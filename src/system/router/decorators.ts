@@ -26,7 +26,7 @@ function RouteMethodDecorator(target: any, propertyKey: string,
   let serviceMethod: metadata.ServiceMethod = InternalServer.registerServiceMethod(target, propertyKey);
   if (serviceMethod) { // does not intercept constructor
     serviceMethod.path = path;
-    serviceMethod.httpMethod = HttpVerb.GET;
-    serviceMethod.name = propertyKey;
+    serviceMethod.httpMethod = HttpVerb.GET; // ???
+    serviceMethod.name = propertyKey; // ???
   }
 }

@@ -1,14 +1,14 @@
 import {HttpVerb, ParamType} from "../router/enums";
 
-export class ServiceClass {
+export class RouteArea {
 	constructor(targetClass: Function) {
 		this.targetClass = targetClass;
-		this.methods = new Array<ServiceMethod>();
+		this.handlers = new Array<RouteHandler>();
 	}
 
 	targetClass: Function;
 	path: string;
-	methods: Array<ServiceMethod>;
+	handlers: Array<RouteHandler>;
 	languages: Array<string>;
 	accepts: Array<string>;
 	properties: Array<ParamType>;
@@ -25,11 +25,11 @@ export class ServiceClass {
 	}
 }
 
-export class ServiceMethod {
+export class RouteHandler {
 	name: string;
 	path: string;
 	resolvedPath: string;
-	httpMethod: HttpVerb;
+	httpVerb: HttpVerb;
 	parameters: Array<MethodParam> = new Array<MethodParam>();
 	mustParseCookies: boolean = false;
 	files: Array<FileParam> = new Array<FileParam>();
@@ -63,7 +63,7 @@ export class MethodParam {
 	paramType: ParamType;
 }
 
-export class ServiceContext {
+export class RequestContext {
 	/**
 	 * The resolved language to be used in the current request handling. 
 	 */

@@ -1,4 +1,6 @@
-import {IFramework} from "../../core/interfaces"
+import {IFramework, IRouter} from "../../core/interfaces"
+
+import {RouterAdapter} from "./router"
 
 import * as http from "http";
 import * as express from "express";
@@ -6,16 +8,13 @@ import * as coreExpress from "express-serve-static-core";
 
 export class Adapter implements IFramework {
 
-  public router: coreExpress.Application;
+  public router: IRouter;
 
   constructor() {
-    this.router = express();
+    this.router = new RouterAdapter();
   }
 
-  public addRoutingHandler(name: string, handler: coreExpress.RequestHandler): void {
-    this.router.use(name, handler);
-  }
-  public initialize(port: number, hostname: string, callback?: Function): http.Server {
-    return this.router.listen(port, hostname, callback);
+  public startWebServer(port: number, hostname: string, callback?: Function): http.Server {
+    return (<any>this.router).router.listen(port, hostname, callback);
   }
 }

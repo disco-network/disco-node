@@ -1,6 +1,6 @@
 import {AutoWired, Singleton, Inject, Container} from "../adapter/factory";
 
-import {InternalServer} from "../router";
+import {Registrar} from "../router/registrar";
 
 import {ILogger, IFramework} from "../core/interfaces";
 import {Context} from "../core/context";
@@ -91,9 +91,8 @@ export abstract class Bootstrapper {
   }
 
   private initializeRoutes(): void {
-    let router: any = this.context.framework.router;
-    let iternalServer: InternalServer = new InternalServer(router);
-    iternalServer.buildServices();
+    let router: Registrar = new Registrar(this.context.framework.router);
+    router.registerRoutes();
   }
 
   public abstract execute(): void;

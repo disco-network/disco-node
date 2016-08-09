@@ -21,7 +21,7 @@ class Server extends Bootstrapper {
 
         this.context.logger.log('Server running at', url);
 
-        this.context.framework.initialize(this.context.settings.port, this.context.settings.hostname);
+        this.context.framework.startWebServer(this.context.settings.port, this.context.settings.hostname);
     }
 }
 

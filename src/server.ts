@@ -1,4 +1,4 @@
-import {Bootstrapper} from "./system";
+import {Bootstrapper} from "typescript-mvc-web-api";
 
 class Server extends Bootstrapper {
 

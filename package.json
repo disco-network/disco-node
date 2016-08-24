@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "express": "^4.14.0",
-    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git"
+    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
+    "typescript-mvc-web-api": "git+https://github.com/mnemonic101/typescript-mvc-web-api.git"
   },
   "devDependencies": {
     "del": "^2.2.1",

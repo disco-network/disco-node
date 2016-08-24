@@ -1,4 +1,4 @@
-import {ControllerBase, Route} from "../system";
+import {ControllerBase, Route} from "typescript-mvc-web-api";
 
 import * as util from "util";
 

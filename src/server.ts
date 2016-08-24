@@ -1,6 +1,6 @@
-import {Bootstrapper} from "typescript-mvc-web-api";
+import {WebServer} from "typescript-mvc-web-api";
 
-class Server extends Bootstrapper {
+class Server extends WebServer {
 
     public execute(): void {
         /*

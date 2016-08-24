@@ -15,7 +15,7 @@ export class RouterAdapter implements IRouter {
   public router: express.Application;
 
   constructor() {
-		console.log("RouteAdapter constructed...");
+    console.log("RouteAdapter constructed...");
     this.router = express();
   }
 
@@ -28,35 +28,35 @@ export class RouterAdapter implements IRouter {
 
   public register(httpVerb: HttpVerb, path: string, handler: any) {
 
-		let args: any[] = [];
-		args.push(path);
-		args.push(handler);
+    let args: any[] = [];
+    args.push(path);
+    args.push(handler);
 
-		switch (httpVerb) {
-			case HttpVerb.GET:
-				this.router.get.apply(this.router, args);
-				break;
-			case HttpVerb.POST:
-				this.router.post.apply(this.router, args);
-				break;
-			case HttpVerb.PUT:
-				this.router.put.apply(this.router, args);
-				break;
-			case HttpVerb.DELETE:
-				this.router.delete.apply(this.router, args);
-				break;
-			case HttpVerb.HEAD:
-				this.router.head.apply(this.router, args);
-				break;
-			case HttpVerb.OPTIONS:
-				this.router.options.apply(this.router, args);
-				break;
-			case HttpVerb.PATCH:
-				this.router.patch.apply(this.router, args);
-				break;
+    switch (httpVerb) {
+      case HttpVerb.GET:
+        this.router.get.apply(this.router, args);
+        break;
+      case HttpVerb.POST:
+        this.router.post.apply(this.router, args);
+        break;
+      case HttpVerb.PUT:
+        this.router.put.apply(this.router, args);
+        break;
+      case HttpVerb.DELETE:
+        this.router.delete.apply(this.router, args);
+        break;
+      case HttpVerb.HEAD:
+        this.router.head.apply(this.router, args);
+        break;
+      case HttpVerb.OPTIONS:
+        this.router.options.apply(this.router, args);
+        break;
+      case HttpVerb.PATCH:
+        this.router.patch.apply(this.router, args);
+        break;
 
-			default:
-				throw Error("Invalid http method registration. Http verb [" + httpVerb + "], Handler [" + path + "]");
-		}
+      default:
+        throw Error("Invalid http method registration. Http verb [" + httpVerb + "], Handler [" + path + "]");
+    }
   }
 }

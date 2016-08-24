@@ -1,6 +1,6 @@
-import {AutoWired, Inject, Singleton, Provides} from "../../core/factory";
+import {AutoWired, Singleton, Provides} from "../../core/factory";
 
-import {IFramework, IRouter} from "../../core/interfaces"
+import {IRouter} from "../../core/interfaces";
 import {HttpVerb} from "../../router/enums";
 
 import * as http from "http";
@@ -15,7 +15,7 @@ export class RouterAdapter implements IRouter {
   public router: express.Application;
 
   constructor() {
-		console.log('RouteAdapter constructed...');
+		console.log("RouteAdapter constructed...");
     this.router = express();
   }
 
@@ -56,7 +56,7 @@ export class RouterAdapter implements IRouter {
 				break;
 
 			default:
-				throw Error('Invalid http method registration. Http verb [' + httpVerb + '], Handler [' + path + ']');
+				throw Error("Invalid http method registration. Http verb [" + httpVerb + "], Handler [" + path + "]");
 		}
-  }  
+  }
 }

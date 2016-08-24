@@ -1,4 +1,4 @@
-import {Provided, Provider, Singleton, ConfigurationProvider/*, ProvidedByJson*/} from "../core/factory";
+import {Provided, Singleton, ConfigurationProvider/*, ProvidedByJson*/} from "../core/factory";
 
 import {JsonObject, JsonMember} from "typedjson";
 

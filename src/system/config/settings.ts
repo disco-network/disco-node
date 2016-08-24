@@ -8,11 +8,11 @@ import {JsonObject, JsonMember} from "typedjson";
 // TODO: wrap with @ProvidedByJson
 export class Settings {
 
-  private defaultProtocol: string = 'http';
-  private defaultHostname: string = '127.0.0.1';
+  private defaultProtocol: string = "http";
+  private defaultHostname: string = "127.0.0.1";
   private defaultPort: number = 80;
-  private defaultRoot: string = '/';
-  private defaultBasePath: string = '/lib/src';
+  private defaultRoot: string = "/";
+  private defaultBasePath: string = "/lib/src";
 
   private _protocol: string;
   public get protocol(): string {

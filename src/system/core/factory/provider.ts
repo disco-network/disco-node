@@ -1,9 +1,8 @@
-import {Provided, Provider, Singleton} from "../factory";
+import {Provided, Provider} from "../factory";
 
-import {fsHelper} from "../../core/helper";
+import {FileSystemHelper} from "../../core/helper";
 
 import {TypedJSON} from "typedjson";
-import * as fs from "fs";
 
 export function ProvidedByJson(): Function {
   return function (target: Function): Function {
@@ -19,8 +18,8 @@ export class ConfigurationProvider implements Provider {
   }
 
   public get(): Object {
-    let name: string = this.type.name.toLowerCase() + '.json';
-    let configJson: Buffer = fsHelper.locateAndReadFile(name);
+    let name: string = this.type.name.toLowerCase() + ".json";
+    let configJson: Buffer = FileSystemHelper.locateAndReadFile(name);
     let config: any = TypedJSON.parse(configJson.toString(), this.type);
     return config;
   }

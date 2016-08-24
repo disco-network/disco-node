@@ -7,10 +7,10 @@ import {RouteArea, RouteHandler} from "../router/metadata";
 
 export function Route(path: string) {
   return function (...args: any[]) {
-    if (args.length == 1) {
+    if (args.length === 1) {
       return RouteTypeDecorator.apply(this, [args[0], path]);
     }
-    else if (args.length == 3 && typeof args[2] === "object") {
+    else if (args.length === 3 && typeof args[2] === "object") {
       return RouteMethodDecorator.apply(this, [args[0], args[1], args[2], path]);
     }
 

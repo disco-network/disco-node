@@ -1,12 +1,12 @@
 import {AutoWired, Inject, Singleton} from "../core/factory";
 
-import {Package} from "../config/package"
-import {Settings} from "../config/settings"
+import {Package} from "../config/package";
+import {Settings} from "../config/settings";
 
 @AutoWired
 @Singleton
 export class Configuration {
-  
+
   private _package: Package;
   public get package(): Package {
     return this._package;

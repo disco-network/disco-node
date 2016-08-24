@@ -5,8 +5,6 @@ import {RouteArea, RouteHandler, RequestContext, ReferencedResource} from "../ro
 
 import {IRouter} from "../core/interfaces";
 
-import * as http from "http";
-
 @AutoWired
 @Singleton
 export class RouteRegistrar {

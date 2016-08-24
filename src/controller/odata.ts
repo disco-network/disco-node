@@ -1,6 +1,4 @@
-import {ControllerBase, Route, HttpVerb} from "../system";
-
-import * as util from "util";
+import {ControllerBase, Route} from "../system";
 
 @Route("/api")
 export class ODataController extends ControllerBase {

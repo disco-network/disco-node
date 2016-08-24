@@ -1,4 +1,4 @@
-export * from "./factory"
+export * from "./factory";
 
-export {Adapter as logger} from "./logger"
-export {Adapter as framework} from "./framework"
+export {Adapter as logger} from "./logger";
+export {Adapter as framework} from "./framework";

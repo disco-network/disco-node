@@ -43,14 +43,6 @@ gulp.task('copy', function () {
 });
 
 gulp.task('tests', ['build'], function () {
-  // using the spec file path is currently possible by using a custom hack in gulp-jasmin/index.js
-  // 	if (opts.config) {
-  // 	 	if (typeof opts.config === 'string') {
-  // 		 	jasmine.loadConfigFile(opts.config);
-  // 	 	} else {
-  // 	 		jasmine.loadConfig(opts.config);
-  // 	 	}
-  // 	}
   return gulp.src('./')
     .pipe(jasmine({ config: require('./spec/support/jasmine.json'), includeStackTrace: true, verbose: true }));
 });

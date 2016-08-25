@@ -2,7 +2,10 @@
   "name": "disco-node",
   "description": "An OData and SPARQL endpoint to be part of the d!sco network",
   "version": "0.0.1",
-  "author": "The d!sco Network <hq@disco-network.org>",
+  "author": {
+    "name": "The d!sco Network",
+    "email": "hq@disco-network.org"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/disco-network/disco-node.git"

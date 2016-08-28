@@ -1,6 +1,6 @@
-import {ControllerBase, Route} from "typescript-mvc-web-api";
+import {Controller, Route} from "typescript-mvc-web-api";
 
-export class HomeController extends ControllerBase {
+export class HomeController extends Controller {
 
   @Route("/")
   public Index(): void {

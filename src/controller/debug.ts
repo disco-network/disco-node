@@ -1,8 +1,8 @@
-import {ControllerBase, Route} from "typescript-mvc-web-api";
+import {Controller, Route} from "typescript-mvc-web-api";
 
 import * as util from "util";
 
-export class DebugController extends ControllerBase {
+export class DebugController extends Controller {
 
   @Route("/debug")
   public Debug(): void {

@@ -14,6 +14,12 @@ class Server extends WebServer {
                 ];
         */
 
+        this.context.framework.router.addRequestHandler("/", (request: any, response: any, next: any) => {
+          this.context.logger.log("Unhandled request:", request.url);
+
+          next();
+        });
+
         let url = this.context.settings.protocol
             + "://" + this.context.settings.hostname
             + ":" + this.context.settings.port

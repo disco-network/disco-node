@@ -1,4 +1,8 @@
+"use strict";
+var fs = require('fs');
+var path = require('path');
 var gulp = require('gulp'),
+  runSequence = require('run-sequence'),
   del = require('del'),
   jasmine = require('gulp-jasmine'),
   tslint = require('gulp-tslint'),
@@ -9,20 +13,24 @@ gulp.task('lint', function () {
   return gulp.src([
     'src/**/**.ts',
     'spec/**.ts',
-    'typings/**.d.ts'
+    'typings/**.d.ts',
+    '!lib/**',
+    '!maps/**'
   ])
     .pipe(tslint({}))
     .pipe(tslint.report('verbose'));
 });
 
-var tsProject = tsc.createProject('tsconfig.json');
-gulp.task('build', ['copy'], function () {
+var tsProjectForJs = tsc.createProject("tsconfig.json");
+var tsProjectForDts = tsc.createProject("tsconfig.json");
+gulp.task('build-js', function () {
   return gulp.src([
     './**/**.ts',
+    '!./lib/**',
     '!./node_modules/**'
   ])
     .pipe(sourcemaps.init())
-    .pipe(tsc(tsProject))
+    .pipe(tsc(tsProjectForJs))
     .js
     .pipe(sourcemaps.write('../maps', {
       includeContent: false,
@@ -34,6 +42,35 @@ gulp.task('build', ['copy'], function () {
     }))
     .pipe(gulp.dest('lib'));
 })
+gulp.task('build-dts', function () {
+  return gulp.src([
+    './**/**.ts',
+    '!./lib/**',
+    '!./node_modules/**'
+  ])
+    .pipe(tsc(tsProjectForDts))
+    .dts
+    .pipe(gulp.dest('lib'));
+})
+gulp.task('build-package.json', function () {
+  var appPackageJson = JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8'));
+  var npmPackageJson = {
+    "name": appPackageJson.name,
+    "description": appPackageJson.description,
+    "version": appPackageJson.version,
+    "author": appPackageJson.author,
+    "repository": appPackageJson.repository,
+    "main": "server.js",      // TODO: generate this from app package.json
+    "typings": "server.d.ts", // TODO: generate this from app package.json
+    "dependencies": appPackageJson.dependencies,
+    "keywords": appPackageJson.keywords,
+    "license": appPackageJson.license,
+    "bugs": appPackageJson.bugs
+  }
+  fs.mkdirSync(path.join(__dirname, 'lib'));
+  fs.mkdirSync(path.join(__dirname, 'lib', 'src'));
+  fs.writeFileSync(path.join(__dirname, 'lib', 'src', 'package.json'), JSON.stringify(npmPackageJson, null, 2));
+});
 
 gulp.task('copy', function () {
   return gulp.src([
@@ -41,13 +78,20 @@ gulp.task('copy', function () {
   ])
     .pipe(gulp.dest('lib'));
 });
+gulp.task('build', function (cb) {
+  return runSequence(
+    'clean-all',
+    ['build-js', 'build-dts', 'copy', 'build-package.json'],
+    cb
+  );
+});
 
 gulp.task('tests', ['build'], function () {
   return gulp.src('./')
     .pipe(jasmine({ config: require('./spec/support/jasmine.json'), includeStackTrace: true, verbose: true }));
 });
 
-gulp.task('clean:all', function () {
+gulp.task('clean-all', function () {
   return del(['./maps', './lib']);
 });
 

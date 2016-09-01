@@ -1,4 +1,4 @@
-import {Controller, Route} from "typescript-mvc-web-api";
+import {Controller, Route} from "typescript-mvc";
 
 export class HomeController extends Controller {
 

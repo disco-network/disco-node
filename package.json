@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
-    "typescript-mvc-web-api": "git+https://github.com/mnemonic101/typescript-mvc-web-api.git"
+    "typescript-mvc": "0.0.3"
   },
   "devDependencies": {
     "del": "^2.2.1",

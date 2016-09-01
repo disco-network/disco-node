@@ -1,4 +1,4 @@
-import {Controller, Route} from "typescript-mvc-web-api";
+import {Controller, Route} from "typescript-mvc";
 
 import * as util from "util";
 

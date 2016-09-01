@@ -1,4 +1,4 @@
-import {WebServer} from "typescript-mvc-web-api";
+import {WebServer} from "typescript-mvc";
 
 class Server extends WebServer {
 

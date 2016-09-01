@@ -1,4 +1,4 @@
-import {Controller, Route} from "typescript-mvc-web-api";
+import {Controller, Route} from "typescript-mvc";
 
 @Route("/api")
 export class SparqlController extends Controller {

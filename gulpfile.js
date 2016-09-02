@@ -76,7 +76,7 @@ gulp.task("build-package.json", function () {
 
 gulp.task("copy", function () {
   return gulp.src([
-    "./**/**settings.json",
+    "./src/settings.json",
     "README.md",
     "LICENSE"
   ])

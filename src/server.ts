@@ -1,35 +1,37 @@
 import {WebServer} from "typescript-mvc";
+import {AutoWired, Provides} from "typescript-mvc";
 
+@AutoWired
+@Provides(WebServer)
 class Server extends WebServer {
 
-    public execute(): void {
-        /*
-            /api/odata/*
+  public onBeforeServerStart(): void {
+    /*
+        /api/odata/*
 
-            /api/sparql/*
+        /api/sparql/*
 
-                let routes = [
-                    new Route('/', { controller: 'Home', action: 'index' }),
-                    new Route('/', { controller: 'Home', action: 'index' }),
-                ];
-        */
+            let routes = [
+                new Route('/', { controller: 'Home', action: 'index' }),
+                new Route('/', { controller: 'Home', action: 'index' }),
+            ];
+    */
 
-        this.context.framework.router.addRequestHandler("/", (request: any, response: any, next: any) => {
-          this.context.logger.log("Unhandled request:", request.url);
+    this.codeShouldBeMovedIntoFramework();
+  }
 
-          next();
-        });
+  // TODO: move this into the mvc framework soon
+  private codeShouldBeMovedIntoFramework(): void {
+    // TODO: add system default request handlers, e.g. error
+    this.context.framework.router.addRequestHandler("/", (request: any, response: any, next: any) => {
+      this.context.logger.log("Unhandled request:", request.url);
+      next();
+    });
 
-        let url = this.context.settings.protocol
-            + "://" + this.context.settings.hostname
-            + ":" + this.context.settings.port
-            + this.context.settings.root;
+    // TODO: add processing of application level adapter registrations for ILogger, IFactory, IDataStore etc.
+    //
 
-        this.context.logger.log("Server running at", url);
-
-        this.context.framework.startWebServer(this.context.settings.port, this.context.settings.hostname);
-    }
+  }
 }
 
-let server = new Server();
-server.initialize();
+Server.start();

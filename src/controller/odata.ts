@@ -1,4 +1,10 @@
-import {Controller, Route} from "typescript-mvc";
+import {Controller, Route, IActionResult, ResponseData} from "typescript-mvc";
+import {Promise} from "typescript-mvc";
+
+import { IHttpRequestHandler, IHttpResponseSender } from "odata-rdf-interface";
+
+import { GetHandler, OptionsHandler } from "odata-rdf-interface";
+import { Schema } from "odata-rdf-interface";
 
 import * as url from "url";
 
@@ -6,7 +12,7 @@ import * as url from "url";
 export class ODataController extends Controller {
 
   @Route("/odata/:query")
-  public OData(query: string): void {
+  public OData(query: string): any {
 
     console.log("ODataController called!");
 
@@ -14,7 +20,7 @@ export class ODataController extends Controller {
 
     query = urlParts.query;
     console.log("OData query:", query);
-    let pathname = urlParts.pathname;
+    let pathname = urlParts.pathname.substring(urlParts.pathname.lastIndexOf("/"));
     console.log("OData entity:", pathname);
 
     let oneof = false;
@@ -36,12 +42,63 @@ export class ODataController extends Controller {
       this.response.send(200);
     }
     else {
-      this.response.end("{ message: 'ODataController called!' }");
+      let engine: IHttpRequestHandler;
+      let responseSender: IHttpResponseSender = new ResponseSender();
+
+      if (this.request.method === "GET") {
+        engine = new GetHandler(new Schema(), this.context.dataProvider, responseSender);
+      }
+      else if (this.request.method === "OPTIONS") {
+        engine = new OptionsHandler(responseSender);
+      }
+      else {
+        this.response.send(403);
+      }
+
+      engine.query(convertHttpRequest(this.request));
+
+      return responseSender;
     }
-
-    // this.response.header("Access-Control-Allow-Origin", "http://disco-node.local:3000");
-
-    // this.response.header(200, { "Content-Type": "text/plain" });
-    // this.response.end("ODataController called!");
   }
+}
+
+class ResponseSender implements IHttpResponseSender, IActionResult<ResponseData> {
+
+  private resolve: (data: ResponseData) => void;
+  private reject: (error: string) => void;
+
+  public promise: Promise<ResponseData>;
+  public data: ResponseData;
+
+  constructor() {
+    this.promise = new Promise((resolve: (data: ResponseData) => void, reject: () => void) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+
+    this.data = new ResponseData();
+  }
+
+  public sendStatusCode(code: number) {
+    this.data.code = code;
+  }
+
+  public sendBody(body: string) {
+    this.data.body = body;
+  }
+
+  public sendHeader(key: string, value: string) {
+    this.data.headers[key] = value;
+  }
+
+  public finishResponse() {
+    this.resolve(this.data);
+  }
+}
+
+function convertHttpRequest(req) {
+  return {
+    relativeUrl: req.url.substring(req.url.lastIndexOf("/")),
+    body: "@todo",
+  };
 }

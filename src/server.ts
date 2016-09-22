@@ -6,16 +6,6 @@ import {AutoWired, Provides} from "typescript-mvc";
 class Server extends WebServer {
 
   public onBeforeServerStart(): void {
-    /*
-        /api/odata/*
-
-        /api/sparql/*
-
-            let routes = [
-                new Route('/', { controller: 'Home', action: 'index' }),
-                new Route('/', { controller: 'Home', action: 'index' }),
-            ];
-    */
 
     this.codeShouldBeMovedIntoFramework();
   }

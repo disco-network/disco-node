@@ -1,13 +1,26 @@
-import {IInitializer, CallbackHandler} from "typescript-mvc";
+import {IDataContext, IDataAdapter, IInitializer} from "typescript-mvc";
+import {AutoWired, Inject} from "typescript-mvc";
+import {Promise} from "typescript-mvc";
 
-import * as DataStore from "../adapter/data";
+import { SparqlProvider } from "odata-rdf-interface";
 
-export class Initializer implements IInitializer {
-  public provider;
-  public execute(cb: CallbackHandler) {
-    const dsa = new DataStore.Adapter();
-    dsa.initialize(cb);
+@AutoWired
+export class DataContextInitializer implements IInitializer {
 
-    this.provider = dsa.provider;
+  constructor(
+    @Inject private context: IDataContext,
+    @Inject private adapter: IDataAdapter<SparqlProvider>) { }
+
+  public execute(): Promise<any> {
+    return new Promise((resolve: (data: any) => void, reject: (reason: string) => void) => {
+      this.adapter.initialize((error: string, data: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          this.context.provider = data;
+          resolve(data);
+        }
+      });
+    });
   }
 }

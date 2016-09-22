@@ -1,23 +1,22 @@
 import { SparqlProvider } from "odata-rdf-interface";
 import * as RdfStore from "rdfstore";
 
-import {IDataProvider, CallbackHandler} from "typescript-mvc";
+import {IDataAdapter, CallbackHandler} from "typescript-mvc";
 
-export class Adapter extends IDataProvider {
+export class Adapter extends IDataAdapter<SparqlProvider> {
 
   public provider: SparqlProvider;
 
   private storeUri: string = "http://datokrat.sirius.uberspace.de/disco-test";
   private store: RdfStore.Store;
 
+  private onInitialized: CallbackHandler = () => { ; };
 
   public initialize(cb: CallbackHandler): void {
     this.onInitialized = cb;
 
     RdfStore.create((error: any, store: RdfStore.Store) => this.createStoreCallbackHandler(error, store));
   }
-
-  private onInitialized: CallbackHandler = () => { ; };
 
   private createStoreCallbackHandler(error: any, store: RdfStore.Store): void {
     this.store = store;

@@ -6,7 +6,7 @@ export class SparqlController extends Controller {
   @Route("/sparql")
   public Sparql(): void {
 
-    console.log("SparqlController called!");
+    this.context.logger.log("SparqlController called!");
 
     this.response.writeHead(200, { "Content-Type": "text/plain" });
     this.response.end("SparqlController called!");

@@ -14,14 +14,14 @@ export class ODataController extends Controller {
   @Route("/odata/:query")
   public OData(query: string): any {
 
-    console.log("ODataController called!");
+    this.context.logger.log("ODataController called!");
 
     let urlParts: url.Url = url.parse(this.request.url);
 
     query = urlParts.query;
-    console.log("OData query:", query);
+    this.context.logger.log("OData query:", query);
     let pathname = urlParts.pathname.substring(urlParts.pathname.lastIndexOf("/"));
-    console.log("OData entity:", pathname);
+    this.context.logger.log("OData entity:", pathname);
 
     let oneof = false;
     if (this.request.headers.origin) {

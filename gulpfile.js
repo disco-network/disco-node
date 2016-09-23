@@ -77,6 +77,7 @@ gulp.task("build-package.json", function () {
 gulp.task("copy", function () {
   return gulp.src([
     "./src/settings.json",
+    "./src/disco-metadata.xml",
     "README.md",
     "LICENSE"
   ])

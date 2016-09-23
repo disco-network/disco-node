@@ -1,19 +1,36 @@
 import {Controller, Route, IActionResult, ResponseData} from "typescript-mvc";
-import {Promise} from "typescript-mvc";
+import {GET, OPTIONS} from "typescript-mvc";
+import {Promise, FileSystemHelper} from "typescript-mvc";
 
 import { IHttpRequestHandler, IHttpResponseSender } from "odata-rdf-interface";
 
-import { GetHandler, OptionsHandler } from "odata-rdf-interface";
+import { GetHandler } from "odata-rdf-interface";
 import { Schema } from "odata-rdf-interface";
 
 import * as url from "url";
+import * as fs from "fs";
 
-@Route("/api")
+@Route("/api/odata")
 export class ODataController extends Controller {
 
-  @Route("/odata/:query")
-  public OData(query: string): any {
+  @OPTIONS
+  @Route("/\*")
+  public options(): void {
+    this.context.logger.log("ODataController OPTIONS called!");
 
+    if (this.request.headers.origin) {
+      this.response.header("Access-Control-Allow-Origin", this.request.headers.origin);
+      this.response.header("Access-Control-Allow-Credentials", true);
+      this.response.header("Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE,PUT,HEAD");
+      this.response.header("Access-Control-Allow-Headers",
+        "authorization,content-type,dataserviceversion,maxdataserviceversion,accept");
+      this.response.header("Access-Control-Expose-Headers", "dataserviceversion,maxdataserviceversion");
+      this.response.header("Access-Control-Max-Age", 60 * 60 * 24 * 365);
+    }
+  }
+
+  @Route("/Posts?:query")
+  public odata(query: string): any {
     this.context.logger.log("ODataController called!");
 
     let urlParts: url.Url = url.parse(this.request.url);
@@ -23,42 +40,41 @@ export class ODataController extends Controller {
     let pathname = urlParts.pathname.substring(urlParts.pathname.lastIndexOf("/"));
     this.context.logger.log("OData entity:", pathname);
 
-    let oneof = false;
-    if (this.request.headers.origin) {
-      this.response.header("Access-Control-Allow-Origin", this.request.headers.origin);
-      this.response.header("Access-Control-Allow-Credentials", true);
-      this.response.header("Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE,PUT,HEAD");
-      this.response.header("Access-Control-Allow-Headers",
-        "authorization,content-type,dataserviceversion,maxdataserviceversion,accept");
-      this.response.header("Access-Control-Expose-Headers", "dataserviceversion,maxdataserviceversion");
-      oneof = true;
-    }
-    /*    if (oneof) {
-          this.response.header("Access-Control-Max-Age", 60 * 60 * 24 * 365);
+    let responseSender: IHttpResponseSender = new ResponseSender();
+    let engine: IHttpRequestHandler = new GetHandler(new Schema(), this.context.dataProvider, responseSender);
+    engine.query({
+      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/")),
+      body: "@todo",
+    });
+
+    return (<ResponseSender>responseSender).promise;
+  }
+
+  @Route("/\*metadata")
+  public metadata(): Promise<string> {
+    this.context.logger.log("ODataController METADATA called!");
+
+    this.response.header("Cache-Control", "no-cache");
+    this.response.header("Pragma", "no-cache");
+    this.response.header("Content-Type", "application/xml; charset=utf-8");
+    this.response.header("Expires", -1);
+    this.response.header("DataServiceVersion", "3.0");
+    this.response.set("Connection", "close");
+
+    let filename = "disco-metadata.xml";
+    let filepath = FileSystemHelper.locateFolderOf(filename);
+
+    let promise = new Promise<string>((resolve: (data: string) => void, reject: (reason: string) => void) => {
+      fs.readFile(filepath + "/" + filename, (error: NodeJS.ErrnoException, data: Buffer) => {
+        if (error) {
+          reject(error.message);
+        } else {
+          resolve(data.toString());
         }
-    */
-    // intercept OPTIONS method
-    if (oneof && this.request.method === "OPTIONS") {
-      this.response.send(200);
-    }
-    else {
-      let engine: IHttpRequestHandler;
-      let responseSender: IHttpResponseSender = new ResponseSender();
+      });
+    });
 
-      if (this.request.method === "GET") {
-        engine = new GetHandler(new Schema(), this.context.dataProvider, responseSender);
-      }
-      else if (this.request.method === "OPTIONS") {
-        engine = new OptionsHandler(responseSender);
-      }
-      else {
-        this.response.send(403);
-      }
-
-      engine.query(convertHttpRequest(this.request));
-
-      return responseSender;
-    }
+    return promise;
   }
 }
 
@@ -94,11 +110,4 @@ class ResponseSender implements IHttpResponseSender, IActionResult<ResponseData>
   public finishResponse() {
     this.resolve(this.data);
   }
-}
-
-function convertHttpRequest(req) {
-  return {
-    relativeUrl: req.url.substring(req.url.lastIndexOf("/")),
-    body: "@todo",
-  };
 }

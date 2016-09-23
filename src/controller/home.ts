@@ -3,7 +3,7 @@ import {Controller, Route} from "typescript-mvc";
 export class HomeController extends Controller {
 
   @Route("/")
-  public Index(): void {
+  public index(): void {
 
     this.context.logger.log("HomeController called!");
 

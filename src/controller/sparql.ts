@@ -4,7 +4,7 @@ import {Controller, Route} from "typescript-mvc";
 export class SparqlController extends Controller {
 
   @Route("/sparql")
-  public Sparql(): void {
+  public sparql(): void {
 
     this.context.logger.log("SparqlController called!");
 

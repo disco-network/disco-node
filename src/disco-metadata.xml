@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="3.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="Disco.Ontology" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="EntityBase" Abstract="true">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="Key" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Modified" Type="Edm.DateTime" Nullable="false" />
+      </EntityType>
+      <EntityType Name="Culture" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Code" Type="Edm.String" />
+        <Property Name="Name" Type="Edm.String" />
+      </EntityType>
+      <EntityType Name="Region" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Code" Type="Edm.String" />
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ParentId" Type="Edm.Int64" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+        <NavigationProperty Name="Parent" Relationship="Disco.Ontology.Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartner" ToRole="Parent" FromRole="ParentPartner" />
+        <NavigationProperty Name="Partitions" Relationship="Disco.Ontology.Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartner" ToRole="Partitions" FromRole="PartitionsPartner" />
+        <NavigationProperty Name="Posts" Relationship="Disco.Ontology.Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartner" ToRole="Posts" FromRole="PostsPartner" />
+      </EntityType>
+      <EntityType Name="Origin" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Uri" Type="Edm.String" />
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+      </EntityType>
+      <EntityType Name="Originator" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="AuthorId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="OriginId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Author" Relationship="Disco.Ontology.Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartner" ToRole="Author" FromRole="AuthorPartner" />
+        <NavigationProperty Name="Origin" Relationship="Disco.Ontology.Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartner" ToRole="Origin" FromRole="OriginPartner" />
+      </EntityType>
+      <EntityType Name="Descriptor" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Description" Type="Edm.String" />
+        <Property Name="CultureId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Culture" Relationship="Disco.Ontology.Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartner" ToRole="Culture" FromRole="CulturePartner" />
+      </EntityType>
+      <EntityType Name="User" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Alias" Type="Edm.String" Nullable="false" />
+        <Property Name="Token" Type="Edm.String" Nullable="false" />
+        <Property Name="OriginId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Origin" Relationship="Disco.Ontology.Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartner" ToRole="Origin" FromRole="OriginPartner" />
+        <NavigationProperty Name="Memberships" Relationship="Disco.Ontology.Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner" ToRole="Memberships" FromRole="MembershipsPartner" />
+      </EntityType>
+      <EntityType Name="Group" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Alias" Type="Edm.String" />
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ParentId" Type="Edm.Int64" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+        <NavigationProperty Name="Memberships" Relationship="Disco.Ontology.Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner" ToRole="Memberships" FromRole="MembershipsPartner" />
+        <NavigationProperty Name="Parent" Relationship="Disco.Ontology.Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartner" ToRole="Parent" FromRole="ParentPartner" />
+        <NavigationProperty Name="Partitions" Relationship="Disco.Ontology.Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartner" ToRole="Partitions" FromRole="PartitionsPartner" />
+      </EntityType>
+      <EntityType Name="GroupMembership" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="MembershipTypeId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="User" Relationship="Disco.Ontology.Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartner" ToRole="User" FromRole="UserPartner" />
+        <NavigationProperty Name="Group" Relationship="Disco.Ontology.Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartner" ToRole="Group" FromRole="GroupPartner" />
+        <NavigationProperty Name="MembershipType" Relationship="Disco.Ontology.Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartner" ToRole="MembershipType" FromRole="MembershipTypePartner" />
+      </EntityType>
+      <EntityType Name="GroupMembershipType" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+      </EntityType>
+      <EntityType Name="Post" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="PostTypeId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ContentId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="PostType" Relationship="Disco.Ontology.Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartner" ToRole="PostType" FromRole="PostTypePartner" />
+        <NavigationProperty Name="Content" Relationship="Disco.Ontology.Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartner" ToRole="Content" FromRole="ContentPartner" />
+        <NavigationProperty Name="Tags" Relationship="Disco.Ontology.Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartner" ToRole="Tags" FromRole="TagsPartner" />
+        <NavigationProperty Name="Ratings" Relationship="Disco.Ontology.Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartner" ToRole="Ratings" FromRole="RatingsPartner" />
+        <NavigationProperty Name="RefersTo" Relationship="Disco.Ontology.Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartner" ToRole="RefersTo" FromRole="RefersToPartner" />
+        <NavigationProperty Name="ReferredFrom" Relationship="Disco.Ontology.Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartner" ToRole="ReferredFrom" FromRole="ReferredFromPartner" />
+        <NavigationProperty Name="ModifiedBy" Relationship="Disco.Ontology.Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner" ToRole="ModifiedBy" FromRole="ModifiedByPartner" />
+        <NavigationProperty Name="ChangeDetail" Relationship="Disco.Ontology.Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner" ToRole="ChangeDetail" FromRole="ChangeDetailPartner" />
+      </EntityType>
+      <EntityType Name="PostReference" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="ReferrerId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ReferreeId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ReferenceTypeId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Referrer" Relationship="Disco.Ontology.Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartner" ToRole="Referrer" FromRole="ReferrerPartner" />
+        <NavigationProperty Name="Referree" Relationship="Disco.Ontology.Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartner" ToRole="Referree" FromRole="ReferreePartner" />
+        <NavigationProperty Name="ReferenceType" Relationship="Disco.Ontology.Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartner" ToRole="ReferenceType" FromRole="ReferenceTypePartner" />
+      </EntityType>
+      <EntityType Name="PostReferenceType" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+      </EntityType>
+      <EntityType Name="PostType" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+      </EntityType>
+      <EntityType Name="Tag" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="DescriptionId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Description" Relationship="Disco.Ontology.Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartner" ToRole="Description" FromRole="DescriptionPartner" />
+        <NavigationProperty Name="Tagged" Relationship="Disco.Ontology.Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartner" ToRole="Tagged" FromRole="TaggedPartner" />
+        <NavigationProperty Name="Related" Relationship="Disco.Ontology.Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartner" ToRole="Related" FromRole="RelatedPartner" />
+      </EntityType>
+      <EntityType Name="Rating" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Score" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PostId" Type="Edm.Int64" Nullable="false" />
+        <Property Name="UserId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="User" Relationship="Disco.Ontology.Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartner" ToRole="User" FromRole="UserPartner" />
+        <NavigationProperty Name="Post" Relationship="Disco.Ontology.Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartner" ToRole="Post" FromRole="PostPartner" />
+        <NavigationProperty Name="ModifiedBy" Relationship="Disco.Ontology.Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner" ToRole="ModifiedBy" FromRole="ModifiedByPartner" />
+        <NavigationProperty Name="ChangeDetail" Relationship="Disco.Ontology.Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner" ToRole="ChangeDetail" FromRole="ChangeDetailPartner" />
+      </EntityType>
+      <EntityType Name="Content" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Title" Type="Edm.String" />
+        <Property Name="Text" Type="Edm.String" />
+        <Property Name="CultureId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Culture" Relationship="Disco.Ontology.Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartner" ToRole="Culture" FromRole="CulturePartner" />
+        <NavigationProperty Name="ModifiedBy" Relationship="Disco.Ontology.Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner" ToRole="ModifiedBy" FromRole="ModifiedByPartner" />
+        <NavigationProperty Name="ChangeDetail" Relationship="Disco.Ontology.Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner" ToRole="ChangeDetail" FromRole="ChangeDetailPartner" />
+      </EntityType>
+      <EntityType Name="Changeset" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="ModifiedById" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="ModifiedBy" Relationship="Disco.Ontology.Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner" ToRole="ModifiedBy" FromRole="ModifiedByPartner" />
+        <NavigationProperty Name="Details" Relationship="Disco.Ontology.Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartner" ToRole="Details" FromRole="DetailsPartner" />
+      </EntityType>
+      <EntityType Name="ChangeDetail" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Action" Type="Edm.String" />
+        <Property Name="EntityName" Type="Edm.String" />
+        <Property Name="EntityKey" Type="Edm.Guid" Nullable="false" />
+        <Property Name="OldValues" Type="Edm.String" />
+        <Property Name="NewValues" Type="Edm.String" />
+        <Property Name="ChangesetId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Changeset" Relationship="Disco.Ontology.Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartner" ToRole="Changeset" FromRole="ChangesetPartner" />
+      </EntityType>
+      <EntityType Name="NamedValueSet" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="OriginId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="Origin" Relationship="Disco.Ontology.Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartner" ToRole="Origin" FromRole="OriginPartner" />
+        <NavigationProperty Name="Values" Relationship="Disco.Ontology.Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartner" ToRole="Values" FromRole="ValuesPartner" />
+      </EntityType>
+      <EntityType Name="NamedValue" BaseType="Disco.Ontology.EntityBase">
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Value" Type="Edm.String" />
+        <Property Name="NamedValueSetId" Type="Edm.Int64" Nullable="false" />
+        <NavigationProperty Name="NamedValueSet" Relationship="Disco.Ontology.Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartner" ToRole="NamedValueSet" FromRole="NamedValueSetPartner" />
+      </EntityType>
+      <Association Name="Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Region" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartner">
+        <End Type="Disco.Ontology.Region" Role="Parent" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Region" Role="ParentPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartner">
+        <End Type="Disco.Ontology.Region" Role="Partitions" Multiplicity="*" />
+        <End Type="Disco.Ontology.Region" Role="PartitionsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartner">
+        <End Type="Disco.Ontology.Post" Role="Posts" Multiplicity="*" />
+        <End Type="Disco.Ontology.Region" Role="PostsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Origin" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartner">
+        <End Type="Disco.Ontology.User" Role="Author" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Originator" Role="AuthorPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartner">
+        <End Type="Disco.Ontology.Origin" Role="Origin" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Originator" Role="OriginPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartner">
+        <End Type="Disco.Ontology.Culture" Role="Culture" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Descriptor" Role="CulturePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartner">
+        <End Type="Disco.Ontology.Origin" Role="Origin" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.User" Role="OriginPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+        <End Type="Disco.Ontology.GroupMembership" Role="Memberships" Multiplicity="*" />
+        <End Type="Disco.Ontology.User" Role="MembershipsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Group" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+        <End Type="Disco.Ontology.GroupMembership" Role="Memberships" Multiplicity="*" />
+        <End Type="Disco.Ontology.Group" Role="MembershipsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartner">
+        <End Type="Disco.Ontology.Group" Role="Parent" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Group" Role="ParentPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartner">
+        <End Type="Disco.Ontology.Group" Role="Partitions" Multiplicity="*" />
+        <End Type="Disco.Ontology.Group" Role="PartitionsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartner">
+        <End Type="Disco.Ontology.User" Role="User" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.GroupMembership" Role="UserPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartner">
+        <End Type="Disco.Ontology.Group" Role="Group" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.GroupMembership" Role="GroupPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartner">
+        <End Type="Disco.Ontology.GroupMembershipType" Role="MembershipType" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.GroupMembership" Role="MembershipTypePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.GroupMembershipType" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartner">
+        <End Type="Disco.Ontology.PostType" Role="PostType" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Post" Role="PostTypePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartner">
+        <End Type="Disco.Ontology.Content" Role="Content" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Post" Role="ContentPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartner">
+        <End Type="Disco.Ontology.Tag" Role="Tags" Multiplicity="*" />
+        <End Type="Disco.Ontology.Post" Role="TagsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartner">
+        <End Type="Disco.Ontology.Rating" Role="Ratings" Multiplicity="*" />
+        <End Type="Disco.Ontology.Post" Role="RatingsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartner">
+        <End Type="Disco.Ontology.PostReference" Role="RefersTo" Multiplicity="*" />
+        <End Type="Disco.Ontology.Post" Role="RefersToPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartner">
+        <End Type="Disco.Ontology.PostReference" Role="ReferredFrom" Multiplicity="*" />
+        <End Type="Disco.Ontology.Post" Role="ReferredFromPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+        <End Type="Disco.Ontology.Originator" Role="ModifiedBy" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Post" Role="ModifiedByPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+        <End Type="Disco.Ontology.ChangeDetail" Role="ChangeDetail" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Post" Role="ChangeDetailPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartner">
+        <End Type="Disco.Ontology.Post" Role="Referrer" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.PostReference" Role="ReferrerPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartner">
+        <End Type="Disco.Ontology.Post" Role="Referree" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.PostReference" Role="ReferreePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartner">
+        <End Type="Disco.Ontology.PostReferenceType" Role="ReferenceType" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.PostReference" Role="ReferenceTypePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.PostReferenceType" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.PostType" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+        <End Type="Disco.Ontology.Descriptor" Role="Description" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Tag" Role="DescriptionPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartner">
+        <End Type="Disco.Ontology.Post" Role="Tagged" Multiplicity="*" />
+        <End Type="Disco.Ontology.Tag" Role="TaggedPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartner">
+        <End Type="Disco.Ontology.Tag" Role="Related" Multiplicity="*" />
+        <End Type="Disco.Ontology.Tag" Role="RelatedPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartner">
+        <End Type="Disco.Ontology.User" Role="User" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Rating" Role="UserPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartner">
+        <End Type="Disco.Ontology.Post" Role="Post" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Rating" Role="PostPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+        <End Type="Disco.Ontology.Originator" Role="ModifiedBy" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Rating" Role="ModifiedByPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+        <End Type="Disco.Ontology.ChangeDetail" Role="ChangeDetail" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Rating" Role="ChangeDetailPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartner">
+        <End Type="Disco.Ontology.Culture" Role="Culture" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Content" Role="CulturePartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+        <End Type="Disco.Ontology.Originator" Role="ModifiedBy" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Content" Role="ModifiedByPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+        <End Type="Disco.Ontology.ChangeDetail" Role="ChangeDetail" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Content" Role="ChangeDetailPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+        <End Type="Disco.Ontology.Originator" Role="ModifiedBy" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.Changeset" Role="ModifiedByPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartner">
+        <End Type="Disco.Ontology.ChangeDetail" Role="Details" Multiplicity="*" />
+        <End Type="Disco.Ontology.Changeset" Role="DetailsPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartner">
+        <End Type="Disco.Ontology.Changeset" Role="Changeset" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.ChangeDetail" Role="ChangesetPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartner">
+        <End Type="Disco.Ontology.Origin" Role="Origin" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.NamedValueSet" Role="OriginPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartner">
+        <End Type="Disco.Ontology.NamedValue" Role="Values" Multiplicity="*" />
+        <End Type="Disco.Ontology.NamedValueSet" Role="ValuesPartner" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartner">
+        <End Type="Disco.Ontology.NamedValueSet" Role="NamedValueSet" Multiplicity="0..1" />
+        <End Type="Disco.Ontology.NamedValue" Role="NamedValueSetPartner" Multiplicity="0..1" />
+      </Association>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityContainer Name="Container" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="EntityBases" EntityType="Disco.Ontology.EntityBase" />
+        <EntitySet Name="Cultures" EntityType="Disco.Ontology.Culture" />
+        <EntitySet Name="Regions" EntityType="Disco.Ontology.Region" />
+        <EntitySet Name="Origins" EntityType="Disco.Ontology.Origin" />
+        <EntitySet Name="Originators" EntityType="Disco.Ontology.Originator" />
+        <EntitySet Name="Descriptors" EntityType="Disco.Ontology.Descriptor" />
+        <EntitySet Name="Users" EntityType="Disco.Ontology.User" />
+        <EntitySet Name="Groups" EntityType="Disco.Ontology.Group" />
+        <EntitySet Name="GroupMemberships" EntityType="Disco.Ontology.GroupMembership" />
+        <EntitySet Name="GroupMembershipTypes" EntityType="Disco.Ontology.GroupMembershipType" />
+        <EntitySet Name="Posts" EntityType="Disco.Ontology.Post" />
+        <EntitySet Name="PostReferences" EntityType="Disco.Ontology.PostReference" />
+        <EntitySet Name="PostReferenceTypes" EntityType="Disco.Ontology.PostReferenceType" />
+        <EntitySet Name="PostTypes" EntityType="Disco.Ontology.PostType" />
+        <EntitySet Name="Tags" EntityType="Disco.Ontology.Tag" />
+        <EntitySet Name="Ratings" EntityType="Disco.Ontology.Rating" />
+        <EntitySet Name="Content" EntityType="Disco.Ontology.Content" />
+        <EntitySet Name="Changesets" EntityType="Disco.Ontology.Changeset" />
+        <EntitySet Name="ChangeDetails" EntityType="Disco.Ontology.ChangeDetail" />
+        <EntitySet Name="NamedValueSets" EntityType="Disco.Ontology.NamedValueSet" />
+        <EntitySet Name="NamedValues" EntityType="Disco.Ontology.NamedValue" />
+        <AssociationSet Name="Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartner">
+          <End Role="ParentPartner" EntitySet="EntityBases" />
+          <End Role="Parent" EntitySet="Regions" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartner">
+          <End Role="PartitionsPartner" EntitySet="EntityBases" />
+          <End Role="Partitions" EntitySet="Regions" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartner">
+          <End Role="PostsPartner" EntitySet="EntityBases" />
+          <End Role="Posts" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartnerSet" Association="Disco.Ontology.Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartner">
+          <End Role="AuthorPartner" EntitySet="EntityBases" />
+          <End Role="Author" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="EntityBases" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartnerSet" Association="Disco.Ontology.Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartner">
+          <End Role="CulturePartner" EntitySet="EntityBases" />
+          <End Role="Culture" EntitySet="Cultures" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="EntityBases" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartnerSet" Association="Disco.Ontology.Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+          <End Role="MembershipsPartner" EntitySet="EntityBases" />
+          <End Role="Memberships" EntitySet="GroupMemberships" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+          <End Role="MembershipsPartner" EntitySet="EntityBases" />
+          <End Role="Memberships" EntitySet="GroupMemberships" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartner">
+          <End Role="ParentPartner" EntitySet="EntityBases" />
+          <End Role="Parent" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartner">
+          <End Role="PartitionsPartner" EntitySet="EntityBases" />
+          <End Role="Partitions" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartner">
+          <End Role="UserPartner" EntitySet="EntityBases" />
+          <End Role="User" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartner">
+          <End Role="GroupPartner" EntitySet="EntityBases" />
+          <End Role="Group" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartner">
+          <End Role="MembershipTypePartner" EntitySet="EntityBases" />
+          <End Role="MembershipType" EntitySet="GroupMembershipTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartner">
+          <End Role="PostTypePartner" EntitySet="EntityBases" />
+          <End Role="PostType" EntitySet="PostTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartner">
+          <End Role="ContentPartner" EntitySet="EntityBases" />
+          <End Role="Content" EntitySet="Content" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartner">
+          <End Role="TagsPartner" EntitySet="EntityBases" />
+          <End Role="Tags" EntitySet="Tags" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartner">
+          <End Role="RatingsPartner" EntitySet="EntityBases" />
+          <End Role="Ratings" EntitySet="Ratings" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartner">
+          <End Role="RefersToPartner" EntitySet="EntityBases" />
+          <End Role="RefersTo" EntitySet="PostReferences" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartner">
+          <End Role="ReferredFromPartner" EntitySet="EntityBases" />
+          <End Role="ReferredFrom" EntitySet="PostReferences" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="EntityBases" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="EntityBases" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartner">
+          <End Role="ReferrerPartner" EntitySet="EntityBases" />
+          <End Role="Referrer" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartner">
+          <End Role="ReferreePartner" EntitySet="EntityBases" />
+          <End Role="Referree" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartner">
+          <End Role="ReferenceTypePartner" EntitySet="EntityBases" />
+          <End Role="ReferenceType" EntitySet="PostReferenceTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="EntityBases" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartner">
+          <End Role="TaggedPartner" EntitySet="EntityBases" />
+          <End Role="Tagged" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartner">
+          <End Role="RelatedPartner" EntitySet="EntityBases" />
+          <End Role="Related" EntitySet="Tags" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartner">
+          <End Role="UserPartner" EntitySet="EntityBases" />
+          <End Role="User" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartner">
+          <End Role="PostPartner" EntitySet="EntityBases" />
+          <End Role="Post" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="EntityBases" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="EntityBases" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartner">
+          <End Role="CulturePartner" EntitySet="EntityBases" />
+          <End Role="Culture" EntitySet="Cultures" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="EntityBases" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="EntityBases" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="EntityBases" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartner">
+          <End Role="DetailsPartner" EntitySet="EntityBases" />
+          <End Role="Details" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartnerSet" Association="Disco.Ontology.Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartner">
+          <End Role="ChangesetPartner" EntitySet="EntityBases" />
+          <End Role="Changeset" EntitySet="Changesets" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="EntityBases" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartner">
+          <End Role="ValuesPartner" EntitySet="EntityBases" />
+          <End Role="Values" EntitySet="NamedValues" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartner">
+          <End Role="NamedValueSetPartner" EntitySet="EntityBases" />
+          <End Role="NamedValueSet" EntitySet="NamedValueSets" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="Regions" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Parent_Disco_Ontology_Region_ParentPartner">
+          <End Role="ParentPartner" EntitySet="Regions" />
+          <End Role="Parent" EntitySet="Regions" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Partitions_Disco_Ontology_Region_PartitionsPartner">
+          <End Role="PartitionsPartner" EntitySet="Regions" />
+          <End Role="Partitions" EntitySet="Regions" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Region_Posts_Disco_Ontology_Post_PostsPartner">
+          <End Role="PostsPartner" EntitySet="Regions" />
+          <End Role="Posts" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Origin_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="Origins" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartnerSet" Association="Disco.Ontology.Disco_Ontology_Originator_Author_Disco_Ontology_User_AuthorPartner">
+          <End Role="AuthorPartner" EntitySet="Originators" />
+          <End Role="Author" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_Originator_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="Originators" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartnerSet" Association="Disco.Ontology.Disco_Ontology_Descriptor_Culture_Disco_Ontology_Culture_CulturePartner">
+          <End Role="CulturePartner" EntitySet="Descriptors" />
+          <End Role="Culture" EntitySet="Cultures" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_User_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="Users" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartnerSet" Association="Disco.Ontology.Disco_Ontology_User_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+          <End Role="MembershipsPartner" EntitySet="Users" />
+          <End Role="Memberships" EntitySet="GroupMemberships" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="Groups" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Memberships_Disco_Ontology_GroupMembership_MembershipsPartner">
+          <End Role="MembershipsPartner" EntitySet="Groups" />
+          <End Role="Memberships" EntitySet="GroupMemberships" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Parent_Disco_Ontology_Group_ParentPartner">
+          <End Role="ParentPartner" EntitySet="Groups" />
+          <End Role="Parent" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Group_Partitions_Disco_Ontology_Group_PartitionsPartner">
+          <End Role="PartitionsPartner" EntitySet="Groups" />
+          <End Role="Partitions" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_User_Disco_Ontology_User_UserPartner">
+          <End Role="UserPartner" EntitySet="GroupMemberships" />
+          <End Role="User" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_Group_Disco_Ontology_Group_GroupPartner">
+          <End Role="GroupPartner" EntitySet="GroupMemberships" />
+          <End Role="Group" EntitySet="Groups" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembership_MembershipType_Disco_Ontology_GroupMembershipType_MembershipTypePartner">
+          <End Role="MembershipTypePartner" EntitySet="GroupMemberships" />
+          <End Role="MembershipType" EntitySet="GroupMembershipTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_GroupMembershipType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="GroupMembershipTypes" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_PostType_Disco_Ontology_PostType_PostTypePartner">
+          <End Role="PostTypePartner" EntitySet="Posts" />
+          <End Role="PostType" EntitySet="PostTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Content_Disco_Ontology_Content_ContentPartner">
+          <End Role="ContentPartner" EntitySet="Posts" />
+          <End Role="Content" EntitySet="Content" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Tags_Disco_Ontology_Tag_TagsPartner">
+          <End Role="TagsPartner" EntitySet="Posts" />
+          <End Role="Tags" EntitySet="Tags" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_Ratings_Disco_Ontology_Rating_RatingsPartner">
+          <End Role="RatingsPartner" EntitySet="Posts" />
+          <End Role="Ratings" EntitySet="Ratings" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_RefersTo_Disco_Ontology_PostReference_RefersToPartner">
+          <End Role="RefersToPartner" EntitySet="Posts" />
+          <End Role="RefersTo" EntitySet="PostReferences" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ReferredFrom_Disco_Ontology_PostReference_ReferredFromPartner">
+          <End Role="ReferredFromPartner" EntitySet="Posts" />
+          <End Role="ReferredFrom" EntitySet="PostReferences" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="Posts" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Post_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="Posts" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_Referrer_Disco_Ontology_Post_ReferrerPartner">
+          <End Role="ReferrerPartner" EntitySet="PostReferences" />
+          <End Role="Referrer" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_Referree_Disco_Ontology_Post_ReferreePartner">
+          <End Role="ReferreePartner" EntitySet="PostReferences" />
+          <End Role="Referree" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReference_ReferenceType_Disco_Ontology_PostReferenceType_ReferenceTypePartner">
+          <End Role="ReferenceTypePartner" EntitySet="PostReferences" />
+          <End Role="ReferenceType" EntitySet="PostReferenceTypes" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostReferenceType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="PostReferenceTypes" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_PostType_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="PostTypes" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Description_Disco_Ontology_Descriptor_DescriptionPartner">
+          <End Role="DescriptionPartner" EntitySet="Tags" />
+          <End Role="Description" EntitySet="Descriptors" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Tagged_Disco_Ontology_Post_TaggedPartner">
+          <End Role="TaggedPartner" EntitySet="Tags" />
+          <End Role="Tagged" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartnerSet" Association="Disco.Ontology.Disco_Ontology_Tag_Related_Disco_Ontology_Tag_RelatedPartner">
+          <End Role="RelatedPartner" EntitySet="Tags" />
+          <End Role="Related" EntitySet="Tags" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_User_Disco_Ontology_User_UserPartner">
+          <End Role="UserPartner" EntitySet="Ratings" />
+          <End Role="User" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_Post_Disco_Ontology_Post_PostPartner">
+          <End Role="PostPartner" EntitySet="Ratings" />
+          <End Role="Post" EntitySet="Posts" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="Ratings" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Rating_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="Ratings" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_Culture_Disco_Ontology_Culture_CulturePartner">
+          <End Role="CulturePartner" EntitySet="Content" />
+          <End Role="Culture" EntitySet="Cultures" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="Content" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartnerSet" Association="Disco.Ontology.Disco_Ontology_Content_ChangeDetail_Disco_Ontology_ChangeDetail_ChangeDetailPartner">
+          <End Role="ChangeDetailPartner" EntitySet="Content" />
+          <End Role="ChangeDetail" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartnerSet" Association="Disco.Ontology.Disco_Ontology_Changeset_ModifiedBy_Disco_Ontology_Originator_ModifiedByPartner">
+          <End Role="ModifiedByPartner" EntitySet="Changesets" />
+          <End Role="ModifiedBy" EntitySet="Originators" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartnerSet" Association="Disco.Ontology.Disco_Ontology_Changeset_Details_Disco_Ontology_ChangeDetail_DetailsPartner">
+          <End Role="DetailsPartner" EntitySet="Changesets" />
+          <End Role="Details" EntitySet="ChangeDetails" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartnerSet" Association="Disco.Ontology.Disco_Ontology_ChangeDetail_Changeset_Disco_Ontology_Changeset_ChangesetPartner">
+          <End Role="ChangesetPartner" EntitySet="ChangeDetails" />
+          <End Role="Changeset" EntitySet="Changesets" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValueSet_Origin_Disco_Ontology_Origin_OriginPartner">
+          <End Role="OriginPartner" EntitySet="NamedValueSets" />
+          <End Role="Origin" EntitySet="Origins" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValueSet_Values_Disco_Ontology_NamedValue_ValuesPartner">
+          <End Role="ValuesPartner" EntitySet="NamedValueSets" />
+          <End Role="Values" EntitySet="NamedValues" />
+        </AssociationSet>
+        <AssociationSet Name="Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartnerSet" Association="Disco.Ontology.Disco_Ontology_NamedValue_NamedValueSet_Disco_Ontology_NamedValueSet_NamedValueSetPartner">
+          <End Role="NamedValueSetPartner" EntitySet="NamedValues" />
+          <End Role="NamedValueSet" EntitySet="NamedValueSets" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

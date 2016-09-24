@@ -11,11 +11,9 @@ var gulp = require("gulp"),
 
 gulp.task("lint", function () {
   return gulp.src([
-    "src/**/**.ts",
-    "spec/**.ts",
-    "typings/**.d.ts",
-    "!lib/**",
-    "!maps/**"
+    "**",
+    "!**/*.d.ts",
+    "!**/typings/**"
   ])
     .pipe(tslint({}))
     .pipe(tslint.report("verbose"));
@@ -26,6 +24,7 @@ var tsProjectForDts = tsc.createProject("tsconfig.json");
 gulp.task("build-js", function () {
   return gulp.src([
     "./**/**.ts",
+    "./typings/**.d.ts",
     "!./spec/**",
     "!./lib/**",
     "!./node_modules/**"
@@ -46,6 +45,7 @@ gulp.task("build-js", function () {
 gulp.task("build-dts", function () {
   return gulp.src([
     "./**/**.ts",
+    "./typings/**/**.d.ts",
     "!./spec/**",
     "!./lib/**",
     "!./node_modules/**"
@@ -87,7 +87,8 @@ gulp.task("copy", function () {
 gulp.task("build", function (cb) {
   return runSequence(
     "clean-all",
-    ["build-js", "build-dts", "copy", "build-package.json"],
+    // ["build-js", "build-dts", "copy", "build-package.json"],
+    ["build-js", "copy", "build-package.json"],
     cb
   );
 });

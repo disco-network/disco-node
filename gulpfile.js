@@ -30,7 +30,7 @@ gulp.task("build-js", function () {
     "!./node_modules/**"
   ])
     .pipe(sourcemaps.init())
-    .pipe(tsc(tsProjectForJs))
+    .pipe(tsProjectForJs())
     .js
     .pipe(sourcemaps.write("../maps", {
       includeContent: false,
@@ -50,7 +50,7 @@ gulp.task("build-dts", function () {
     "!./lib/**",
     "!./node_modules/**"
   ])
-    .pipe(tsc(tsProjectForDts))
+    .pipe(tsProjectForDts())
     .dts
     .pipe(gulp.dest("lib"));
 })
@@ -101,7 +101,7 @@ gulp.task("build-spec", function (cb) {
     "!./node_modules/**"
   ])
     .pipe(sourcemaps.init())
-    .pipe(tsc(tsProjectForJs))
+    .pipe(tsProjectForJs())
     .js
     .pipe(sourcemaps.write("../maps", {
       includeContent: false,

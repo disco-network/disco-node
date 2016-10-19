@@ -1,0 +1,611 @@
+{
+  "entityTypes": {
+    "Culture": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Code": {
+          "type": "Edm.String",
+          "rdfName": "code"
+        },
+        "Name": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "name"
+        }
+      },
+      "rdfName": "Culture"
+    },
+    "Post": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "ModifiedBy": {
+          "type": "Originator",
+          "optional": true,
+          "rdfName": "modifiedBy"
+        },
+        "PostTypeId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "PostType"
+        },
+        "PostType": {
+          "type": "Post",
+          "cardinality": "one-to-one",
+          "rdfName": "postType"
+        },
+        "ContentId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Content"
+        },
+        "Content": {
+          "type": "Content",
+          "cardinality": "one-to-many",
+          "rdfName": "content"
+        },
+        "Tags": {
+          "type": "Tag",
+          "cardinality": "many-to-many",
+          "rdfName": "tag"
+        },
+        "Ratings": {
+          "type": "Rating",
+          "cardinality": "one-to-many",
+          "rdfName": "rating"
+        },
+        "RefersTo": {
+          "type": "PostReference",
+          "inverseProperty": "Referree",
+          "foreignSet": "PostReferences",
+          "cardinality": "many-to-one"
+        },
+        "ReferredFrom": {
+          "type": "PostReference",
+          "inverseProperty": "Referrer",
+          "foreignSet": "PostReferences",
+          "cardinality": "many-to-one"
+        }
+      },
+      "rdfName": "Post"
+    },
+    "PostReference": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Referrer": {
+          "type": "Post",
+          "cardinality": "one-to-many",
+          "rdfName": "referrer"
+        },
+        "ReferrerId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "PostReference"
+        },
+        "Referree": {
+          "type": "Post",
+          "cardinality": "one-to-many",
+          "rdfName": "referree"
+        },
+        "ReferreeId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "PostReference"
+        },
+        "ReferenceTypeId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "ReferenceType"
+        },
+        "ReferenceType": {
+          "type": "PostReferenceType",
+          "cardinality": "one-to-many",
+          "rdfName": "referenceType"
+        }
+      },
+      "rdfName": "PostReference"
+    },
+    "Region": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Code": {
+          "type": "Edm.String",
+          "rdfName": "code"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        },
+        "ParentId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Parent"
+        },
+        "Parent": {
+          "type": "Region",
+          "rdfName": "parent"
+        },
+        "Partitions": {
+          "type": "Region",
+          "cardinality": "one-to-many",
+          "rdfName": "partitions"
+        },
+        "Posts": {
+          "type": "Post",
+          "cardinality": "one-to-many",
+          "rdfName": "posts"
+        }
+      },
+      "rdfName": "Region"
+    },
+    "Origin": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Uri": {
+          "type": "Edm.String",
+          "rdfName": "uri"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        }
+      },
+      "rdfName": "Origin"
+    },
+    "Originator": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "AuthorId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "authorId"
+        },
+        "Author": {
+          "type": "User",
+          "rdfName": "author"
+        },
+        "OriginId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "originId"
+        },
+        "Origin": {
+          "type": "Origin",
+          "rdfName": "origin"
+        }
+      },
+      "rdfName": "Originator"
+    },
+    "Descriptor": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Name": {
+          "type": "Edm.String",
+          "rdfName": "name"
+        },
+        "Description": {
+          "type": "Edm.String",
+          "rdfName": "description"
+        },
+        "CultureId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "cultureId"
+        },
+        "Culture": {
+          "type": "Culture",
+          "rdfName": "culture"
+        }
+      },
+      "rdfName": "Descriptor"
+    },
+    "User": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Alias": {
+          "type": "Edm.String",
+          "rdfName": "alias"
+        },
+        "Token": {
+          "type": "Edm.String",
+          "rdfName": "token"
+        },
+        "Memberships": {
+          "type": "GroupMembership",
+          "inverseProperty": "User",
+          "foreignSet": "GroupMemberships",
+          "cardinality": "many-to-many"
+        },
+        "OriginId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "originId"
+        },
+        "Origin": {
+          "type": "Origin",
+          "rdfName": "origin"
+        }
+      },
+      "rdfName": "User"
+    },
+    "Group": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "Alias": {
+          "type": "Edm.String",
+          "rdfName": "alias"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        },
+        "ParentId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Parent"
+        },
+        "Parent": {
+          "type": "Group",
+          "rdfName": "parent"
+        },
+        "Memberships": {
+          "type": "GroupMembership",
+          "inverseProperty": "User",
+          "foreignSet": "GroupMemberships",
+          "cardinality": "many-to-many"
+        },
+        "Partitions": {
+          "type": "Group",
+          "cardinality": "one-to-many",
+          "rdfName": "partitions"
+        }
+      },
+      "rdfName": "Group"
+    },
+    "GroupMembership": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "MembershipTypeId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "MembershipType"
+        },
+        "MembershipType": {
+          "type": "GroupMembershipType",
+          "rdfName": "membershipType"
+        },
+        "User": {
+          "type": "User",
+          "rdfName": "user"
+        },
+        "Group": {
+          "type": "Group",
+          "rdfName": "group"
+        }
+      },
+      "rdfName": "GroupMembership"
+    },
+    "GroupMembershipType": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        }
+      },
+      "rdfName": "GroupMembershipType"
+    },
+    "PostReferenceType": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        }
+      },
+      "rdfName": "PostReferenceType"
+    },
+    "PostType": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        }
+      },
+      "rdfName": "PostType"
+    },
+    "Tag": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "DescriptionId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Description"
+        },
+        "Description": {
+          "type": "Descriptor",
+          "rdfName": "description"
+        },
+        "Tagged": {
+          "type": "Post",
+          "inverseProperty": "Tags",
+          "foreignSet": "Posts",
+          "cardinality": "many-to-many"
+        },
+        "Related": {
+          "type": "Tag",
+          "cardinality": "one-to-many",
+          "rdfName": "related"
+        }
+      },
+      "rdfName": "Tag"
+    },
+    "Rating": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "ModifiedBy": {
+          "type": "Originator",
+          "optional": true,
+          "rdfName": "modifiedBy"
+        },
+        "Score": {
+          "type": "Edm.Int32",
+          "rdfName": "score"
+        },
+        "PostId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "Post"
+        },
+        "Post": {
+          "type": "Post",
+          "rdfName": "post"
+        },
+        "UserId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "User"
+        },
+        "User": {
+          "type": "User",
+          "rdfName": "user"
+        }
+      },
+      "rdfName": "Rating"
+    },
+    "Content": {
+      "properties": {
+        "Id": {
+          "type": "Edm.Guid",
+          "generated": "uuid",
+          "rdfName": "id"
+        },
+        "Modified": {
+          "type": "Edm.String",
+          "optional": true,
+          "rdfName": "modified"
+        },
+        "ModifiedBy": {
+          "type": "Originator",
+          "optional": true,
+          "rdfName": "modifiedBy"
+        },
+        "Title": {
+          "type": "Edm.String",
+          "rdfName": "title"
+        },
+        "Text": {
+          "type": "Edm.String",
+          "rdfName": "text"
+        },
+        "CultureId": {
+          "type": "Edm.Guid",
+          "foreignProperty": "cultureId"
+        },
+        "Culture": {
+          "type": "Culture",
+          "rdfName": "culture"
+        }
+      },
+      "rdfName": "Content"
+    }
+  },
+  "entitySets": {
+    "Posts": {
+      "type": "Post"
+    },
+    "Content": {
+      "type": "Content"
+    },
+    "Ratings": {
+      "type": "Rating"
+    },
+    "Tags": {
+      "type": "Tag"
+    },
+    "PostTypes": {
+      "type": "PostType"
+    },
+    "PostReferenceTypes": {
+      "type": "PostReferenceType"
+    },
+    "GroupMembershipTypes": {
+      "type": "GroupMembershipType"
+    },
+    "GroupMemberships": {
+      "type": "GroupMembership"
+    },
+    "Groups": {
+      "type": "Group"
+    },
+    "Users": {
+      "type": "User"
+    },
+    "Descriptors": {
+      "type": "Descriptor"
+    },
+    "Originators": {
+      "type": "Originator"
+    },
+    "Origins": {
+      "type": "Origin"
+    },
+    "Regions": {
+      "type": "Region"
+    },
+    "PostReferences": {
+      "type": "PostReference"
+    },
+    "Cultures": {
+      "type": "Culture"
+    }
+  },
+  "defaultNamespace": {
+    "prefix": "disco",
+    "uri": "http://disco-network.org/resource/"
+  }
+}

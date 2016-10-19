@@ -11,9 +11,9 @@
     "url": "https://github.com/disco-network/disco-node.git"
   },
   "dependencies": {
-    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
+    "odata-rdf-interface": "file:../odata-rdf-interface",
     "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git",
-    "typescript-mvc": "0.0.5"
+    "typescript-mvc": "file:../typescript-mvc"
   },
   "devDependencies": {
     "del": "^2.2.1",
@@ -29,8 +29,8 @@
     "tslint": "^3.13.0",
     "typescript": "^2.0.3"
   },
-  "main": "lib/src/server.js",
-  "typings": "src/server.ts",
+  "main": "build/lib/server.js",
+  "typings": "source/lib/server.ts",
   "directories": {
     "doc": "doc",
     "lib": "lib/src"

@@ -36,15 +36,17 @@ export class ODataController extends Controller {
     let pathname = urlParts.pathname.substring(urlParts.pathname.lastIndexOf("/"));
     this.context.logger.log("OData entity:", pathname);
 
+    let discoSchema = require("../disco-schema.json");
+
     let responseSender: IHttpResponseSender = new ResponseSender();
     let engine: IHttpRequestHandler =
-      new GetHandler(new Schema(), this.context.dataProvider, this.context.dataProvider.graphName);
+      new GetHandler(new Schema(discoSchema), this.context.dataProvider, this.context.dataProvider.graphName);
     engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/")),
       body: "@todo",
     }, responseSender);
 
-    return (<ResponseSender>responseSender).promise;
+    return (<ResponseSender> responseSender).promise;
   }
 
   @Route("/\*metadata")

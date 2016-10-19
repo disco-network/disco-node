@@ -1,12 +1,13 @@
 "use strict";
 var fs = require("fs");
 var path = require("path");
+var merge = require('merge2');
 var gulp = require("gulp"),
   runSequence = require("run-sequence"),
   del = require("del"),
   jasmine = require("gulp-jasmine"),
   tslint = require("gulp-tslint"),
-  tsc = require("gulp-typescript"),
+  ts = require("gulp-typescript"),
   sourcemaps = require("gulp-sourcemaps");
 
 gulp.task("lint", function () {
@@ -19,41 +20,30 @@ gulp.task("lint", function () {
     .pipe(tslint.report("verbose"));
 });
 
-var tsProjectForJs = tsc.createProject("tsconfig.json");
-var tsProjectForDts = tsc.createProject("tsconfig.json");
+var tsProjectForJs = ts.createProject("tsconfig.json");
+var tsProjectForDts = ts.createProject("tsconfig.json");
 gulp.task("build-js", function () {
-  return gulp.src([
-    "./**/**.ts",
-    "./typings/**.d.ts",
+  var tsResult = gulp.src([
+    "source/lib/**/*.ts",
+    "typings/**.d.ts",
     "!./spec/**",
     "!./lib/**",
     "!./node_modules/**"
   ])
     .pipe(sourcemaps.init())
-    .pipe(tsProjectForJs())
-    .js
-    .pipe(sourcemaps.write("../maps", {
-      includeContent: false,
-      sourceRoot: function (file) {
-        // needed to fix relative path in sourceMaps
-        var path = "../".repeat((file.relative.match(/\//g) || []).length + 1);
-        return path;
-      }
-    }))
-    .pipe(gulp.dest("lib"));
+    .pipe(tsProjectForJs(ts.reporter.longReporter()));
+
+  return merge([
+    tsResult.dts
+      .pipe(gulp.dest("build/typings")),
+    tsResult.js
+      .pipe(sourcemaps.write("../maps", {
+        includeContent: false
+      }))
+      .pipe(gulp.dest("build/lib"))
+  ]);
 })
-gulp.task("build-dts", function () {
-  return gulp.src([
-    "./**/**.ts",
-    "./typings/**/**.d.ts",
-    "!./spec/**",
-    "!./lib/**",
-    "!./node_modules/**"
-  ])
-    .pipe(tsProjectForDts())
-    .dts
-    .pipe(gulp.dest("lib"));
-})
+
 gulp.task("build-package.json", function () {
   var appPackageJson = JSON.parse(fs.readFileSync(__dirname + "/package.json", "utf8"));
   var npmPackageJson = {
@@ -69,63 +59,35 @@ gulp.task("build-package.json", function () {
     "license": appPackageJson.license,
     "bugs": appPackageJson.bugs
   }
-  fs.mkdirSync(path.join(__dirname, "lib"));
-  fs.mkdirSync(path.join(__dirname, "lib", "src"));
-  fs.writeFileSync(path.join(__dirname, "lib", "src", "package.json"), JSON.stringify(npmPackageJson, null, 2));
+  fs.mkdirSync(path.join(__dirname, "build"));
+  fs.mkdirSync(path.join(__dirname, "build", "lib"));
+  fs.writeFileSync(path.join(__dirname, "build", "lib", "package.json"), JSON.stringify(npmPackageJson, null, 2));
 });
 
 gulp.task("copy", function () {
   return gulp.src([
-    "./src/settings.json",
-    "./src/disco-metadata.xml",
+    "./src/*.json",
+    "./src/*.xml",
     "README.md",
     "LICENSE"
   ])
-    .pipe(gulp.dest("lib/src"));
+    .pipe(gulp.dest("build/lib"));
 });
 
 gulp.task("build", function (cb) {
   return runSequence(
     "clean-all",
-    // ["build-js", "build-dts", "copy", "build-package.json"],
     ["build-js", "copy", "build-package.json"],
     cb
   );
 });
 
-gulp.task("build-spec", function (cb) {
-  return gulp.src([
-    "./**/**.ts",
-    "!./src/**",
-    "!./lib/**",
-    "!./node_modules/**"
-  ])
-    .pipe(sourcemaps.init())
-    .pipe(tsProjectForJs())
-    .js
-    .pipe(sourcemaps.write("../maps", {
-      includeContent: false,
-      sourceRoot: function (file) {
-        // needed to fix relative path in sourceMaps
-        var path = "../".repeat((file.relative.match(/\//g) || []).length + 1);
-        return path;
-      }
-    }))
-    .pipe(gulp.dest("lib"));
-});
-
-gulp.task("tests", ["build-spec"], function () {
-  return gulp.src("./")
-    .pipe(jasmine({ config: require("./spec/support/jasmine.json"), includeStackTrace: true, verbose: true }));
-});
-
 gulp.task("clean-all", function () {
-  return del(["./maps", "./lib"]);
+  return del(["./build"]);
 });
 
-//alternative name for the "tests" task
-gulp.task("specs", ["tests"]);
+gulp.task("specs");
 
 gulp.task("server", function () {
-  require("./lib/src/server");
+  require("./build/lib/server");
 });

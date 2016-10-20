@@ -23,7 +23,7 @@ gulp.task("lint", function () {
 var sourceMapsConfig = {
   includeContent: false,
   mapSources: function (sourcePath) {
-    return '../../' + sourcePath;
+    return '../' + sourcePath;
   }
 };
 

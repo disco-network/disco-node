@@ -1,5 +1,6 @@
 import {Controller, Route} from "typescript-mvc";
-import {GET, OPTIONS} from "typescript-mvc";
+import {OPTIONS} from "typescript-mvc";
+import {NotImplementedError} from "typescript-mvc";
 import {Promise, FileSystemHelper} from "typescript-mvc";
 
 import {IHttpRequestHandler, IHttpResponseSender} from "odata-rdf-interface";
@@ -8,11 +9,12 @@ import {Schema} from "odata-rdf-interface";
 
 import {ResponseSender} from "../system/responsesender";
 
-import * as url from "url";
 import * as fs from "fs";
 
 @Route("/api/odata")
 export class ODataController extends Controller {
+
+  private discoSchema = require("../disco-schema.json");
 
   @OPTIONS
   @Route("/\*")
@@ -25,32 +27,15 @@ export class ODataController extends Controller {
     // this.response.header("Access-Control-Expose-Headers", "dataserviceversion,maxdataserviceversion");
   }
 
-  @Route("/Posts?:query")
-  public odata(query: string): any {
-    this.context.logger.log("ODataController called!");
+  @Route("/\\$batch")
+  public batch(): Promise<string> {
+    this.context.logger.log("ODataController BATCH called!");
 
-    let urlParts: url.Url = url.parse(this.request.url);
-
-    query = urlParts.query;
-    this.context.logger.log("OData query:", query);
-    let pathname = urlParts.pathname.substring(urlParts.pathname.lastIndexOf("/"));
-    this.context.logger.log("OData entity:", pathname);
-
-    let discoSchema = require("../disco-schema.json");
-
-    let responseSender: IHttpResponseSender = new ResponseSender();
-    let engine: IHttpRequestHandler =
-      new GetHandler(new Schema(discoSchema), this.context.dataProvider, this.context.dataProvider.graphName);
-    engine.query({
-      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/")),
-      body: "@todo",
-    }, responseSender);
-
-    return (<ResponseSender> responseSender).promise;
+    throw new NotImplementedError();
   }
 
-  @Route("/\*metadata")
-  public metadata(): Promise<string> {
+  @Route("/\\$metadata")
+  public metadata(): any {
     this.context.logger.log("ODataController METADATA called!");
 
     this.response.header("Content-Type", "application/xml; charset=utf-8");
@@ -70,5 +55,25 @@ export class ODataController extends Controller {
     });
 
     return promise;
+  }
+
+  @Route("/:entity")
+  public query(): any {
+    this.context.logger.log("ODataController ENTITYSET called!");
+
+    let entitySetName: string = this.request.params["entity"];
+    this.context.logger.log("OData entity set:", entitySetName);
+    let query: string = this.request.query;
+    this.context.logger.log("OData query:", query);
+
+    let responseSender: IHttpResponseSender = new ResponseSender();
+    let engine: IHttpRequestHandler =
+      new GetHandler(new Schema(this.discoSchema), this.context.dataProvider, this.context.dataProvider.graphName);
+    engine.query({
+      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/")),
+      body: "@todo",
+    }, responseSender);
+
+    return (<ResponseSender> responseSender).promise;
   }
 }

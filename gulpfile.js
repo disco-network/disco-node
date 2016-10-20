@@ -26,8 +26,6 @@ gulp.task("build-js", function () {
   var tsResult = gulp.src([
     "source/lib/**/*.ts",
     "typings/**.d.ts",
-    "!./spec/**",
-    "!./lib/**",
     "!./node_modules/**"
   ])
     .pipe(sourcemaps.init())
@@ -38,7 +36,10 @@ gulp.task("build-js", function () {
       .pipe(gulp.dest("build/typings")),
     tsResult.js
       .pipe(sourcemaps.write("../maps", {
-        includeContent: false
+        includeContent: false,
+        mapSources: function (sourcePath) {
+          return '../../' + sourcePath;
+        }
       }))
       .pipe(gulp.dest("build/lib"))
   ]);
@@ -66,8 +67,8 @@ gulp.task("build-package.json", function () {
 
 gulp.task("copy", function () {
   return gulp.src([
-    "./src/*.json",
-    "./src/*.xml",
+    "./source/lib/*.json",
+    "./source/lib/*.xml",
     "README.md",
     "LICENSE"
   ])

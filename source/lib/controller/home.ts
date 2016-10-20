@@ -3,11 +3,9 @@ import {Controller, Route} from "typescript-mvc";
 export class HomeController extends Controller {
 
   @Route("/")
-  public index(): void {
-
+  public index(): string {
     this.context.logger.log("HomeController called!");
 
-    this.response.writeHead(200, { "Content-Type": "text/plain" });
-    this.response.end("HomeController called!");
+    return "HomeController called!";
   }
 }

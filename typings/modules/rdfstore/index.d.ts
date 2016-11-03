@@ -16,6 +16,7 @@ declare module "rdfstore" {
   }
 
   function create(cb: (error: any, store: Store) => void): any;
+  function create(options: {}, cb: (error: any, store: Store) => void): any;
 
-  export {create};
+  export { create };
 }

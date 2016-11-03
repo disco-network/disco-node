@@ -15,7 +15,9 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
   public initialize(cb: CallbackHandler): void {
     this.onInitialized = cb;
 
-    RdfStore.create((error: any, store: RdfStore.Store) => this.createStoreCallbackHandler(error, store));
+    RdfStore.create(
+      { persistent: true },
+      (error: any, store: RdfStore.Store) => this.createStoreCallbackHandler(error, store));
   }
 
   private createStoreCallbackHandler(error: any, store: RdfStore.Store): void {

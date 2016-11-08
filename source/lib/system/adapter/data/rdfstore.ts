@@ -23,8 +23,8 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
   private createStoreCallbackHandler(error: any, store: RdfStore.Store): void {
     this.store = store;
 
-    this.seed((err: any) => this.seedCallbackHandler(error));
     this.provider = new SparqlProvider(this.store, this.storeUri);
+    this.seed((err: any) => this.seedCallbackHandler(error));
   }
 
   private seedCallbackHandler(error: any): void {

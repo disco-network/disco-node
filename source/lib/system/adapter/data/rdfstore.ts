@@ -7,7 +7,7 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
 
   public provider: SparqlProvider;
 
-  private storeUri: string = "http://datokrat.sirius.uberspace.de/disco-test";
+  private storeUri: string = "http://disco-network.org";
   private store: RdfStore.Store;
 
   private onInitialized: CallbackHandler = () => { ; };

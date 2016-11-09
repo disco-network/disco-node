@@ -2,3 +2,4 @@
 /maps
 /lib
 /build
+/db/**/*.json

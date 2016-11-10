@@ -1,0 +1,41 @@
+{
+  "odata.metadata": "http://disco-network.org/api/odata/$metadata#PostTypes",
+  "value": [
+    {
+      "Id": "1",
+      "Key": "86ca262f-0d31-4e61-bd79-b6de8b784fab",
+      "Modified": "2014-02-18T22:56:15.09",
+      "DescriptionId": "38"
+    },
+    {
+      "Id": "2",
+      "Key": "528fe43d-23d8-4b30-ac82-11ed1683e452",
+      "Modified": "2014-02-18T22:56:15.087",
+      "DescriptionId": "33"
+    },
+    {
+      "Id": "3",
+      "Key": "41474cf1-d2ca-4502-a5bf-2f30d9c45a71",
+      "Modified": "2014-02-18T22:56:15.09",
+      "DescriptionId": "34"
+    },
+    {
+      "Id": "4",
+      "Key": "459d2251-852f-4e84-8de9-3c69bceba012",
+      "Modified": "2014-02-18T22:56:15.09",
+      "DescriptionId": "35"
+    },
+    {
+      "Id": "5",
+      "Key": "e545d987-d42f-43bd-93ad-0ab00c9f244a",
+      "Modified": "2014-02-18T22:56:15.09",
+      "DescriptionId": "36"
+    },
+    {
+      "Id": "6",
+      "Key": "b21365b3-2f42-4ad9-a8fc-b91dce53b57a",
+      "Modified": "2014-02-18T22:56:15.09",
+      "DescriptionId": "37"
+    }
+  ]
+}

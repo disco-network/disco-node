@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
-    "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git",
-    "typescript-mvc": "0.0.6"
+    "rdfstore": "file:../rdfstore-js",
+    "typescript-mvc": "file:../typescript-mvc"
   },
   "devDependencies": {
     "del": "^2.2.1",
@@ -23,11 +23,12 @@
     "gulp-sourcemaps": "^2.1.1",
     "gulp-tslint": "^6.1.2",
     "gulp-typescript": "^3.0.2",
+    "json-ld-macros": "git+https://github.com/antoniogarrote/json-ld-macros.git",
     "merge2": "^1.0.2",
     "reflect-metadata": "^0.1.3",
     "run-sequence": "^1.2.2",
     "tslint": "^3.13.0",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.8"
   },
   "main": "build/lib/server.js",
   "typings": "source/lib/server.ts",

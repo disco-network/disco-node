@@ -1,0 +1,103 @@
+{
+  "odata.metadata": "http://disco-network.org/api/odata/$metadata#Originators",
+  "value": [
+    {
+      "Id": "1",
+      "Key": "a21adc1a-2fdd-4043-9c7e-2ff4248239e5",
+      "Modified": "2014-02-18T22:56:15.063",
+      "AuthorId": "1",
+      "OriginId": "2"
+    },
+    {
+      "Id": "2",
+      "Key": "fb829e62-1c66-420c-a2fd-a60bbdd326f1",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "1",
+      "OriginId": "3"
+    },
+    {
+      "Id": "3",
+      "Key": "0dec8803-a3fd-4227-b408-f1af61c15e9e",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "2",
+      "OriginId": "2"
+    },
+    {
+      "Id": "4",
+      "Key": "695f33cc-0913-4c3f-a682-aa68aa1f8670",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "2",
+      "OriginId": "4"
+    },
+    {
+      "Id": "5",
+      "Key": "5acde460-cb47-419d-9238-a69aeedb2f59",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "3",
+      "OriginId": "2"
+    },
+    {
+      "Id": "6",
+      "Key": "70126f91-b2b6-4778-ac6b-6598e1482ce2",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "4",
+      "OriginId": "4"
+    },
+    {
+      "Id": "7",
+      "Key": "e8dd0f79-423d-4996-a1e9-84090eb9ddcb",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "5",
+      "OriginId": "1"
+    },
+    {
+      "Id": "8",
+      "Key": "5ec5670b-2bec-492f-ac6b-2a2f4aa250ae",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "6",
+      "OriginId": "4"
+    },
+    {
+      "Id": "9",
+      "Key": "1f92d212-0ebd-4445-bf6b-d85ce7f35e30",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "7",
+      "OriginId": "4"
+    },
+    {
+      "Id": "10",
+      "Key": "2f72b810-b659-4ca8-87db-1e6d7c0b4105",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "8",
+      "OriginId": "1"
+    },
+    {
+      "Id": "11",
+      "Key": "18b053a5-5ed3-4bad-821b-37dae32ec800",
+      "Modified": "2014-02-18T22:56:15.067",
+      "AuthorId": "9",
+      "OriginId": "1"
+    },
+    {
+      "Id": "13",
+      "Key": "682010de-098b-41c4-adee-53f9157b2ded",
+      "Modified": "2014-02-19T18:26:13.9",
+      "AuthorId": "12",
+      "OriginId": "3"
+    },
+    {
+      "Id": "14",
+      "Key": "539f3984-1cae-4980-9fcd-4a59c26c2b3c",
+      "Modified": "2014-08-08T21:59:11.113",
+      "AuthorId": "12",
+      "OriginId": "1"
+    },
+    {
+      "Id": "15",
+      "Key": "b808e3ef-7b1f-4c20-b5e1-c5a1a71c72bd",
+      "Modified": "2014-08-13T07:11:39.327",
+      "AuthorId": "11",
+      "OriginId": "3"
+    }
+  ]
+}

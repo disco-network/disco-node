@@ -3,9 +3,13 @@
     "Culture": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -27,9 +31,13 @@
     "Post": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -87,9 +95,13 @@
     "PostReference": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -129,9 +141,13 @@
     "Region": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -174,9 +190,13 @@
     "Origin": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -201,9 +221,13 @@
     "Originator": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -232,9 +256,13 @@
     "Descriptor": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -263,9 +291,13 @@
     "User": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -300,9 +332,13 @@
     "Group": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -346,9 +382,13 @@
     "GroupMembership": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -377,9 +417,13 @@
     "GroupMembershipType": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -400,9 +444,13 @@
     "PostReferenceType": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -423,9 +471,13 @@
     "PostType": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -446,9 +498,13 @@
     "Tag": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -480,9 +536,13 @@
     "Rating": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
@@ -520,9 +580,13 @@
     "Content": {
       "properties": {
         "Id": {
-          "type": "Edm.Guid",
-          "generated": "uuid",
+          "type": "Edm.Integer",
+          "generated": "integer",
           "rdfName": "id"
+        },
+        "Key": {
+          "type": "Edm.Guid",
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",

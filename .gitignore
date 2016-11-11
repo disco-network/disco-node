@@ -2,5 +2,4 @@
 /maps
 /lib
 /build
-/db/*.json
-/db/**/*.jsonld
+/db/seed/json-ld/*.json

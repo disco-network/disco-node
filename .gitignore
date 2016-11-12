@@ -3,4 +3,4 @@
 /lib
 /build
 /db/*.json
-/db/seed/json-ld/*.json
+/db/seed/data/*.jsonld

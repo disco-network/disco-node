@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
-    "rdfstore": "file:../rdfstore-js",
-    "typescript-mvc": "file:../typescript-mvc"
+    "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git",
+    "typescript-mvc": "0.0.6"
   },
   "devDependencies": {
     "del": "^2.2.1",

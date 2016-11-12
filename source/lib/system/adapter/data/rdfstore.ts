@@ -7,7 +7,7 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
 
   public provider: SparqlProvider;
 
-  private storeUri: string = "http://disco-network.org";
+  private storeUri: string = "http://disco-network.org/resource/";
   private store: RdfStore.Store;
 
   private onInitialized: CallbackHandler = () => { ; };
@@ -37,7 +37,11 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
   }
 
   private seed(cb: CallbackHandler): void {
-    this.store.rdf.setPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    cb();
+
+    // HINT: run "gulp seed" in the projects root folder to create the initial store! 
+
+    /*this.store.rdf.setPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
     this.store.rdf.setPrefix("disco", "http://disco-network.org/resource/");
 
     let graph = this.store.rdf.createGraph();
@@ -81,14 +85,14 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
       node("disco:content2"), node("disco:title"), literal("Post Nr. 2")
     ));
 
-    this.store.insert(graph, this.storeUri, cb);
+    this.store.insert(graph, this.storeUri, cb);*/
   }
 
-  private createNamedNode(value: string): any {
+  /*private createNamedNode(value: string): any {
     return this.store.rdf.createNamedNode(this.store.rdf.resolve(value));
   }
 
   private createLiteral(value: string): any {
     return this.store.rdf.createLiteral(value);
-  }
+  }*/
 }

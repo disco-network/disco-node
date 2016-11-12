@@ -1,0 +1,149 @@
+{
+  "odata.metadata": "http://disco-network.org/api/odata/$metadata#Users",
+  "value": [
+    {
+      "Id": "1",
+      "Key": "35eaabf7-9fca-441b-aaa9-85f93df6a25a",
+      "Modified": "2014-02-18T22:56:15.053",
+      "Alias": "homeboy",
+      "Token": "D75ABB26-CAEF-440F-8E1F-A1D11DE1F29B",
+      "OriginId": "3"
+    },
+    {
+      "Id": "2",
+      "Key": "7ad36a58-d12c-4d8a-a4f0-a03ac6901568",
+      "Modified": "2014-02-18T22:56:15.06",
+      "Alias": "Slash",
+      "Token": "5DB4490E-C7D2-4C2B-98EF-CE165609B0EB",
+      "OriginId": "4"
+    },
+    {
+      "Id": "3",
+      "Key": "ce9b9863-5749-41ff-9f91-2c3fea216870",
+      "Modified": "2014-02-18T22:56:15.06",
+      "Alias": "maximi",
+      "Token": "7CF787BF-7FB2-4033-915E-A08FEB87882E",
+      "OriginId": "4"
+    },
+    {
+      "Id": "4",
+      "Key": "723750ae-59d4-4f40-b948-ff790e46cdd4",
+      "Modified": "2014-02-18T22:56:15.06",
+      "Alias": "John-Boy",
+      "Token": "F8BFE13A-E51B-48D1-8C8E-A4B9DF9320DF",
+      "OriginId": "2"
+    },
+    {
+      "Id": "5",
+      "Key": "90f86337-e546-4977-b4b8-2c01b0cb20cc",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "WS",
+      "Token": "86951E49-D7AB-4508-BA1B-C71E7BF4C8E7",
+      "OriginId": "1"
+    },
+    {
+      "Id": "6",
+      "Key": "f9825d05-631e-48a7-914c-8518d0b701fc",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "Just",
+      "Token": "E1F67FE9-A687-48B9-BB1E-8457120A94CE",
+      "OriginId": "1"
+    },
+    {
+      "Id": "7",
+      "Key": "026bb5ab-dad9-40d0-a137-f18d68ed623b",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "Mary",
+      "Token": "9A0C070C-A618-4DD9-9575-3AC008ECA728",
+      "OriginId": "1"
+    },
+    {
+      "Id": "8",
+      "Key": "7774b4d6-37c5-4c87-b92a-e01a13575af8",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "max",
+      "Token": "DF6EBDE5-629A-485C-8CA5-1875558CDAEB",
+      "OriginId": "1"
+    },
+    {
+      "Id": "9",
+      "Key": "14ac6568-ae46-496e-9b2a-f73b7b41034b",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "mike",
+      "Token": "7D265B24-D55C-4CA7-99DD-AC91E9E85B7F",
+      "OriginId": "1"
+    },
+    {
+      "Id": "10",
+      "Key": "2e309ad7-4137-474f-a88b-949cc44866d4",
+      "Modified": "2014-02-18T22:56:15.06",
+      "Alias": "Little Buddha",
+      "Token": "4D93F330-D3EE-4242-A5E8-80C8433A4A02",
+      "OriginId": "4"
+    },
+    {
+      "Id": "11",
+      "Key": "b0e5777b-516f-4659-9732-b5cfe78f1bab",
+      "Modified": "2014-02-18T22:56:15.063",
+      "Alias": "Merkbefreiter",
+      "Token": "3EB01882-1FD2-462D-9ECC-40A918BFEC03",
+      "OriginId": "2"
+    },
+    {
+      "Id": "12",
+      "Key": "3557b53a-b4be-4145-bf98-6451df471c18",
+      "Modified": "2014-02-18T22:56:15.05",
+      "Alias": "anonymous",
+      "Token": "255E1944-7062-4370-A17A-B4F7EEAB34B8",
+      "OriginId": "2"
+    },
+    {
+      "Id": "13",
+      "Key": "6140729e-e117-403e-bef1-b9ffe0e15063",
+      "Modified": "2014-08-08T21:59:11.003",
+      "Alias": "DerThomas",
+      "Token": "D75ABB26-CAEF-440F-8E1F-A1D11DE1F2BB",
+      "OriginId": "3"
+    },
+    {
+      "Id": "14",
+      "Key": "9351ea54-fd36-482e-be37-2aee581316e6",
+      "Modified": "2014-08-08T22:00:30.3",
+      "Alias": "bloxx",
+      "Token": "D75ABB26-CAEF-440F-8E1F-A1D11DE1F2AA",
+      "OriginId": "2"
+    },
+    {
+      "Id": "15",
+      "Key": "d90b1b3f-b19c-4df4-843a-0aedd7229586",
+      "Modified": "2014-08-08T22:45:00.667",
+      "Alias": "marc",
+      "Token": "D75ABB26-CAEF-440F-8E1F-A1D11DE1F2EE",
+      "OriginId": "2"
+    },
+    {
+      "Id": "16",
+      "Key": "21d72345-62ce-4f0b-be48-faa3c5927075",
+      "Modified": "2014-08-11T12:21:13.587",
+      "Alias": "marc",
+      "Token": "marc@merkstduwas.de",
+      "OriginId": "3"
+    },
+    {
+      "Id": "17",
+      "Key": "0b093ecb-b2b1-4849-9ee1-1bb4e1ef17e5",
+      "Modified": "2014-08-11T17:02:06.17",
+      "Alias": "marc",
+      "Token": "marc@merkstduwas.de",
+      "OriginId": "3"
+    },
+    {
+      "Id": "18",
+      "Key": "7f6db7ac-f02b-417a-a625-336ecbacd8fc",
+      "Modified": "2014-08-12T05:54:33.553",
+      "Alias": "",
+      "Token": "",
+      "OriginId": "3"
+    }
+  ]
+}

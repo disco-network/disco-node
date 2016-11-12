@@ -278,7 +278,7 @@
           "rdfName": "description"
         },
         "CultureId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "cultureId"
         },
         "Culture": {

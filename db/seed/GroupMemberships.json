@@ -1,0 +1,119 @@
+{
+  "odata.metadata": "http://disco-network.org/api/odata/$metadata#GroupMemberships",
+  "value": [
+    {
+      "Id": "1",
+      "Key": "19fbd02c-0523-4c78-8af1-20aafc6b2a6b",
+      "Modified": "2014-02-18T22:56:15.053",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "2",
+      "Key": "3adc39bb-c193-4232-a2f3-f87278991821",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "3",
+      "Key": "10759524-d4d6-42b1-9fe8-ff63e82c27b7",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "4",
+      "Key": "31bd02c8-bf8e-412d-ba1f-b54a4902f7ce",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "5",
+      "Key": "89df87bc-92ba-42b1-9dc8-41382fe9fcd2",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "6",
+      "Key": "429277ac-11a7-4a40-9746-577a9f0a8e93",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "7",
+      "Key": "cd17bddc-e812-4d09-85b1-4ead25d40b3a",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "2"
+    },
+    {
+      "Id": "8",
+      "Key": "5b83f400-f03b-4337-b9b3-af8c38d6acb4",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "9",
+      "Key": "f3b4442e-90ac-4648-977d-b5f1da3eb9e0",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "10",
+      "Key": "b4abf348-7905-43d8-8b34-2cf72ff7653e",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "11",
+      "Key": "7b4d6c99-fc71-4257-9a6d-31d5f6353a6b",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "12",
+      "Key": "7f46bd53-c032-405a-8909-215722df36b0",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "13",
+      "Key": "d04963c7-aafa-4f06-936f-f87e1b2bb995",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "14",
+      "Key": "1219bbd1-b692-4aab-b0a5-ea2ab0a5fdc8",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "15",
+      "Key": "7548ab93-e428-451e-8678-4912da57168f",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "16",
+      "Key": "fc482752-f5bd-4e93-a1e8-abf9a4be5ced",
+      "Modified": "2014-02-18T22:56:15.06",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "17",
+      "Key": "52a6933a-c4bc-412f-9a9a-b028aca37e4f",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "18",
+      "Key": "498d7fe8-1e19-4fd3-bf9c-6a7caa12a153",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    },
+    {
+      "Id": "19",
+      "Key": "fbfccf56-e3f3-4cf2-b9ee-17a0228aed66",
+      "Modified": "2014-02-18T22:56:15.063",
+      "MembershipTypeId": "1"
+    }
+  ]
+}

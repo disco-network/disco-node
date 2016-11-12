@@ -32,7 +32,7 @@
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/.bin/gulp",
       "stopOnEntry": false,
-      "args": ["build-json-ld"],
+      "args": ["seed-db"],
       "cwd": "${workspaceRoot}",
       "preLaunchTask": null,
       "runtimeExecutable": null,

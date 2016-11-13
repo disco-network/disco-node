@@ -21,6 +21,8 @@ module.exports.seedDb = function () {
       store.rdf.setPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
       store.rdf.setPrefix("disco", storeUri);
 
+      let graph = [{ 'token': 'uri', 'value': storeUri }];
+
       let jsonldFolderPath = path.join(dbSeedFolderPath, "data");
       let filenamesInFolder = fs.readdirSync(jsonldFolderPath);
       filenamesInFolder.forEach(file => {
@@ -29,7 +31,7 @@ module.exports.seedDb = function () {
         if (match) {
 
           let entityset = match[1];
-          console.log("Process entityset ", "\x1b[36m", entityset, "\x1b[0m");
+          console.log("Process entityset ", "\x1b[36m[", entityset, "]\x1b[0m");
 
           let filename = path.join(jsonldFolderPath, file);
           console.log("seed data from file", "\x1b[36m", filename, "\x1b[0m");
@@ -40,15 +42,16 @@ module.exports.seedDb = function () {
             if (err) {
               console.log("\x1b[31m", "There was an error seeding the store", err, "\x1b[0m");
             } else {
-              store.node("disco:" + entityset + "/1", storeUri, function (err, graph) {
+              let json = JSON.parse(jsonld);
+              let entitytype = json["@graph"][0]["@type"];
 
-                if (err) {
-                  console.log("\x1b[31m", "There was an error retrieving the data for", entityset, err, "\x1b[0m");
-                }
-                else {
-                  let triples = graph.toArray();
-                  console.log("\x1b[32m", "Successfully inserted", triples.length, "triples for", entityset, "into the store", "\x1b[0m");
-                }
+              let query = "PREFIX disco: <" + storeUri + ">\
+                           SELECT ?s \
+                           WHERE  { ?s a <" + storeUri + entitytype + "> . }";
+
+              console.log("execute query [\x1b[7m", query.replace(/\s+/g, " "), "\x1b[0m]");
+              store.executeWithEnvironment(query, [storeUri], [], (success, results) => {
+                console.log("\x1b[32m", results.length, "nodes in store for type [", entitytype, "]\x1b[0m");
               });
             }
           });

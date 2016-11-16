@@ -16,7 +16,7 @@
         },
         "Modified": {
           "@id": "disco:modified",
-          "@type": "xsd:dateTime"
+          "@type": "xsd:string"
         },
         "Name": {
           "@id": "disco:name",
@@ -25,10 +25,6 @@
         "Description": {
           "@id": "disco:description",
           "@type": "xsd:string"
-        },
-        "CultureId": {
-          "@id": "disco:cultureId",
-          "@type": "xsd:integer"
         }
       },
       "@remove": [
@@ -54,7 +50,7 @@
         }
       ],
       "@transform": {
-        "CultureId": [
+        "Culture": [
           {
             "f:valueof": "CultureId"
           },

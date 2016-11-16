@@ -16,7 +16,7 @@
         },
         "Modified": {
           "@id": "disco:modified",
-          "@type": "xsd:dateTime"
+          "@type": "xsd:string"
         },
         "Code": {
           "@id": "disco:code",

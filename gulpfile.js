@@ -131,3 +131,8 @@ gulp.task("build-db", function (cb) {
     cb
   );
 });
+
+var util = require('gulp-util');
+gulp.task("execute-sparql", function () {
+  dbConfig.executeSparql(util.env.query);
+});

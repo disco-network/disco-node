@@ -279,10 +279,11 @@
         },
         "CultureId": {
           "type": "Edm.Integer",
-          "foreignProperty": "cultureId"
+          "foreignProperty": "Culture"
         },
         "Culture": {
           "type": "Culture",
+          "cardinality": "many-to-one",
           "rdfName": "culture"
         }
       },

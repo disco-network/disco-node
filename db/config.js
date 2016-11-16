@@ -21,8 +21,6 @@ module.exports.seedDb = function () {
       store.rdf.setPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
       store.rdf.setPrefix("disco", storeUri);
 
-      let graph = [{ 'token': 'uri', 'value': storeUri }];
-
       let jsonldFolderPath = path.join(dbSeedFolderPath, "data");
       let filenamesInFolder = fs.readdirSync(jsonldFolderPath);
       filenamesInFolder.forEach(file => {
@@ -51,12 +49,36 @@ module.exports.seedDb = function () {
 
               console.log("execute query [\x1b[7m", query.replace(/\s+/g, " "), "\x1b[0m]");
               store.executeWithEnvironment(query, [storeUri], [], (success, results) => {
-                console.log("\x1b[32m", results.length, "nodes in store for type [", entitytype, "]\x1b[0m");
+                console.log("\x1b[32m", results.length, "node(s) in store for type [", entitytype, "]\x1b[0m");
               });
             }
           });
 
           store.close(); // done ?!??!
+        }
+      });
+    }
+  });
+}
+
+module.exports.executeSparql = function (query) {
+  rdfstore.create({ persistent: true }, function (err, store) {
+    if (err) {
+      console.log("\x1b[31m", "There was an error creating the store", err, "\x1b[0m");
+    } else {
+
+      let sparqlQuery = "PREFIX disco: <" + storeUri + "> " + query.replace("disco:", storeUri);
+
+      console.log("execute query [\x1b[7m", sparqlQuery.replace(/\s+/g, " "), "\x1b[0m]");
+      store.executeWithEnvironment(sparqlQuery, [storeUri], [], (error, results) => {
+        if (error) {
+          console.log("\x1b[31m", "There was an error executing the query", error, "\x1b[0m");
+          throw error;
+        } else {
+          console.log("\x1b[32m", results.length, "node(s) in store\x1b[0m");
+          results.forEach(element => {
+            console.log(element);
+          });
         }
       });
     }

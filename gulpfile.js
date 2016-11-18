@@ -78,8 +78,8 @@ gulp.task("build-package.json", function () {
     "license": appPackageJson.license,
     "bugs": appPackageJson.bugs
   }
-  fs.mkdirSync(path.join(__dirname, "build"));
-  fs.mkdirSync(path.join(__dirname, "build", "lib"));
+  // fs.mkdirSync(path.join(__dirname, "build"));
+  // fs.mkdirSync(path.join(__dirname, "build", "lib"));
   fs.writeFileSync(path.join(__dirname, "build", "lib", "package.json"), JSON.stringify(npmPackageJson, null, 2));
 });
 
@@ -96,7 +96,7 @@ gulp.task("copy", function () {
 gulp.task("build", function (cb) {
   return runSequence(
     "clean-all",
-    ["build-lib", "copy", "build-package.json"],
+    "build-lib", "copy", "build-package.json",
     cb
   );
 });
@@ -113,11 +113,11 @@ gulp.task("server", function () {
 
 
 gulp.task("build-json-ld", function () {
-  dbConfig.buildJsonLd();
+  return dbConfig.buildJsonLd();
 });
 
 gulp.task("seed-db", ["build-json-ld"], function () {
-  dbConfig.seedDb();
+  return dbConfig.seedDb();
 });
 
 gulp.task("clean-db", function () {

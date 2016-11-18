@@ -25,6 +25,10 @@
         "Description": {
           "@id": "disco:description",
           "@type": "xsd:string"
+        },
+        "Culture": {
+          "@id": "disco:culture",
+          "@type": "@id"
         }
       },
       "@remove": [
@@ -58,7 +62,10 @@
             "f:prefix": "disco:Cultures/"
           }
         ]
-      }
+      },
+      "@remove": [
+        "CultureId"
+      ]
     }
   }
 }

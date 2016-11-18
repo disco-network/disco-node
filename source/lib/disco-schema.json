@@ -12,7 +12,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -40,7 +40,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -104,7 +104,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -150,7 +150,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -199,7 +199,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -230,7 +230,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -265,7 +265,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -301,7 +301,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -342,7 +342,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -392,7 +392,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -427,7 +427,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -454,7 +454,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -481,7 +481,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -508,7 +508,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -546,7 +546,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },
@@ -590,7 +590,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.DateTime",
+          "type": "Edm.String",
           "optional": true,
           "rdfName": "modified"
         },

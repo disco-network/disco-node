@@ -4,3 +4,4 @@
 /build
 /db/*.json
 /db/seed/data/*.jsonld
+*.txt

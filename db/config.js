@@ -45,7 +45,7 @@ module.exports.seedDb = function () {
 
               let query = "PREFIX disco: <" + storeUri + ">\
                            SELECT ?s \
-                           WHERE  { ?s a <" + storeUri + entitytype + "> . }";
+                           WHERE  { ?s a disco:" + entitytype + " . }";
 
               console.log("execute query [\x1b[7m", query.replace(/\s+/g, " "), "\x1b[0m]");
               store.executeWithEnvironment(query, [storeUri], [], (success, results) => {
@@ -67,7 +67,7 @@ module.exports.executeSparql = function (query) {
       console.log("\x1b[31m", "There was an error creating the store", err, "\x1b[0m");
     } else {
 
-      let sparqlQuery = "PREFIX disco: <" + storeUri + "> " + query.replace("disco:", storeUri);
+      let sparqlQuery = "PREFIX disco: <" + storeUri + "> " + query;
 
       console.log("execute query [\x1b[7m", sparqlQuery.replace(/\s+/g, " "), "\x1b[0m]");
       store.executeWithEnvironment(sparqlQuery, [storeUri], [], (error, results) => {
@@ -120,3 +120,23 @@ module.exports.buildJsonLd = function () {
     }
   });
 }
+
+// TODO: define xsd.guid
+/*
+
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://microsoft.com/wsdl/types/" >
+    <xsd:simpleType name="guid">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                The representation of a GUID, generally the id of an element.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xs:pattern value="([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>
+
+*/

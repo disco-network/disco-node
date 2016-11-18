@@ -12,7 +12,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -40,7 +40,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -50,7 +50,7 @@
           "rdfName": "modifiedBy"
         },
         "PostTypeId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "PostType"
         },
         "PostType": {
@@ -59,7 +59,7 @@
           "rdfName": "postType"
         },
         "ContentId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Content"
         },
         "Content": {
@@ -104,7 +104,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -114,7 +114,7 @@
           "rdfName": "referrer"
         },
         "ReferrerId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "PostReference"
         },
         "Referree": {
@@ -123,11 +123,11 @@
           "rdfName": "referree"
         },
         "ReferreeId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "PostReference"
         },
         "ReferenceTypeId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "ReferenceType"
         },
         "ReferenceType": {
@@ -150,7 +150,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -159,7 +159,7 @@
           "rdfName": "code"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -167,7 +167,7 @@
           "rdfName": "description"
         },
         "ParentId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Parent"
         },
         "Parent": {
@@ -199,7 +199,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -208,7 +208,7 @@
           "rdfName": "uri"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -230,21 +230,21 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "AuthorId": {
-          "type": "Edm.Guid",
-          "foreignProperty": "authorId"
+          "type": "Edm.Integer",
+          "foreignProperty": "Author"
         },
         "Author": {
           "type": "User",
           "rdfName": "author"
         },
         "OriginId": {
-          "type": "Edm.Guid",
-          "foreignProperty": "originId"
+          "type": "Edm.Integer",
+          "foreignProperty": "Origin"
         },
         "Origin": {
           "type": "Origin",
@@ -265,7 +265,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -301,7 +301,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -320,8 +320,8 @@
           "cardinality": "many-to-many"
         },
         "OriginId": {
-          "type": "Edm.Guid",
-          "foreignProperty": "originId"
+          "type": "Edm.Integer",
+          "foreignProperty": "Origin"
         },
         "Origin": {
           "type": "Origin",
@@ -342,7 +342,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -351,7 +351,7 @@
           "rdfName": "alias"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -359,7 +359,7 @@
           "rdfName": "description"
         },
         "ParentId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Parent"
         },
         "Parent": {
@@ -392,12 +392,12 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "MembershipTypeId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "MembershipType"
         },
         "MembershipType": {
@@ -427,12 +427,12 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -454,12 +454,12 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -481,12 +481,12 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -508,12 +508,12 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -546,7 +546,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -560,7 +560,7 @@
           "rdfName": "score"
         },
         "PostId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "Post"
         },
         "Post": {
@@ -568,7 +568,7 @@
           "rdfName": "post"
         },
         "UserId": {
-          "type": "Edm.Guid",
+          "type": "Edm.Integer",
           "foreignProperty": "User"
         },
         "User": {
@@ -590,7 +590,7 @@
           "rdfName": "key"
         },
         "Modified": {
-          "type": "Edm.String",
+          "type": "Edm.DateTime",
           "optional": true,
           "rdfName": "modified"
         },
@@ -608,8 +608,8 @@
           "rdfName": "text"
         },
         "CultureId": {
-          "type": "Edm.Guid",
-          "foreignProperty": "cultureId"
+          "type": "Edm.Integer",
+          "foreignProperty": "Culture"
         },
         "Culture": {
           "type": "Culture",

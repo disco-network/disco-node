@@ -1,33 +1,37 @@
 {
-  "http://disco-network.org/resource/Descriptors": {
+  "http://disco-network.org/resource/Posts": {
     "$": {
       "@context": {
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "disco": "http://disco-network.org/resource/",
-        "Descriptor": "disco:Descriptor",
+        "Post": "disco:Post",
         "Id": {
-          "@id": "Descriptor:#id",
+          "@id": "Post:#id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "Descriptor:#key",
+          "@id": "Post:#key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "Descriptor:#modified",
+          "@id": "Post:#modified",
           "@type": "xsd:string"
         },
-        "Name": {
-          "@id": "Descriptor:#name",
-          "@type": "xsd:string"
+        "PostType": {
+          "@id": "Post:#postType",
+          "@type": "@id"
         },
-        "Description": {
-          "@id": "Descriptor:#description",
-          "@type": "xsd:string"
+        "Content": {
+          "@id": "Post:#content",
+          "@type": "@id"
         },
-        "Culture": {
-          "@id": "Descriptor:#culture",
+        "Tags": {
+          "@id": "Post:#tag",
+          "@type": "@id"
+        },
+        "Ratings": {
+          "@id": "Post:#rating",
           "@type": "@id"
         }
       },
@@ -44,27 +48,38 @@
       }
     },
     "$.value.*": {
-      "@type": "Descriptor",
+      "@type": "Post",
       "@id": [
         {
           "f:valueof": "Id"
         },
         {
-          "f:prefix": "disco:Descriptors/"
+          "f:prefix": "disco:Posts/"
         }
       ],
       "@transform": {
-        "Culture": [
+        "PostType": [
           {
-            "f:valueof": "CultureId"
+            "f:valueof": "PostTypeId"
           },
           {
-            "f:prefix": "disco:Cultures/"
+            "f:prefix": "disco:PostTypes/"
+          }
+        ],
+        "Content": [
+          {
+            "f:valueof": "ContentId"
+          },
+          {
+            "f:prefix": "disco:Content/"
           }
         ]
       },
       "@remove": [
-        "CultureId"
+        "PostTypeId",
+        "ContentId",
+        "RefersTo",
+        "ReferredFrom"
       ]
     }
   }

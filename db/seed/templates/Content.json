@@ -1,33 +1,33 @@
 {
-  "http://disco-network.org/resource/Descriptors": {
+  "http://disco-network.org/resource/Content": {
     "$": {
       "@context": {
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "disco": "http://disco-network.org/resource/",
-        "Descriptor": "disco:Descriptor",
+        "Content": "disco:Content",
         "Id": {
-          "@id": "Descriptor:#id",
+          "@id": "Content:#id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "Descriptor:#key",
+          "@id": "Content:#key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "Descriptor:#modified",
+          "@id": "Content:#modified",
           "@type": "xsd:string"
         },
-        "Name": {
-          "@id": "Descriptor:#name",
+        "Title": {
+          "@id": "Content:#title",
           "@type": "xsd:string"
         },
-        "Description": {
-          "@id": "Descriptor:#description",
+        "Text": {
+          "@id": "Content:#text",
           "@type": "xsd:string"
         },
         "Culture": {
-          "@id": "Descriptor:#culture",
+          "@id": "Content:#culture",
           "@type": "@id"
         }
       },
@@ -44,13 +44,13 @@
       }
     },
     "$.value.*": {
-      "@type": "Descriptor",
+      "@type": "Content",
       "@id": [
         {
           "f:valueof": "Id"
         },
         {
-          "f:prefix": "disco:Descriptors/"
+          "f:prefix": "disco:Content/"
         }
       ],
       "@transform": {

@@ -115,6 +115,9 @@ module.exports.buildJsonLd = function () {
 
         let json = JSON.stringify(jsonld, null, 2);
         let filename = path.join(dbSeedFolderPath, "data", entityset + ".jsonld");
+
+        let folderPath = path.join(dbSeedFolderPath, "data");
+        try { fs.accessSync(folderPath, "w"); } catch (err) { fs.mkdirSync(folderPath); }
         fs.writeFileSync(filename, json);
       }
     }

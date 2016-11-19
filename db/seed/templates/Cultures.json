@@ -7,23 +7,23 @@
         "disco": "http://disco-network.org/resource/",
         "Culture": "disco:Culture",
         "Id": {
-          "@id": "Culture:#id",
+          "@id": "disco:id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "Culture:#key",
+          "@id": "disco:key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "Culture:#modified",
+          "@id": "disco:modified",
           "@type": "xsd:string"
         },
         "Code": {
-          "@id": "Culture:#code",
+          "@id": "disco:code",
           "@type": "xsd:string"
         },
         "Name": {
-          "@id": "Culture:#name",
+          "@id": "disco:name",
           "@type": "xsd:string"
         }
       },

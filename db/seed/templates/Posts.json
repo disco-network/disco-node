@@ -7,31 +7,31 @@
         "disco": "http://disco-network.org/resource/",
         "Post": "disco:Post",
         "Id": {
-          "@id": "Post:#id",
+          "@id": "disco:id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "Post:#key",
+          "@id": "disco:key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "Post:#modified",
+          "@id": "disco:modified",
           "@type": "xsd:string"
         },
         "PostType": {
-          "@id": "Post:#postType",
+          "@id": "disco:postType",
           "@type": "@id"
         },
         "Content": {
-          "@id": "Post:#content",
+          "@id": "disco:content",
           "@type": "@id"
         },
         "Tags": {
-          "@id": "Post:#tag",
+          "@id": "disco:tag",
           "@type": "@id"
         },
         "Ratings": {
-          "@id": "Post:#rating",
+          "@id": "disco:rating",
           "@type": "@id"
         }
       },

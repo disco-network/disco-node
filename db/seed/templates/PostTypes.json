@@ -7,19 +7,19 @@
         "disco": "http://disco-network.org/resource/",
         "PostType": "disco:PostType",
         "Id": {
-          "@id": "PostType:#id",
+          "@id": "disco:id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "PostType:#key",
+          "@id": "disco:key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "PostType:#modified",
+          "@id": "disco:modified",
           "@type": "xsd:string"
         },
         "Description": {
-          "@id": "PostType:#description",
+          "@id": "disco:description",
           "@type": "@id"
         }
       },

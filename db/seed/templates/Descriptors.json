@@ -7,27 +7,27 @@
         "disco": "http://disco-network.org/resource/",
         "Descriptor": "disco:Descriptor",
         "Id": {
-          "@id": "Descriptor:#id",
+          "@id": "disco:id",
           "@type": "xsd:string"
         },
         "Key": {
-          "@id": "Descriptor:#key",
+          "@id": "disco:key",
           "@type": "xsd:string"
         },
         "Modified": {
-          "@id": "Descriptor:#modified",
+          "@id": "disco:modified",
           "@type": "xsd:string"
         },
         "Name": {
-          "@id": "Descriptor:#name",
+          "@id": "disco:name",
           "@type": "xsd:string"
         },
         "Description": {
-          "@id": "Descriptor:#description",
+          "@id": "disco:description",
           "@type": "xsd:string"
         },
         "Culture": {
-          "@id": "Descriptor:#culture",
+          "@id": "disco:culture",
           "@type": "@id"
         }
       },

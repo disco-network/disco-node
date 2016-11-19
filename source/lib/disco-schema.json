@@ -583,30 +583,30 @@
         "Id": {
           "type": "Edm.Integer",
           "generated": "integer",
-          "rdfName": "id"
+          "rdfName": "Content#id"
         },
         "Key": {
           "type": "Edm.Guid",
-          "rdfName": "key"
+          "rdfName": "Content#key"
         },
         "Modified": {
           "type": "Edm.String",
           "optional": true,
-          "rdfName": "modified"
+          "rdfName": "Content#modified"
         },
         "ModifiedBy": {
           "type": "Originator",
           "optional": true,
-          "rdfName": "modifiedBy"
+          "rdfName": "Content#modifiedBy"
         },
         "Title": {
           "type": "Edm.String",
           "optional": true,
-          "rdfName": "title"
+          "rdfName": "Content#title"
         },
         "Text": {
           "type": "Edm.String",
-          "rdfName": "text"
+          "rdfName": "Content#text"
         },
         "CultureId": {
           "type": "Edm.Integer",
@@ -614,7 +614,7 @@
         },
         "Culture": {
           "type": "Culture",
-          "rdfName": "culture"
+          "rdfName": "Content#culture"
         }
       },
       "rdfName": "Content"

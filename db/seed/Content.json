@@ -1,0 +1,13 @@
+{
+  "odata.metadata": "http://disco-network.org/api/odata/$metadata#Content",
+  "value": [
+    {
+      "Id": "1",
+      "Key": "bff86dae-58d0-4463-b5e3-7332311ea0b6",
+      "Modified": "2014-02-18T22:56:15.12",
+      "Title": "null",
+      "Text": "Au\u00dfen, Internationales, Frieden",
+      "CultureId": "2"
+    }
+  ]
+}

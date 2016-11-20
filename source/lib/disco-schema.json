@@ -13,7 +13,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Code": {
@@ -41,7 +40,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "ModifiedBy": {
@@ -69,11 +67,13 @@
         },
         "Tags": {
           "type": "Tag",
+          "optional": true,
           "cardinality": "many-to-many",
           "rdfName": "tag"
         },
         "Ratings": {
           "type": "Rating",
+          "optional": true,
           "cardinality": "one-to-many",
           "rdfName": "rating"
         },
@@ -105,7 +105,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Referrer": {
@@ -151,7 +150,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Code": {
@@ -200,7 +198,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Uri": {
@@ -231,7 +228,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "AuthorId": {
@@ -266,7 +262,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Name": {
@@ -302,7 +297,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Alias": {
@@ -343,7 +337,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "Alias": {
@@ -393,7 +386,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "MembershipTypeId": {
@@ -428,7 +420,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -455,7 +446,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -482,7 +472,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -509,7 +498,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -547,7 +535,6 @@
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
           "rdfName": "modified"
         },
         "ModifiedBy": {
@@ -583,30 +570,28 @@
         "Id": {
           "type": "Edm.Integer",
           "generated": "integer",
-          "rdfName": "Content#id"
+          "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
-          "rdfName": "Content#key"
+          "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
-          "optional": true,
-          "rdfName": "Content#modified"
+          "rdfName": "modified"
         },
         "ModifiedBy": {
           "type": "Originator",
           "optional": true,
-          "rdfName": "Content#modifiedBy"
+          "rdfName": "modifiedBy"
         },
         "Title": {
           "type": "Edm.String",
-          "optional": true,
-          "rdfName": "Content#title"
+          "rdfName": "title"
         },
         "Text": {
           "type": "Edm.String",
-          "rdfName": "Content#text"
+          "rdfName": "text"
         },
         "CultureId": {
           "type": "Edm.Integer",
@@ -614,7 +599,7 @@
         },
         "Culture": {
           "type": "Culture",
-          "rdfName": "Content#culture"
+          "rdfName": "culture"
         }
       },
       "rdfName": "Content"

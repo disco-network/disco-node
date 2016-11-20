@@ -51,7 +51,7 @@
             "f:valueof": "DescriptionId"
           },
           {
-            "f:prefix": "disco:Descriptions/"
+            "f:prefix": "disco:Descriptors/"
           }
         ]
       },

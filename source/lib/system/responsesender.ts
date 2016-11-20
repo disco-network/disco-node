@@ -6,13 +6,13 @@ import {IHttpResponseSender} from "odata-rdf-interface";
 export class ResponseSender implements IHttpResponseSender, IActionResult<ResponseData> {
 
   private resolve: (data: ResponseData) => void;
-  private reject: (error: string) => void;
+  private reject: (error: any) => void;
 
   public promise: Promise<ResponseData>;
   public data: ResponseData;
 
   constructor() {
-    this.promise = new Promise((resolve: (data: ResponseData) => void, reject: () => void) => {
+    this.promise = new Promise((resolve: (data: ResponseData) => void, reject: (error: any) => void) => {
       this.resolve = resolve;
       this.reject = reject;
     });
@@ -33,6 +33,10 @@ export class ResponseSender implements IHttpResponseSender, IActionResult<Respon
   }
 
   public finishResponse() {
-    this.resolve(this.data);
+    if (this.data.code !== 500) {
+      this.resolve(this.data);
+    } else {
+      this.reject(new Error("OData request failed! " + this.data.body));
+    }
   }
 }

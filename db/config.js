@@ -25,10 +25,10 @@ module.exports.seedDb = function () {
       let filenamesInFolder = fs.readdirSync(jsonldFolderPath);
       filenamesInFolder.forEach(file => {
 
-        let match = file.match(/([^\.]*)\.jsonld$/i);
+        let match = file.match(/([^\_]{1,4}\_)?([^\.]*)\.jsonld$/i);
         if (match) {
 
-          let entityset = match[1];
+          let entityset = match[2];
           console.log("Process entityset ", "\x1b[36m[", entityset, "]\x1b[0m");
 
           let filename = path.join(jsonldFolderPath, file);
@@ -90,10 +90,11 @@ module.exports.buildJsonLd = function () {
   let filenamesInFolder = fs.readdirSync(dbSeedFolderPath);
   filenamesInFolder.forEach(file => {
 
-    let match = file.match(/([^\.]*)\.json$/i);
+    let match = file.match(/([^\_]{1,4}\_)?([^\.]*)\.json$/i);
     if (match) {
 
-      let entityset = match[1];
+      let order = match[1];
+      let entityset = match[2];
       console.log("Process entityset ", "\x1b[36m", entityset, "\x1b[0m");
 
       let datafile = path.posix.resolve(dbSeedFolderPath, file);
@@ -114,7 +115,8 @@ module.exports.buildJsonLd = function () {
         let jsonld = macros.JSONLDMacro.applyTransformation(transformation, dataset);
 
         let json = JSON.stringify(jsonld, null, 2);
-        let filename = path.join(dbSeedFolderPath, "data", entityset + ".jsonld");
+        let orderedEntityName = (order || "") + entityset;
+        let filename = path.join(dbSeedFolderPath, "data", orderedEntityName + ".jsonld");
 
         let folderPath = path.join(dbSeedFolderPath, "data");
         try { fs.accessSync(folderPath, "w"); } catch (err) { fs.mkdirSync(folderPath); }

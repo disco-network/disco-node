@@ -9,6 +9,13 @@ export function seed() {
     else {
       const seeder = new Seeder(store);
       seeder.begin();
+      seeder.insertCulture({
+        "Id": "2",
+        "Key": "7b5e1699-c6f8-472b-976a-bb37ce517219",
+        "Modified": "2014-02-18T22:56:15.003",
+        "Code": "de-DE",
+        "Name": "german (Germany)",
+      });
       seeder.insertPost({
         "Text": "Au\u00dfen, Internationales, Frieden",
         "Title": null,
@@ -77,6 +84,19 @@ export class Seeder {
     this.triple(this.uri(contentIdentity.uri), this.uri("disco:text"), this.literal(data.Text));
   }
 
+  public insertCulture(data: DCulture) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
+
+    const cultureUri = this.genEntityUri("Cultures", data.Id);
+
+    this.triple(this.uri(cultureUri), this.resolve("rdf:type"), this.resolve("disco:Culture"));
+    this.triple(this.uri(cultureUri), this.resolve("disco:id"), this.literal(data.Id));
+    this.triple(this.uri(cultureUri), this.resolve("disco:key"), this.literal(data.Key));
+    this.triple(this.uri(cultureUri), this.resolve("disco:modified"), this.literal(data.Modified));
+    this.triple(this.uri(cultureUri), this.resolve("disco:code"), this.literal(data.Code));
+    this.triple(this.uri(cultureUri), this.resolve("disco:name"), this.literal(data.Name));
+  }
+
   private genNextIdentity(entitySet: string): { id: string; uri: string } {
     const id = this.genNextId(entitySet);
     const uri = this.genEntityUri(entitySet, id);
@@ -119,4 +139,12 @@ export interface DPost {
   readonly ContentModified: string;
   readonly CultureId: string;
   readonly PostTypeId: string;
+}
+
+export interface DCulture {
+  readonly Id: string;
+  readonly Key: string;
+  readonly Modified: string;
+  readonly Code: string;
+  readonly Name: string;
 }

@@ -70,7 +70,7 @@ export class ODataController extends Controller {
     let engine: IHttpRequestHandler =
       new GetHandler(new Schema(this.discoSchema), this.context.dataProvider, this.context.dataProvider.graphName);
     engine.query({
-      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/")),
+      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: "@todo",
     }, responseSender);
 

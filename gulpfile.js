@@ -116,9 +116,14 @@ gulp.task("build-json-ld", function () {
   return dbConfig.buildJsonLd();
 });
 
-gulp.task("seed-db", ["build-json-ld"], function () {
+gulp.task("seed-db-old", ["build-json-ld"], function () {
   return dbConfig.seedDb();
 });
+
+gulp.task("seed-db", function () {
+  var seed = require("./build/lib/system/adapter/data/seed.js").seed;
+  return seed();
+})
 
 gulp.task("clean-db", function () {
   return del(["./db/rdfstorejs_*.json", "./db/seed/data/*.jsonld"]);

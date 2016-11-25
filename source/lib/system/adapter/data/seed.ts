@@ -68,6 +68,7 @@ export class Seeder {
     this.triple(this.uri(postIdentity.uri), this.resolve("rdf:type"), this.resolve("disco:Post"));
     this.triple(this.uri(postIdentity.uri), this.resolve("disco:id"), this.literal(postIdentity.id));
     this.triple(this.uri(postIdentity.uri), this.resolve("disco:key"), this.literal(data.Key));
+    this.triple(this.uri(postIdentity.uri), this.resolve("disco:foo"), this.literal("Hi"));
     this.triple(this.uri(postIdentity.uri), this.resolve("disco:modified"), this.literal(data.Modified));
     this.triple(this.uri(postIdentity.uri), this.resolve("disco:content"), this.uri(contentIdentity.uri));
     this.triple(this.uri(postIdentity.uri), this.resolve("disco:postType"), this.uri(postTypeUri));
@@ -75,6 +76,7 @@ export class Seeder {
     this.triple(this.uri(contentIdentity.uri), this.resolve("rdf:type"), this.resolve("disco:Content"));
     this.triple(this.uri(contentIdentity.uri), this.resolve("disco:id"), this.literal(contentIdentity.id));
     this.triple(this.uri(contentIdentity.uri), this.resolve("disco:key"), this.literal(data.ContentKey));
+    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:foo"), this.literal("Hi"));
     this.triple(this.uri(contentIdentity.uri), this.resolve("disco:modified"), this.literal(data.ContentModified));
     this.triple(this.uri(contentIdentity.uri), this.resolve("disco:culture"), this.uri(cultureUri));
 
@@ -92,6 +94,7 @@ export class Seeder {
     this.triple(this.uri(cultureUri), this.resolve("rdf:type"), this.resolve("disco:Culture"));
     this.triple(this.uri(cultureUri), this.resolve("disco:id"), this.literal(data.Id));
     this.triple(this.uri(cultureUri), this.resolve("disco:key"), this.literal(data.Key));
+    this.triple(this.uri(cultureUri), this.resolve("disco:foo"), this.literal("Hi"));
     this.triple(this.uri(cultureUri), this.resolve("disco:modified"), this.literal(data.Modified));
     this.triple(this.uri(cultureUri), this.resolve("disco:code"), this.literal(data.Code));
     this.triple(this.uri(cultureUri), this.resolve("disco:name"), this.literal(data.Name));

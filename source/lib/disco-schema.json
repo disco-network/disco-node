@@ -52,7 +52,7 @@
           "foreignProperty": "PostType"
         },
         "PostType": {
-          "type": "Post",
+          "type": "PostType",
           "cardinality": "one-to-one",
           "rdfName": "postType"
         },

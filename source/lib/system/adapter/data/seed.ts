@@ -16,6 +16,15 @@ export function seed() {
         "Code": "de-DE",
         "Name": "german (Germany)",
       });
+      seeder.insertPostType({
+        "Id": "1",
+        "Key": "86ca262f-0d31-4e61-bd79-b6de8b784fab",
+        "Modified": "2014-02-18T22:56:15.09",
+        "Description": null,
+        "DescriptionName": "Topic",
+        "DescriptionKey": "a3952f8c-ecc5-4aaf-8891-a25952ae523d",
+        "DescriptionModified": "2014-02-18T22:56:15.09",
+      });
       seeder.insertPost({
         "Text": "Au\u00dfen, Internationales, Frieden",
         "Title": null,
@@ -100,6 +109,28 @@ export class Seeder {
     this.triple(this.uri(cultureUri), this.resolve("disco:name"), this.literal(data.Name));
   }
 
+  public insertPostType(data: DPostType) {
+    const postTypeUri = this.genEntityUri("PostTypes", data.Id);
+    const descriptionIdentity = this.genNextIdentity("Descriptors");
+
+    this.triple(this.uri(postTypeUri), this.resolve("rdf:type"), this.resolve("disco:PostType"));
+    this.triple(this.uri(postTypeUri), this.resolve("disco:id"), this.literal(data.Id));
+    this.triple(this.uri(postTypeUri), this.resolve("disco:key"), this.literal(data.Key));
+    this.triple(this.uri(postTypeUri), this.resolve("disco:foo"), this.literal("Hi"));
+    this.triple(this.uri(postTypeUri), this.resolve("disco:modified"), this.literal(data.Modified));
+    this.triple(this.uri(postTypeUri), this.resolve("disco:description"), this.uri(descriptionIdentity.uri));
+
+    this.triple(this.uri(descriptionIdentity.uri), this.resolve("rdf:type"), this.resolve("disco:Descriptor"));
+    this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:id"), this.literal(descriptionIdentity.id));
+    this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:key"), this.literal(data.DescriptionKey));
+    this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:foo"), this.literal("Hi"));
+    this.triple(
+      this.uri(descriptionIdentity.uri), this.resolve("disco:modified"), this.literal(data.DescriptionModified));
+    this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:name"), this.literal(data.DescriptionName));
+    if (data.Description !== null)
+      this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:description"), this.literal(data.Description));
+  }
+
   private genNextIdentity(entitySet: string): { id: string; uri: string } {
     const id = this.genNextId(entitySet);
     const uri = this.genEntityUri(entitySet, id);
@@ -150,4 +181,24 @@ export interface DCulture {
   readonly Modified: string;
   readonly Code: string;
   readonly Name: string;
+}
+
+export interface DPostType {
+  readonly Id: string;
+  readonly Key: string;
+  readonly Modified: string;
+
+  readonly Description: string;
+  readonly DescriptionName: string;
+  readonly DescriptionKey: string;
+  readonly DescriptionModified: string;
+}
+
+export interface DDescriptor {
+  readonly Id: string;
+  readonly Key: string;
+  readonly Modified: string;
+  readonly Name: string;
+  readonly Description: string;
+  readonly CultureId: string;
 }

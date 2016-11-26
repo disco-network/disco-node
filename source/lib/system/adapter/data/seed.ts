@@ -9,13 +9,22 @@ export function seed() {
     else {
       const seeder = new Seeder(store);
       seeder.begin();
-      seeder.insertCulture({
+
+      seeder.insertMany(seeder.insertCulture, [{
+        "Id": "1",
+        "Key": "ce30d475-b11e-46ac-8de9-3f3b89a89344",
+        "Modified": "2014-03-26T20:03:30.797",
+        "Code": "en-US",
+        "Name": "english (UK)",
+      },
+      {
         "Id": "2",
         "Key": "7b5e1699-c6f8-472b-976a-bb37ce517219",
         "Modified": "2014-02-18T22:56:15.003",
         "Code": "de-DE",
         "Name": "german (Germany)",
-      });
+      }]);
+
       seeder.insertPostType({
         "Id": "1",
         "Key": "86ca262f-0d31-4e61-bd79-b6de8b784fab",
@@ -25,16 +34,37 @@ export function seed() {
         "DescriptionKey": "a3952f8c-ecc5-4aaf-8891-a25952ae523d",
         "DescriptionModified": "2014-02-18T22:56:15.09",
       });
-      seeder.insertPost({
-        "Text": "Au\u00dfen, Internationales, Frieden",
+
+      seeder.insertMany<DPost>(seeder.insertPost, [{
         "Title": null,
+        "Text": "Innen, Recht, Demokratie, Sicherheit",
+        "Key": "004c55c4-d71c-4307-ab57-36d907b12584",
+        "Modified": "2014-02-18T22:56:15.127",
+        "CultureId": "2",
+        "ContentKey": "da922338-6d8a-4cc0-addc-6670201ad9e1",
+        "ContentModified": "2014-02-18T22:56:15.127",
+        "PostTypeId": "1",
+      },
+      {
+        "Title": null,
+        "Text": "Au\u00dfen, Internationales, Frieden",
+        "CultureId": "2",
         "Key": "bf38a895-264f-40d9-81f8-63f224dacc46",
         "Modified": "2014-02-18T22:56:15.103",
         "ContentKey": "bff86dae-58d0-4463-b5e3-7332311ea0b6",
         "ContentModified": "2014-02-18T22:56:15.12",
-        "CultureId": "2",
         "PostTypeId": "1",
-      });
+      }, {
+        "Key": "6099ee26-97a2-4890-85c8-e1c87c63d834",
+        "Modified": "2014-02-18T22:56:15.127",
+        "PostTypeId": "1",
+        "ContentKey": "80616591-0e9f-41d3-9b73-7adef946edaf",
+        "ContentModified": "2014-02-18T22:56:15.127",
+        "Title": null,
+        "Text": "Konzepte f\u00fcr Basisdemokratie",
+        "CultureId": "2",
+      }]);
+
       seeder.save(storeUri, () => store["close"]());
     }
   });
@@ -44,7 +74,6 @@ export class Seeder {
 
   private readyForSeeding = false;
   private graph;
-  private nextId: { [entitySet: string]: number } = {};
 
   constructor(private store: rdfstore.Store) { }
 
@@ -67,32 +96,29 @@ export class Seeder {
     }
   }
 
+  public insertMany<T>(insertionFn: (T) => void, data: T[]) {
+    for (let entry of data) {
+      insertionFn.call(this, entry);
+    }
+  }
+
   public insertPost(data: DPost) {
     if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
-    const postIdentity = this.genNextIdentity("Posts");
-    const contentIdentity = this.genNextIdentity("Content");
-    const cultureUri = this.genEntityUri("Cultures", data.CultureId);
+    const postUri = this.uri(this.genEntityUri("Posts", data.Id));
+    const contentUri = this.genEntityUri("Content", data.ContentId);
     const postTypeUri = this.genEntityUri("PostTypes", data.PostTypeId);
 
-    this.triple(this.uri(postIdentity.uri), this.resolve("rdf:type"), this.resolve("disco:Post"));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:id"), this.literal(postIdentity.id));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:key"), this.literal(data.Key));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:foo"), this.literal("Hi"));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:modified"), this.literal(data.Modified));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:content"), this.uri(contentIdentity.uri));
-    this.triple(this.uri(postIdentity.uri), this.resolve("disco:postType"), this.uri(postTypeUri));
+    this.triple(postUri, this.resolve("rdf:type"), this.resolve("disco:Post"));
+    this.applyEntityBaseProperties(postUri, "disco:Post", data);
+    this.triple(postUri, this.resolve("disco:content"), this.uri(contentUri));
+    this.triple(postUri, this.resolve("disco:postType"), this.uri(postTypeUri));
+  }
 
-    this.triple(this.uri(contentIdentity.uri), this.resolve("rdf:type"), this.resolve("disco:Content"));
-    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:id"), this.literal(contentIdentity.id));
-    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:key"), this.literal(data.ContentKey));
-    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:foo"), this.literal("Hi"));
-    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:modified"), this.literal(data.ContentModified));
-    this.triple(this.uri(contentIdentity.uri), this.resolve("disco:culture"), this.uri(cultureUri));
+  public insertContent(data: DContent) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
+    const contentUri = this.uri(this.genEntityUri("Content", data.Id));
 
-    if (data.Title !== null)
-      this.triple(this.uri(contentIdentity.uri), this.uri("disco:title"), this.literal(data.Title));
-
-    this.triple(this.uri(contentIdentity.uri), this.uri("disco:text"), this.literal(data.Text));
+    this.applyEntityBaseProperties(contentUri, data);
   }
 
   public insertCulture(data: DCulture) {
@@ -131,19 +157,15 @@ export class Seeder {
       this.triple(this.uri(descriptionIdentity.uri), this.resolve("disco:description"), this.literal(data.Description));
   }
 
-  private genNextIdentity(entitySet: string): { id: string; uri: string } {
-    const id = this.genNextId(entitySet);
-    const uri = this.genEntityUri(entitySet, id);
-    return { id, uri };
+  public applyEntityBaseProperties(uri, rdfType: string, data: DEntity) {
+    this.triple(uri, this.resolve("rdf:type"), this.literal(rdfType));
+    this.triple(uri, this.resolve("disco:id"), this.literal(data.Id));
+    this.triple(uri, this.resolve("disco:key"), this.literal(data.Key));
+    this.triple(uri, this.resolve("disco:modified"), this.literal(data.Modified));
   }
 
   private genEntityUri(entitySet: string, entityId: string) {
     return `http://disco-network.org/resource/${entitySet}/${entityId}`;
-  }
-
-  private genNextId(entitySet: string): string {
-    this.nextId[entitySet] = this.nextId[entitySet] || 1;
-    return (this.nextId[entitySet]++).toString();
   }
 
   private triple(s, p, o) {
@@ -163,41 +185,34 @@ export class Seeder {
   }
 }
 
-/* D is prefix for data structures */
-export interface DPost {
-  readonly Key: string;
-  readonly ContentKey: string;
-  readonly Title?: string;
-  readonly Text: string;
-  readonly Modified: string;
-  readonly ContentModified: string;
-  readonly CultureId: string;
-  readonly PostTypeId: string;
-}
-
-export interface DCulture {
+export interface DEntity {
   readonly Id: string;
   readonly Key: string;
   readonly Modified: string;
+}
+
+/* D is prefix for data structures */
+export interface DPost extends DEntity {
+  readonly ContentId: string;
+  readonly PostTypeId: string;
+}
+
+export interface DContent extends DEntity {
+  readonly Title?: string;
+  readonly Text: string;
+  readonly CultureId: string;
+}
+
+export interface DCulture extends DEntity {
   readonly Code: string;
   readonly Name: string;
 }
 
-export interface DPostType {
-  readonly Id: string;
-  readonly Key: string;
-  readonly Modified: string;
-
-  readonly Description: string;
-  readonly DescriptionName: string;
-  readonly DescriptionKey: string;
-  readonly DescriptionModified: string;
+export interface DPostType extends DEntity {
+  readonly DescriptionId: string;
 }
 
-export interface DDescriptor {
-  readonly Id: string;
-  readonly Key: string;
-  readonly Modified: string;
+export interface DDescriptor extends DEntity {
   readonly Name: string;
   readonly Description: string;
   readonly CultureId: string;

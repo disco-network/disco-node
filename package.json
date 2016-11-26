@@ -11,8 +11,8 @@
     "url": "https://github.com/disco-network/disco-node.git"
   },
   "dependencies": {
-    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git#diskdb-persistence",
-    "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git",
+    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
+    "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git#diskdb-persistence",
     "typescript-mvc": "0.0.6"
   },
   "devDependencies": {

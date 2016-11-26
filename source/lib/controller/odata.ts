@@ -67,8 +67,12 @@ export class ODataController extends Controller {
     this.context.logger.log("OData query:", query);
 
     let responseSender: IHttpResponseSender = new ResponseSender();
-    let engine: IHttpRequestHandler =
-      new GetHandler(new Schema(this.discoSchema), this.context.dataProvider, this.context.dataProvider.graphName);
+    let engine =
+      new GetHandler(
+        new Schema(this.discoSchema),
+        this.context.dataProvider,
+        this.context.dataProvider.graphName,
+        this.context.logger);
     engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: "@todo",

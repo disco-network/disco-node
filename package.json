@@ -13,7 +13,7 @@
   "dependencies": {
     "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
     "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git#diskdb-persistence",
-    "typescript-mvc": "0.0.6"
+    "typescript-mvc": "git+https://git@github.com/mnemonic101/typescript-mvc"
   },
   "devDependencies": {
     "del": "^2.2.1",

@@ -1,8 +1,9 @@
 import { SparqlProvider } from "odata-rdf-interface";
 import * as RdfStore from "rdfstore";
 
-import {IDataAdapter, CallbackHandler} from "typescript-mvc";
+import {IDataAdapter, CallbackHandler, ILogger, Inject, AutoWired} from "typescript-mvc";
 
+@AutoWired
 export class Adapter extends IDataAdapter<SparqlProvider> {
 
   public provider: SparqlProvider;
@@ -11,6 +12,10 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
   private store: RdfStore.Store;
 
   private onInitialized: CallbackHandler = () => { ; };
+
+  constructor(@Inject private logger: ILogger) {
+    super();
+  }
 
   public initialize(cb: CallbackHandler): void {
     this.onInitialized = cb;
@@ -23,7 +28,7 @@ export class Adapter extends IDataAdapter<SparqlProvider> {
   private createStoreCallbackHandler(error: any, store: RdfStore.Store): void {
     this.store = store;
 
-    this.provider = new SparqlProvider(this.store, this.storeUri);
+    this.provider = new SparqlProvider(this.store, this.storeUri, this.logger);
     this.seed((err: any) => this.seedCallbackHandler(error));
   }
 

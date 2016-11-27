@@ -62,15 +62,21 @@ module.exports.seedDb = function () {
 }
 
 module.exports.executeSparql = function (query) {
+  console.log("creating rdfstore...");
+  var firstTimestamp = process.hrtime();
   rdfstore.create({ persistent: true }, function (err, store) {
     if (err) {
       console.log("\x1b[31m", "There was an error creating the store", err, "\x1b[0m");
+      var afterTime = process.hrtime(firstTimestamp);
+      console.log(`(after ${afterTime[0] + afterTime[1]/1000000000} seconds)`)
     } else {
 
       let sparqlQuery = "PREFIX disco: <" + storeUri + "> " + query;
 
       console.log("execute query [\x1b[7m", sparqlQuery.replace(/\s+/g, " "), "\x1b[0m]");
+      var timeBeforeQuery = process.hrtime();
       store.executeWithEnvironment(sparqlQuery, [storeUri], [], (error, results) => {
+        var queryDuration = process.hrtime(timeBeforeQuery);
         if (error) {
           console.log("\x1b[31m", "There was an error executing the query", error, "\x1b[0m");
           throw error;
@@ -80,6 +86,7 @@ module.exports.executeSparql = function (query) {
             console.log(element);
           });
         }
+        console.log(`Query took ${queryDuration[0] + queryDuration[1]/1000000000} seconds!`)
       });
     }
   });

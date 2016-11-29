@@ -1,13 +1,13 @@
-import {Controller, Route} from "typescript-mvc";
-import {OPTIONS} from "typescript-mvc";
-import {NotImplementedError} from "typescript-mvc";
-import {Promise, FileSystemHelper} from "typescript-mvc";
+import { Controller, Route } from "typescript-mvc";
+import { OPTIONS } from "typescript-mvc";
+import { NotImplementedError } from "typescript-mvc";
+import { Promise, FileSystemHelper } from "typescript-mvc";
 
-import {IHttpRequestHandler, IHttpResponseSender} from "odata-rdf-interface";
-import {GetHandler} from "odata-rdf-interface";
-import {Schema} from "odata-rdf-interface";
+import { IHttpResponseSender } from "odata-rdf-interface";
+import { GetHandler } from "odata-rdf-interface";
+import { Schema } from "odata-rdf-interface";
 
-import {ResponseSender} from "../system/responsesender";
+import { ResponseSender } from "../system/responsesender";
 
 import * as fs from "fs";
 
@@ -66,7 +66,8 @@ export class ODataController extends Controller {
     let query: string = this.request.query;
     this.context.logger.log("OData query:", query);
 
-    let responseSender: IHttpResponseSender = new ResponseSender();
+    let url = this.request.protocol + "://" + this.request.get("Host") + "/api/";
+    let responseSender: IHttpResponseSender = new ResponseSender(url);
     let engine =
       new GetHandler(
         new Schema(this.discoSchema),
@@ -78,6 +79,6 @@ export class ODataController extends Controller {
       body: "@todo",
     }, responseSender);
 
-    return (<ResponseSender> responseSender).promise;
+    return (<ResponseSender>responseSender).promise;
   }
 }

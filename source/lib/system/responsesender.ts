@@ -11,7 +11,7 @@ export class ResponseSender implements IHttpResponseSender, IActionResult<Respon
   public promise: Promise<ResponseData>;
   public data: ResponseData;
 
-  constructor() {
+  constructor(public requestUrl: string) {
     this.promise = new Promise((resolve: (data: ResponseData) => void, reject: (error: any) => void) => {
       this.resolve = resolve;
       this.reject = reject;
@@ -25,7 +25,8 @@ export class ResponseSender implements IHttpResponseSender, IActionResult<Respon
   }
 
   public sendBody(body: string) {
-    this.data.body = body;
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    this.data.body = body.replace(/http\:\/\/disco\-network\.org\/resource\//g, this.requestUrl);
   }
 
   public sendHeader(key: string, value: string) {

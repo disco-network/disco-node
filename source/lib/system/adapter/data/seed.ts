@@ -87,37 +87,38 @@ export class Seeder {
 
   public insertPosts(data: DPost) {
     if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
-    const postUri = this.genEntityUri("Posts", data.Id);
+    const uri = this.genEntityUri("Posts", data.Id);
 
-    this.applyEntityBaseProperties(postUri, "disco:Post", data);
+    this.applyEntityBaseProperties(uri, "disco:Post", data);
 
-    this.navProperty(postUri, "disco:content", "Content", data.ContentId);
-    this.navProperty(postUri, "disco:postType", "PostTypes", data.PostTypeId);
+    this.navProperty(uri, "disco:content", "Content", data.ContentId);
+    this.navProperty(uri, "disco:postType", "PostTypes", data.PostTypeId);
   }
 
   public insertContents(data: DContent) {
     if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
-    const contentUri = this.genEntityUri("Content", data.Id);
+    const uri = this.genEntityUri("Content", data.Id);
 
-    this.applyEntityBaseProperties(contentUri, "disco:Content", data);
+    this.applyEntityBaseProperties(uri, "disco:Content", data);
 
     if (data.Title)
-      this.property(contentUri, "disco:title", data.Title);
-    this.property(contentUri, "disco:text", data.Text);
-    this.navProperty(contentUri, "disco:culture", "Cultures", data.CultureId);
+      this.property(uri, "disco:title", data.Title);
+    this.property(uri, "disco:text", data.Text);
+    this.navProperty(uri, "disco:culture", "Cultures", data.CultureId);
   }
 
   public insertCultures(data: DCulture) {
     if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
-    const cultureUri = this.genEntityUri("Cultures", data.Id);
+    const uri = this.genEntityUri("Cultures", data.Id);
 
-    this.applyEntityBaseProperties(cultureUri, "disco:Culture", data);
+    this.applyEntityBaseProperties(uri, "disco:Culture", data);
 
-    this.property(cultureUri, "disco:code", data.Code);
-    this.property(cultureUri, "disco:name", data.Name);
+    this.property(uri, "disco:code", data.Code);
+    this.property(uri, "disco:name", data.Name);
   }
 
   public insertPostTypes(data: DPostType) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("PostTypes", data.Id);
 
     this.applyEntityBaseProperties(uri, "disco:PostType", data);
@@ -126,114 +127,127 @@ export class Seeder {
   }
 
   public insertDescriptors(data: DDescriptor) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Descriptors", data.Id);
 
     this.applyEntityBaseProperties(uri, "disco:Descriptor", data);
-    
+
     this.property(uri, "disco:name", data.Name);
     this.property(uri, "disco:description", data.Description);
     this.navProperty(uri, "disco:culture", "Cultures", data.CultureId);
   }
 
-  public insertPostReferenceTypes(data: DPostReferenceTypes) {
-    const uri = this.genEntityUri("Descriptors", data.Id);
+  public insertPostReferenceTypes(data: DPostReferenceType) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
+    const uri = this.genEntityUri("PostReferenceTypes", data.Id);
 
     this.applyEntityBaseProperties(uri, "disco:PostReferenceType", data);
-    
+
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
   }
 
-  public insertPostReferences(data: DPostReferences) {
+  public insertPostReferences(data: DPostReference) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("PostReferences", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:PostReferences", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:PostReference", data);
+
     this.navProperty(uri, "disco:referrer", "Posts", data.ReferrerId);
     this.navProperty(uri, "disco:referree", "Posts", data.ReferreeId);
     this.navProperty(uri, "disco:referenceType", "Posts", data.ReferenceTypeId);
   }
 
-  public insertOrigins(data: DOrigins) {
+  public insertOrigins(data: DOrigin) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Origins", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Origins", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Origin", data);
+
     this.property(uri, "disco:uri", data.Uri);
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
   }
 
-  public insertUsers(data: DUsers) {
+  public insertUsers(data: DUser) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Users", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Users", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:User", data);
+
     this.property(uri, "disco:alias", data.Alias);
     this.property(uri, "disco:token", data.Token);
     this.navProperty(uri, "disco:origin", "Origins", data.OriginId);
   }
 
-  public insertOriginators(data: DOriginators) {
+  public insertOriginators(data: DOriginator) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Originators", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Originators", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Originator", data);
+
     this.navProperty(uri, "disco:author", "Users", data.AuthorId);
     this.navProperty(uri, "disco:origin", "Origins", data.OriginId);
   }
 
-  public insertGroups(data: DGroups) {
+  public insertGroups(data: DGroup) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Groups", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Groups", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Group", data);
+
     this.property(uri, "disco:alias", data.Alias);
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
     this.navProperty(uri, "disco:parent", "Groups", data.ParentId);
   }
 
-  public insertGroupMembershipTypes(data: DGroupMembershipTypes) {
+  public insertGroupMembershipTypes(data: DGroupMembershipType) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("GroupMembershipTypes", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:GroupMembershipTypes", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:GroupMembershipType", data);
+
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
   }
 
-  public insertGroupMemberships(data: DGroupMemberships) {
+  public insertGroupMemberships(data: DGroupMembership) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("GroupMemberships", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:GroupMemberships", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:GroupMembership", data);
+
     this.navProperty(uri, "disco:membershipType", "GroupMembershipTypes", data.MembershipTypeId);
   }
 
-  public insertRatings(data: DRatings) {
+  public insertRatings(data: DRating) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Ratings", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Ratings", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Rating", data);
+
     this.property(uri, "disco:score", data.Score);
     this.navProperty(uri, "disco:post", "Posts", data.PostId);
     this.navProperty(uri, "disco:user", "Users", data.UserId);
   }
 
-  public insertTags(data: DTags) {
+  public insertTags(data: DTag) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Tags", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Tags", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Tag", data);
+
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
   }
 
-  public insertRegions(data: DRegions) {
+  public insertRegions(data: DRegion) {
+    if (!this.readyForSeeding) throw new Error("not ready for seeding, call begin().");
     const uri = this.genEntityUri("Regions", data.Id);
 
-    this.applyEntityBaseProperties(uri, "disco:Regions", data);
-    
+    this.applyEntityBaseProperties(uri, "disco:Region", data);
+
     this.property(uri, "disco:code", data.Code);
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
     this.navProperty(uri, "disco:parent", "Groups", data.ParentId);
   }
+
 
   public navProperty(uri, property: string, entitySet: string, id: string) {
     this.triple(uri, this.resolve(property), this.genEntityUri(entitySet, id));
@@ -304,57 +318,57 @@ export interface DDescriptor extends DEntity {
   readonly CultureId: string;
 }
 
-export interface DPostReferenceTypes extends DEntity {
+export interface DPostReferenceType extends DEntity {
   readonly DescriptionId: string;
 }
 
-export interface DPostReferences extends DEntity {
+export interface DPostReference extends DEntity {
   readonly ReferrerId: string;
   readonly ReferreeId: string;
   readonly ReferenceTypeId: string;
 }
 
-export interface DOrigins extends DEntity {
+export interface DOrigin extends DEntity {
   readonly Uri: string;
   readonly DescriptionId: string;
 }
 
-export interface DUsers extends DEntity {
+export interface DUser extends DEntity {
   readonly Alias: string;
   readonly Token: string;
   readonly OriginId: string;
 }
 
-export interface DOriginators extends DEntity {
+export interface DOriginator extends DEntity {
   readonly AuthorId: string;
   readonly OriginId: string;
 }
 
-export interface DGroups extends DEntity {
+export interface DGroup extends DEntity {
   readonly Alias: string;
   readonly DescriptionId: string;
   readonly ParentId: string;
 }
 
-export interface DGroupMembershipTypes extends DEntity {
+export interface DGroupMembershipType extends DEntity {
   readonly DescriptionId: string;
 }
 
-export interface DGroupMemberships extends DEntity {
+export interface DGroupMembership extends DEntity {
   readonly MembershipTypeId: string;
 }
 
-export interface DRatings extends DEntity {
+export interface DRating extends DEntity {
   readonly Score: string;
   readonly PostId: string;
   readonly UserId: string;
 }
 
-export interface DTags extends DEntity {
+export interface DTag extends DEntity {
   readonly DescriptionId: string;
 }
 
-export interface DRegions extends DEntity {
+export interface DRegion extends DEntity {
   readonly Code: string;
   readonly DescriptionId: string;
   readonly ParentId: string;

@@ -3,7 +3,7 @@
     "Culture": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -30,7 +30,7 @@
     "Post": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -48,7 +48,7 @@
           "rdfName": "modifiedBy"
         },
         "PostTypeId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "PostType"
         },
         "PostType": {
@@ -57,7 +57,7 @@
           "rdfName": "postType"
         },
         "ContentId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Content"
         },
         "Content": {
@@ -95,7 +95,7 @@
     "PostReference": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -113,7 +113,7 @@
           "rdfName": "referrer"
         },
         "ReferrerId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "PostReference"
         },
         "Referree": {
@@ -122,11 +122,11 @@
           "rdfName": "referree"
         },
         "ReferreeId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "PostReference"
         },
         "ReferenceTypeId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "ReferenceType"
         },
         "ReferenceType": {
@@ -140,7 +140,7 @@
     "Region": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -157,7 +157,7 @@
           "rdfName": "code"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -165,7 +165,7 @@
           "rdfName": "description"
         },
         "ParentId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Parent"
         },
         "Parent": {
@@ -188,7 +188,7 @@
     "Origin": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -205,7 +205,7 @@
           "rdfName": "uri"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -218,7 +218,7 @@
     "Originator": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -231,7 +231,7 @@
           "rdfName": "modified"
         },
         "AuthorId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Author"
         },
         "Author": {
@@ -239,7 +239,7 @@
           "rdfName": "author"
         },
         "OriginId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Origin"
         },
         "Origin": {
@@ -252,7 +252,7 @@
     "Descriptor": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -273,7 +273,7 @@
           "rdfName": "description"
         },
         "CultureId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Culture"
         },
         "Culture": {
@@ -287,7 +287,7 @@
     "User": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -314,7 +314,7 @@
           "cardinality": "many-to-many"
         },
         "OriginId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Origin"
         },
         "Origin": {
@@ -327,7 +327,7 @@
     "Group": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -344,7 +344,7 @@
           "rdfName": "alias"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -352,7 +352,7 @@
           "rdfName": "description"
         },
         "ParentId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Parent"
         },
         "Parent": {
@@ -376,7 +376,7 @@
     "GroupMembership": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -389,7 +389,7 @@
           "rdfName": "modified"
         },
         "MembershipTypeId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "MembershipType"
         },
         "MembershipType": {
@@ -410,7 +410,7 @@
     "GroupMembershipType": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -423,7 +423,7 @@
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -436,7 +436,7 @@
     "PostReferenceType": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -449,7 +449,7 @@
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -462,7 +462,7 @@
     "PostType": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -475,7 +475,7 @@
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -488,7 +488,7 @@
     "Tag": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -501,7 +501,7 @@
           "rdfName": "modified"
         },
         "DescriptionId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Description"
         },
         "Description": {
@@ -525,7 +525,7 @@
     "Rating": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -547,7 +547,7 @@
           "rdfName": "score"
         },
         "PostId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Post"
         },
         "Post": {
@@ -555,7 +555,7 @@
           "rdfName": "post"
         },
         "UserId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "User"
         },
         "User": {
@@ -568,7 +568,7 @@
     "Content": {
       "properties": {
         "Id": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "generated": "integer",
           "rdfName": "id"
         },
@@ -594,7 +594,7 @@
           "rdfName": "text"
         },
         "CultureId": {
-          "type": "Edm.Integer",
+          "type": "Edm.Int32",
           "foreignProperty": "Culture"
         },
         "Culture": {

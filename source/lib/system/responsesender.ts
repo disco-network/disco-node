@@ -1,7 +1,7 @@
-import {IActionResult, ResponseData} from "typescript-mvc";
-import {Promise} from "typescript-mvc";
+import { IActionResult, ResponseData } from "typescript-mvc";
+import { Promise } from "typescript-mvc";
 
-import {IHttpResponseSender} from "odata-rdf-interface";
+import { IHttpResponseSender } from "odata-rdf-interface";
 
 export class ResponseSender implements IHttpResponseSender, IActionResult<ResponseData> {
 
@@ -29,7 +29,9 @@ export class ResponseSender implements IHttpResponseSender, IActionResult<Respon
   }
 
   public sendHeader(key: string, value: string) {
-    this.data.headers[key] = value;
+    if (key !== "Content-Length") {
+      this.data.headers[key] = value;
+    }
   }
 
   public finishResponse() {

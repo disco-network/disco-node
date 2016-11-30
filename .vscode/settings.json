@@ -3,5 +3,6 @@
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "typescript.check.workspaceVersion": false
+  "typescript.check.workspaceVersion": true,
+  "typescript.tsdk": "./node_modules/typescript/lib"
 }

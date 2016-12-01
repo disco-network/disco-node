@@ -58,7 +58,7 @@ export class ODataController extends Controller {
   }
 
   @Route("/:entity")
-  public entityset(): any {
+  public entityset(): Promise<any> {
     this.context.logger.log("ODataController ENTITYSET called!");
 
     let entitySetName: string = this.request.params["entity"];

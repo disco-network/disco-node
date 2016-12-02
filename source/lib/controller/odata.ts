@@ -57,7 +57,7 @@ export class ODataController extends Controller {
     return promise;
   }
 
-  @Route("/:entity")
+  @Route("/:entity*")
   public entityset(): Promise<any> {
     this.context.logger.log("ODataController ENTITYSET called!");
 
@@ -66,10 +66,13 @@ export class ODataController extends Controller {
     let query: string = this.request.query;
     this.context.logger.log("OData query:", query);
 
-    let url = this.request.protocol + "://" + this.request.get("Host") + "/api/";
-    let responseSender: IHttpResponseSender = new ResponseSender(url);
+    let responseSender: IHttpResponseSender = new ResponseSender();
+
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    let url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
     let engine =
       new GetHandler(
+        url,
         new Schema(this.discoSchema),
         this.context.dataProvider,
         this.context.dataProvider.graphName,

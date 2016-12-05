@@ -9,13 +9,21 @@ The [`disco-node`](https://github.com/disco-network/disco-node) repository is wh
 * Review [source code changes](https://github.com/disco-network/disco-node/pulls)
 * Review the [documentation](https://github.com/disco-network/disco-node-docs) and make pull requests for anything from typos to new content
 
-We are using [`vscode`](https://code.visualstudio.com/) for development.
-
 ## Prerequisites
 
 You will need [`nodejs`](https://nodejs.org/), at least v4.4.7, to run [`disco-node`](https://github.com/disco-network/disco-node).
 
 ### For Development
+
+We are using [`vscode`](https://code.visualstudio.com/) for development.
+
+#### Setup
+
+Currently we do use `disco-node.local` as the local hostname. You could either change this in the configuration file `./source/lib/settings.json` for the the odata endpoint.
+Or you could configure this hostname alias in your `/etc/hosts` file. That's up to you.
+
+#### Dependencies
+
 We are using [`TypeScript`](https://www.typescriptlang.org/) as programming language.
 ```
 npm install typescript

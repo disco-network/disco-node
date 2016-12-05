@@ -1,6 +1,4 @@
 import * as rdfstore from "rdfstore";
-import * as path from "path";
-import * as fs from "fs";
 
 const storeUri = "http://disco-network.org/resource/";
 
@@ -154,7 +152,7 @@ export class Seeder {
 
     this.navProperty(uri, "disco:referrer", "Posts", data.ReferrerId);
     this.navProperty(uri, "disco:referree", "Posts", data.ReferreeId);
-    this.navProperty(uri, "disco:referenceType", "Posts", data.ReferenceTypeId);
+    this.navProperty(uri, "disco:referenceType", "PostReferenceTypes", data.ReferenceTypeId);
   }
 
   public insertOrigins(data: DOrigin) {
@@ -245,7 +243,7 @@ export class Seeder {
 
     this.property(uri, "disco:code", data.Code);
     this.navProperty(uri, "disco:description", "Descriptors", data.DescriptionId);
-    this.navProperty(uri, "disco:parent", "Groups", data.ParentId);
+    this.navProperty(uri, "disco:parent", "Regions", data.ParentId);
   }
 
 
@@ -372,4 +370,5 @@ export interface DRegion extends DEntity {
   readonly Code: string;
   readonly DescriptionId: string;
   readonly ParentId: string;
+  readonly Partitions: DRegion[];
 }

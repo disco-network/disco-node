@@ -107,23 +107,23 @@
           "type": "Edm.String",
           "rdfName": "modified"
         },
+        "ReferrerId": {
+          "type": "Edm.Int32",
+          "foreignProperty": "Referrer"
+        },
         "Referrer": {
           "type": "Post",
           "cardinality": "one-to-many",
           "rdfName": "referrer"
         },
-        "ReferrerId": {
+        "ReferreeId": {
           "type": "Edm.Int32",
-          "foreignProperty": "PostReference"
+          "foreignProperty": "Referree"
         },
         "Referree": {
           "type": "Post",
           "cardinality": "one-to-many",
           "rdfName": "referree"
-        },
-        "ReferreeId": {
-          "type": "Edm.Int32",
-          "foreignProperty": "PostReference"
         },
         "ReferenceTypeId": {
           "type": "Edm.Int32",
@@ -131,7 +131,6 @@
         },
         "ReferenceType": {
           "type": "PostReferenceType",
-          "cardinality": "one-to-many",
           "rdfName": "referenceType"
         }
       },
@@ -174,12 +173,14 @@
         },
         "Partitions": {
           "type": "Region",
-          "cardinality": "one-to-many",
+          "inverseProperty": "ParentId",
+          "foreignSet": "Regions",
+          "cardinality": "many-to-many",
           "rdfName": "partitions"
         },
         "Posts": {
           "type": "Post",
-          "cardinality": "one-to-many",
+          "optional": true,
           "rdfName": "posts"
         }
       },

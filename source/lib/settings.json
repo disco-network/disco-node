@@ -1,6 +1,6 @@
 {
   "protocol": "http",
-  "hostname": "localhost",
+  "hostname": "disco-node.local",
   "port": 3000,
   "root": "/"
 }

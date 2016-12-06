@@ -1,7 +1,10 @@
 import { Controller, Route } from "typescript-mvc";
 import { OPTIONS } from "typescript-mvc";
 import { NotImplementedError } from "typescript-mvc";
-import { Promise, FileSystemHelper } from "typescript-mvc";
+
+/* TS2529 Duplicate identifier 'Promise'. 
+Compiler reserves name 'Promise' in top level scope of a module containing async functions*/ 
+import { Promise as Promiz, FileSystemHelper } from "typescript-mvc";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
 import { GetHandler } from "odata-rdf-interface";
@@ -28,7 +31,7 @@ export class ODataController extends Controller {
   }
 
   @Route("/\\$batch")
-  public batch(): Promise<string> {
+  public batch(): Promiz<string> {
     this.context.logger.log("ODataController BATCH called!");
 
     throw new NotImplementedError();
@@ -44,7 +47,7 @@ export class ODataController extends Controller {
     let filename = "disco-metadata.xml";
     let filepath = FileSystemHelper.locateFolderOf(filename);
 
-    let promise = new Promise<string>((resolve: (data: string) => void, reject: (reason: string) => void) => {
+    let promise = new Promiz<string>((resolve: (data: string) => void, reject: (reason: string) => void) => {
       fs.readFile(filepath + "/" + filename, (error: NodeJS.ErrnoException, data: Buffer) => {
         if (error) {
           reject(error.message);
@@ -58,7 +61,7 @@ export class ODataController extends Controller {
   }
 
   @Route("/:entity*")
-  public entityset(): Promise<any> {
+  public async entityset(): Promiz<any> {
     this.context.logger.log("ODataController ENTITYSET called!");
 
     let entitySetName: string = this.request.params["entity"];
@@ -70,7 +73,7 @@ export class ODataController extends Controller {
 
     // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
     let url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
-    let engine =
+    let engine = await
       new GetHandler(
         url,
         new Schema(this.discoSchema),

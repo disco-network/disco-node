@@ -1,4 +1,4 @@
-import { Controller, Route } from "typescript-mvc";
+import { Trace, Controller, Route } from "typescript-mvc";
 import { OPTIONS } from "typescript-mvc";
 import { NotImplementedError } from "typescript-mvc";
 
@@ -14,6 +14,7 @@ import { ResponseSender } from "../system/responsesender";
 
 import * as fs from "fs";
 
+@Trace
 @Route("/api/odata")
 export class ODataController extends Controller {
 

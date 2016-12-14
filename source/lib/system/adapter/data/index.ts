@@ -1,1 +1,1 @@
-export * from "./rdfstore";
+export * from "./sparql";

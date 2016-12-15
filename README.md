@@ -45,6 +45,12 @@ npm install jasmine
 npm install
 ```
 
+To use some dummy data, you can seed the rdf store with some test data:
+```shell
+gulp seed-db
+```
+Be patient - this might take some time!
+
 ## Usage
 
 ```shell

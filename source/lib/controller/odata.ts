@@ -79,7 +79,7 @@ export class ODataController extends Controller {
         url,
         new Schema(this.discoSchema),
         this.context.dataProvider,
-        this.context.dataProvider.graphName,
+        "http://disco-network.org/resource/",
         this.context.logger);
     engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),

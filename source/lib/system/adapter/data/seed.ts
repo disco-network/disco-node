@@ -1,78 +1,70 @@
-import * as rdfstore from "rdfstore";
-
-const storeUri = "http://disco-network.org/resource/";
+import * as fs from "fs";
 
 export function seed() {
-  rdfstore.create({ persistent: true }, (error, store) => {
-    if (error)
-      console.log("\x1b[31m", "There was an error creating the store", error, "\x1b[0m");
-    else {
-      const seeder = new Seeder(store);
-      seeder.begin();
+  const seeder = new Seeder("./seed.ttl");
+  seeder.begin();
 
-      const dbSeedFolderPath = "../../../../../db/seed";
+  const dbSeedFolderPath = "../../../../../db/seed";
 
-      const cultures = require(`${dbSeedFolderPath}/01_Cultures.json`).value;
-      const content = require(`${dbSeedFolderPath}/02_Content.json`).value;
-      const descriptors = require(`${dbSeedFolderPath}/03_Descriptors.json`).value;
-      const postTypes = require(`${dbSeedFolderPath}/10_PostTypes.json`).value;
-      const posts = require(`${dbSeedFolderPath}/11_Posts.json`).value;
-      const postReferenceTypes = require(`${dbSeedFolderPath}/15_PostReferenceTypes.json`).value;
-      const postReferences = require(`${dbSeedFolderPath}/16_PostReferences.json`).value;
-      const origins = require(`${dbSeedFolderPath}/20_Origins.json`).value;
-      const users = require(`${dbSeedFolderPath}/21_Users.json`).value;
-      const originators = require(`${dbSeedFolderPath}/22_Originators.json`).value;
-      const groups = require(`${dbSeedFolderPath}/30_Groups.json`).value;
-      const groupMembershipTypes = require(`${dbSeedFolderPath}/31_GroupMembershipTypes.json`).value;
-      const groupMemberships = require(`${dbSeedFolderPath}/32_GroupMemberships.json`).value;
-      const ratings = require(`${dbSeedFolderPath}/40_Ratings.json`).value;
-      const tags = require(`${dbSeedFolderPath}/50_Tags.json`).value;
-      const regions = require(`${dbSeedFolderPath}/60_Regions.json`).value;
+  const cultures = require(`${dbSeedFolderPath}/01_Cultures.json`).value;
+  const content = require(`${dbSeedFolderPath}/02_Content.json`).value;
+  const descriptors = require(`${dbSeedFolderPath}/03_Descriptors.json`).value;
+  const postTypes = require(`${dbSeedFolderPath}/10_PostTypes.json`).value;
+  const posts = require(`${dbSeedFolderPath}/11_Posts.json`).value;
+  const postReferenceTypes = require(`${dbSeedFolderPath}/15_PostReferenceTypes.json`).value;
+  const postReferences = require(`${dbSeedFolderPath}/16_PostReferences.json`).value;
+  const origins = require(`${dbSeedFolderPath}/20_Origins.json`).value;
+  const users = require(`${dbSeedFolderPath}/21_Users.json`).value;
+  const originators = require(`${dbSeedFolderPath}/22_Originators.json`).value;
+  const groups = require(`${dbSeedFolderPath}/30_Groups.json`).value;
+  const groupMembershipTypes = require(`${dbSeedFolderPath}/31_GroupMembershipTypes.json`).value;
+  const groupMemberships = require(`${dbSeedFolderPath}/32_GroupMemberships.json`).value;
+  const ratings = require(`${dbSeedFolderPath}/40_Ratings.json`).value;
+  const tags = require(`${dbSeedFolderPath}/50_Tags.json`).value;
+  const regions = require(`${dbSeedFolderPath}/60_Regions.json`).value;
 
-      seeder.insertMany(seeder.insertCultures, cultures);
-      seeder.insertMany(seeder.insertContents, content);
-      seeder.insertMany(seeder.insertDescriptors, descriptors);
-      seeder.insertMany(seeder.insertPostTypes, postTypes);
-      seeder.insertMany(seeder.insertPosts, posts);
-      seeder.insertMany(seeder.insertPostReferenceTypes, postReferenceTypes);
-      seeder.insertMany(seeder.insertPostReferences, postReferences);
-      seeder.insertMany(seeder.insertOrigins, origins);
-      seeder.insertMany(seeder.insertUsers, users);
-      seeder.insertMany(seeder.insertOriginators, originators);
-      seeder.insertMany(seeder.insertGroups, groups);
-      seeder.insertMany(seeder.insertGroupMembershipTypes, groupMembershipTypes);
-      seeder.insertMany(seeder.insertGroupMemberships, groupMemberships);
-      seeder.insertMany(seeder.insertRatings, ratings);
-      seeder.insertMany(seeder.insertTags, tags);
-      seeder.insertMany(seeder.insertRegions, regions);
+  seeder.insertMany(seeder.insertCultures, cultures);
+  seeder.insertMany(seeder.insertContents, content);
+  seeder.insertMany(seeder.insertDescriptors, descriptors);
+  seeder.insertMany(seeder.insertPostTypes, postTypes);
+  seeder.insertMany(seeder.insertPosts, posts);
+  seeder.insertMany(seeder.insertPostReferenceTypes, postReferenceTypes);
+  seeder.insertMany(seeder.insertPostReferences, postReferences);
+  seeder.insertMany(seeder.insertOrigins, origins);
+  seeder.insertMany(seeder.insertUsers, users);
+  seeder.insertMany(seeder.insertOriginators, originators);
+  seeder.insertMany(seeder.insertGroups, groups);
+  seeder.insertMany(seeder.insertGroupMembershipTypes, groupMembershipTypes);
+  seeder.insertMany(seeder.insertGroupMemberships, groupMemberships);
+  seeder.insertMany(seeder.insertRatings, ratings);
+  seeder.insertMany(seeder.insertTags, tags);
+  seeder.insertMany(seeder.insertRegions, regions);
 
-      seeder.save(storeUri, () => store["close"]());
-    }
-  });
+  seeder.save();
 }
 
 export class Seeder {
 
   private readyForSeeding = false;
-  private graph;
+  private out: string;
 
-  constructor(private store: rdfstore.Store) { }
+  constructor(private file: string) { }
 
   public begin() {
     if (!this.readyForSeeding) {
-      this.store.rdf.setPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-      this.store.rdf.setPrefix("disco", "http://disco-network.org/resource/");
-      this.graph = this.store.rdf.createGraph();
+      this.out =
+`@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix disco:   <http://disco-network.org/resource/> .
 
+`;
       this.readyForSeeding = true;
     }
   }
 
-  public save(graphName: string, cb: () => void) {
+  public save() {
     if (this.readyForSeeding) {
-      this.store.insert(this.graph, graphName, cb);
-
-      this.graph = undefined;
+      fs.writeFileSync(this.file, this.out, { encoding: "utf8", flag: "w" });
       this.readyForSeeding = false;
     }
   }
@@ -131,7 +123,7 @@ export class Seeder {
     this.applyEntityBaseProperties(uri, "disco:Descriptor", data);
 
     this.property(uri, "disco:name", data.Name);
-    this.property(uri, "disco:description", data.Description);
+    if (data.Description) this.property(uri, "disco:description", data.Description);
     this.navProperty(uri, "disco:culture", "Cultures", data.CultureId);
   }
 
@@ -246,7 +238,6 @@ export class Seeder {
     this.navProperty(uri, "disco:parent", "Regions", data.ParentId);
   }
 
-
   public navProperty(uri, property: string, entitySet: string, id: string) {
     this.triple(uri, this.resolve(property), this.genEntityUri(entitySet, id));
   }
@@ -267,19 +258,31 @@ export class Seeder {
   }
 
   private triple(s, p, o) {
-    this.graph.add(this.store.rdf.createTriple(s, p, o));
+    this.out += `${s} ${p} ${o} .\n`;
   }
 
   private uri(uri: string) {
-    return this.store.rdf.createNamedNode(uri);
+    return `<${uri}>`;
   }
 
   private resolve(prefixed: string) {
-    return this.store.rdf.createNamedNode(this.store.rdf.resolve(prefixed));
+    return prefixed;
   }
 
-  private literal(value: string, type?: string) {
-    return this.store.rdf.createLiteral(value, type);
+  private literal(value: string | number, type?: string) {
+    value = value.toString().replace(new RegExp("\\\\", "g"), "\\\\");
+    value = value.replace(new RegExp("\t", "g"), "\\t");
+    value = value.replace(new RegExp("\b", "g"), "\\b");
+    value = value.replace(new RegExp("\n", "g"), "\\n");
+    value = value.replace(new RegExp("\r", "g"), "\\r");
+    value = value.replace(new RegExp("\f", "g"), "\\f");
+    value = value.replace(new RegExp("'", "g"), "\\'");
+    value = value.replace(new RegExp("\"", "g"), "\\\"");
+
+    if (type)
+      return `"${value}"^^${type}`;
+    else
+      return `"${value}"`;
   }
 }
 

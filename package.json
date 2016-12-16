@@ -11,9 +11,8 @@
     "url": "https://github.com/disco-network/disco-node.git"
   },
   "dependencies": {
-    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git",
-    "rdfstore": "git+https://git@github.com/disco-network/rdfstore-js.git#diskdb-persistence",
-    "typescript-mvc": "git+https://git@github.com/mnemonic101/typescript-mvc"
+    "irony": "git+https://github.com/mnemonic101/irony.git",
+    "odata-rdf-interface": "git+https://github.com/disco-network/odata-rdf-interface.git"
   },
   "devDependencies": {
     "del": "^2.2.1",
@@ -39,7 +38,10 @@
   },
   "scripts": {
     "test": "gulp specs",
-    "build": "gulp build"
+    "build": "gulp build",
+    "postinstall": "gulp build",
+    "server": "node ./build/lib/server.js",
+    "store": "cd ../apache-jena-fuseki-2.4.1/ && ./fuseki-server --file ../disco-node/build/db/init.ttl /api"
   },
   "keywords": [
     "OData",

@@ -22,7 +22,7 @@
       "outFiles": [
         "${workspaceRoot}/build/**/*.js",
         "!${workspaceRoot}/build/spec/**/*.js",
-        "${workspaceRoot}/node_modules/typescript-mvc/build/**/*.js",
+        "${workspaceRoot}/node_modules/irony/build/**/*.js",
         "${workspaceRoot}/node_modules/odata-rdf-interface/build/**/*.js"
       ]
     },

@@ -1,7 +1,4 @@
 /node_modules
-/maps
-/lib
 /build
-/db/*.json
-/db/seed/data/*.jsonld
 *.txt
+*.log

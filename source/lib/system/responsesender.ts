@@ -1,5 +1,5 @@
-import { IActionResult, ResponseData } from "typescript-mvc";
-import { Promise } from "typescript-mvc";
+import { IActionResult, ResponseData } from "irony";
+import { Promise } from "irony";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
 

@@ -1,10 +1,10 @@
 import * as fs from "fs";
 
 export function seed() {
-  const seeder = new Seeder("./seed.ttl");
+  const seeder = new Seeder(__dirname + "/../init.ttl");
   seeder.begin();
 
-  const dbSeedFolderPath = "../../../../../db/seed";
+  const dbSeedFolderPath = __dirname + "/data";
 
   const cultures = require(`${dbSeedFolderPath}/01_Cultures.json`).value;
   const content = require(`${dbSeedFolderPath}/02_Content.json`).value;

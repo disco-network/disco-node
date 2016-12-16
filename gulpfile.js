@@ -1,7 +1,6 @@
 "use strict";
 var fs = require("fs");
 var path = require("path");
-var dbConfig = require("./db/config.js");
 var merge = require('merge2');
 var gulp = require("gulp"),
   runSequence = require("run-sequence"),
@@ -59,8 +58,22 @@ function build(sourcePath, base, targetPath) {
 gulp.task("build-spec", function () {
   return build(["source/**/*.ts", "typings/**.d.ts", "!./node_modules/**"], "./source", "");
 });
+
 gulp.task("build-lib", function () {
   return build(["source/lib/**/*.ts", "typings/**.d.ts", "!./node_modules/**"], "./source", "lib");
+});
+
+gulp.task("build-turtle", function () {
+  var seed = require("./build/db/seed/seeder.js").seed;
+  return seed();
+})
+
+gulp.task("build-seeder", function () {
+  return build(["source/db/**/*.ts", "typings/**.d.ts", "!./node_modules/**"], "./source", "db");
+});
+
+gulp.task("build-db", function () {
+  return runSequence("build-seeder", "build-turtle");
 });
 
 gulp.task("build-package.json", function () {
@@ -85,18 +98,18 @@ gulp.task("build-package.json", function () {
 
 gulp.task("copy", function () {
   return gulp.src([
-    "./source/lib/*.json",
-    "./source/lib/*.xml",
+    "./source/**/*.json",
+    "./source/**/*.xml",
     "README.md",
     "LICENSE"
   ])
-    .pipe(gulp.dest("build/lib"));
+    .pipe(gulp.dest("build/"));
 });
 
 gulp.task("build", function (cb) {
   return runSequence(
     "clean-all",
-    "build-lib", "copy", "build-package.json",
+    "copy", "build-lib", "build-db", "build-package.json",
     cb
   );
 });
@@ -106,38 +119,3 @@ gulp.task("clean-all", function () {
 });
 
 gulp.task("specs");
-
-gulp.task("server", function () {
-  require("./build/lib/server");
-});
-
-
-gulp.task("build-json-ld", function () {
-  return dbConfig.buildJsonLd();
-});
-
-gulp.task("seed-db-old", ["build-json-ld"], function () {
-  return dbConfig.seedDb();
-});
-
-gulp.task("seed-db", function () {
-  var seed = require("./build/lib/system/adapter/data/seed.js").seed;
-  return seed();
-})
-
-gulp.task("clean-db", function () {
-  return del(["./db/rdfstorejs_*.json", "./db/seed/data/*.jsonld"]);
-});
-
-gulp.task("build-db", function (cb) {
-  return runSequence(
-    "clean-db",
-    ["build-json-ld", "seed-db"],
-    cb
-  );
-});
-
-var util = require('gulp-util');
-gulp.task("execute-sparql", function () {
-  dbConfig.executeSparql(util.env.query);
-});

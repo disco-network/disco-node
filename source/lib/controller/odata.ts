@@ -1,10 +1,10 @@
-import { Trace, Controller, Route } from "typescript-mvc";
-import { OPTIONS } from "typescript-mvc";
-import { NotImplementedError } from "typescript-mvc";
+import { Trace, Controller, Route } from "irony";
+import { OPTIONS } from "irony";
+import { NotImplementedError } from "irony";
 
 /* TS2529 Duplicate identifier 'Promise'. 
 Compiler reserves name 'Promise' in top level scope of a module containing async functions*/
-import { Promise as Promiz, FileSystemHelper } from "typescript-mvc";
+import { Promise as Promiz, FileSystemHelper } from "irony";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
 import { GetHandler } from "odata-rdf-interface";

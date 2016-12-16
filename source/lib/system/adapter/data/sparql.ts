@@ -1,7 +1,7 @@
 import { ServiceBasedSparqlProvider } from "odata-rdf-interface";
 import { ISparqlProvider } from "odata-rdf-interface/build/lib/sparql/sparql_provider_base";
 
-import {IDataAdapter, CallbackHandler, ILogger, Inject, AutoWired} from "typescript-mvc";
+import {IDataAdapter, CallbackHandler, ILogger, Inject, AutoWired} from "irony";
 
 @AutoWired
 export class Adapter extends IDataAdapter<ISparqlProvider> {

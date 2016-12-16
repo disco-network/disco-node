@@ -1,6 +1,6 @@
-import {IDataContext, IDataAdapter, IInitializer} from "typescript-mvc";
-import {AutoWired, Inject} from "typescript-mvc";
-import {Promise} from "typescript-mvc";
+import {IDataContext, IDataAdapter, IInitializer} from "irony";
+import {AutoWired, Inject} from "irony";
+import {Promise} from "irony";
 
 import { SparqlProvider } from "odata-rdf-interface";
 

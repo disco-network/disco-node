@@ -3,7 +3,7 @@ import { OPTIONS } from "typescript-mvc";
 import { NotImplementedError } from "typescript-mvc";
 
 /* TS2529 Duplicate identifier 'Promise'. 
-Compiler reserves name 'Promise' in top level scope of a module containing async functions*/ 
+Compiler reserves name 'Promise' in top level scope of a module containing async functions*/
 import { Promise as Promiz, FileSystemHelper } from "typescript-mvc";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
@@ -81,7 +81,7 @@ export class ODataController extends Controller {
         this.context.dataProvider,
         "http://disco-network.org/resource/",
         this.context.logger);
-    engine.query({
+    await engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: "@todo",
     }, responseSender);

@@ -7,7 +7,7 @@ Compiler reserves name 'Promise' in top level scope of a module containing async
 import { Promise as Promiz, FileSystemHelper } from "irony";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
-import { GetHandler } from "odata-rdf-interface";
+import { GetHandler, PostHandler } from "odata-rdf-interface";
 import { Schema } from "odata-rdf-interface";
 
 import { ResponseSender } from "../system/responsesender";
@@ -26,7 +26,7 @@ export class ODataController extends Controller {
     this.context.logger.log("ODataController OPTIONS called!");
 
     this.response.header("Access-Control-Allow-Headers",
-      "authorization,content-type,dataserviceversion,maxdataserviceversion,accept");
+      "authorization,content-type,dataserviceversion,maxdataserviceversion,accept,odata-maxversion,odata-version,content-id");
     this.response.header("Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE,PUT,HEAD");
     // this.response.header("Access-Control-Expose-Headers", "dataserviceversion,maxdataserviceversion");
   }
@@ -65,27 +65,56 @@ export class ODataController extends Controller {
   public async entityset(): Promiz<any> {
     this.context.logger.log("ODataController ENTITYSET called!");
 
-    let entitySetName: string = this.request.params["entity"];
+    const entitySetName: string = this.request.params["entity"];
     this.context.logger.log("OData entity set:", entitySetName);
-    let query: string = this.request.query;
+    const query: string = this.request.query;
     this.context.logger.log("OData query:", query);
 
-    let responseSender: IHttpResponseSender = new ResponseSender();
+    const responseSender: IHttpResponseSender = new ResponseSender();
 
     // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
-    let url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
-    let engine = await
-      new GetHandler(
-        url,
-        new Schema(this.discoSchema),
-        this.context.dataProvider,
-        "http://disco-network.org/resource/",
-        this.context.logger);
-    await engine.query({
+    const url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
+    const engine = new GetHandler(
+      url,
+      new Schema(this.discoSchema),
+      this.context.dataProvider,
+      "http://disco-network.org/resource/",
+      this.context.logger);
+    engine.query({
+      relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
+      body: this.request.body,
+    }, responseSender);
+
+    this.context.logger.debug(`Request body: ${this.request.body.substr(0,6)}`);
+
+    return (responseSender as ResponseSender).promise;
+  }
+
+  @Route("/:entity")
+  public async postEntitySet(): Promiz<any> {
+    this.context.logger.log("ODataController ENTITYSET called!");
+
+    const entitySetName: string = this.request.params["entity"];
+    this.context.logger.log("OData entity set:", entitySetName);
+    const query: string = this.request.query;
+    this.context.logger.log("OData query:", query);
+
+    const responseSender: IHttpResponseSender = new ResponseSender();
+
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    const url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
+
+    const engine = new PostHandler(
+      url,
+      new Schema(this.discoSchema),
+      this.context.dataProvider,
+      "http://disco-network.org/resource/");
+
+    engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: "@todo",
     }, responseSender);
 
-    return (<ResponseSender>responseSender).promise;
+    return (responseSender as ResponseSender).promise;
   }
 }

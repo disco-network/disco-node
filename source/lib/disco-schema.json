@@ -53,7 +53,6 @@
         },
         "PostType": {
           "type": "PostType",
-          "cardinality": "one-to-one",
           "rdfName": "postType"
         },
         "ContentId": {
@@ -62,32 +61,31 @@
         },
         "Content": {
           "type": "Content",
-          "cardinality": "one-to-many",
           "rdfName": "content"
         },
         "Tags": {
           "type": "Tag",
           "optional": true,
-          "cardinality": "many-to-many",
+          "isArray": true,
           "rdfName": "tag"
         },
         "Ratings": {
           "type": "Rating",
           "optional": true,
-          "cardinality": "one-to-many",
+          "isArray": true,
           "rdfName": "rating"
         },
         "RefersTo": {
           "type": "PostReference",
-          "inverseProperty": "Referree",
+          "inverseProperty": "Referrer",
           "foreignSet": "PostReferences",
-          "cardinality": "many-to-one"
+          "isArray": true
         },
         "ReferredFrom": {
           "type": "PostReference",
-          "inverseProperty": "Referrer",
+          "inverseProperty": "Referree",
           "foreignSet": "PostReferences",
-          "cardinality": "many-to-one"
+          "isArray": true
         }
       },
       "rdfName": "Post"
@@ -113,7 +111,6 @@
         },
         "Referrer": {
           "type": "Post",
-          "cardinality": "one-to-many",
           "rdfName": "referrer"
         },
         "ReferreeId": {
@@ -122,7 +119,6 @@
         },
         "Referree": {
           "type": "Post",
-          "cardinality": "one-to-many",
           "rdfName": "referree"
         },
         "ReferenceTypeId": {
@@ -175,7 +171,7 @@
           "type": "Region",
           "inverseProperty": "ParentId",
           "foreignSet": "Regions",
-          "cardinality": "many-to-many",
+          "isArray": true,
           "rdfName": "partitions"
         },
         "Posts": {
@@ -279,7 +275,6 @@
         },
         "Culture": {
           "type": "Culture",
-          "cardinality": "many-to-one",
           "rdfName": "culture"
         }
       },
@@ -312,7 +307,7 @@
           "type": "GroupMembership",
           "inverseProperty": "User",
           "foreignSet": "GroupMemberships",
-          "cardinality": "many-to-many"
+          "isArray": true
         },
         "OriginId": {
           "type": "Edm.Int32",
@@ -364,11 +359,11 @@
           "type": "GroupMembership",
           "inverseProperty": "User",
           "foreignSet": "GroupMemberships",
-          "cardinality": "many-to-many"
+          "isArray": true
         },
         "Partitions": {
           "type": "Group",
-          "cardinality": "one-to-many",
+          "isArray": true,
           "rdfName": "partitions"
         }
       },
@@ -513,11 +508,11 @@
           "type": "Post",
           "inverseProperty": "Tags",
           "foreignSet": "Posts",
-          "cardinality": "many-to-many"
+          "isArray": true
         },
         "Related": {
           "type": "Tag",
-          "cardinality": "one-to-many",
+          "isArray": true,
           "rdfName": "related"
         }
       },

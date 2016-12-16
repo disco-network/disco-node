@@ -36,7 +36,7 @@ We are using [`TypeScript`](https://www.typescriptlang.org/) as programming lang
 npm install typescript
 ```
 
-We are using [`gulp`](https://www.gulpjs.org/) as our task runner.
+We are using [`gulp`](https://www.gulpjs.org/) as our advanced task runner.
 ```
 npm install gulp
 ```

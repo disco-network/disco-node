@@ -1,5 +1,5 @@
 import { Trace, Controller, Route } from "irony";
-import { OPTIONS } from "irony";
+import { OPTIONS, POST } from "irony";
 import { NotImplementedError } from "irony";
 
 /* TS2529 Duplicate identifier 'Promise'. 
@@ -90,6 +90,7 @@ export class ODataController extends Controller {
     return (responseSender as ResponseSender).promise;
   }
 
+  @POST
   @Route("/:entity")
   public async postEntitySet(): Promiz<any> {
     this.context.logger.log("ODataController ENTITYSET called!");

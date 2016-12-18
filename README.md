@@ -3,7 +3,7 @@
 
 The [Discussion Ontology Network](https://disco-network.org) (d!sco) is the implementation of a meta discussion system. We emphasizes free and open source technology and support standardized technology like the [OASIS Open Data Protocol (OData)](https://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html) and [SPARQL Query Language for RDF](https://www.w3.org/TR/rdf-sparql-query/). Be involved!
 
-The [`disco-node`](https://github.com/disco-network/disco-node) repository is where we do development and there are many ways you can participate in the project, for example:
+The [`disco-node`](https://github.com/disco-network/disco-node) repository is where we do development and there are many ways you can participate in or contribute to the project, for example:
 
 * [Submit bugs and feature requests](https://github.com/disco-network/disco-node/issues) and help us verify as they are checked in
 * Review [source code changes](https://github.com/disco-network/disco-node/pulls)

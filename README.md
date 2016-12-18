@@ -70,6 +70,8 @@ Start the web server:
 npm run server
 ```
 
+To explore your local [`disco-node`](https://github.com/disco-network/disco-node) endpoint, you could use a local copy of the [`disco-explorer`](https://github.com/disco-network/disco-explorer).
+
 ## License
 
 [MIT](https://github.com/disco-network/disco-node/blob/master/LICENSE)

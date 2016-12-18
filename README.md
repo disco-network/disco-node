@@ -22,7 +22,7 @@ md workspace && cd workspace
 
 ```shell
 git clone https://github.com/disco-network/disco-node.git disco-node
-cd disco-explorer
+cd disco-node
 ```
 
 ### Development

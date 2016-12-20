@@ -82,10 +82,10 @@ export class ODataController extends Controller {
       this.context.logger);
     engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
-      body: this.request.body,
+      body: (typeof this.request.body === "string") ? this.request.body : "",
     }, responseSender);
 
-    this.context.logger.debug(`Request body: ${this.request.body.substr(0,6)}`);
+    this.context.logger.debug(`Request body: ${this.request.body}`);
 
     return (responseSender as ResponseSender).promise;
   }
@@ -113,8 +113,10 @@ export class ODataController extends Controller {
 
     engine.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
-      body: "@todo",
+      body: (typeof this.request.body === "string") ? this.request.body : "",
     }, responseSender);
+
+    this.context.logger.debug(`Request body: ${this.request.body}`);
 
     return (responseSender as ResponseSender).promise;
   }

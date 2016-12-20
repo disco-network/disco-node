@@ -4,15 +4,19 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": "temporary solution until we can generate DateTime strings",
+          "optional": true,
           "rdfName": "modified"
         },
         "Code": {
@@ -31,15 +35,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "ModifiedBy": {
@@ -94,15 +101,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "ReferrerId": {
@@ -136,15 +146,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "Code": {
@@ -186,15 +199,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "Uri": {
@@ -216,15 +232,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "AuthorId": {
@@ -250,15 +269,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "Name": {
@@ -284,15 +306,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "Alias": {
@@ -324,15 +349,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "Alias": {
@@ -373,15 +401,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "MembershipTypeId": {
@@ -407,15 +438,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -433,15 +467,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -459,15 +496,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -485,15 +525,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "DescriptionId": {
@@ -522,15 +565,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "ModifiedBy": {
@@ -565,15 +611,18 @@
       "properties": {
         "Id": {
           "type": "Edm.Int32",
-          "generated": "integer",
+          "generated": "auto-increment",
+          "autoIncrement_nextValue": 1000,
           "rdfName": "id"
         },
         "Key": {
           "type": "Edm.Guid",
+          "generated": "uuid",
           "rdfName": "key"
         },
         "Modified": {
           "type": "Edm.String",
+          "optional": true,
           "rdfName": "modified"
         },
         "ModifiedBy": {

@@ -1,10 +1,11 @@
 import { Trace, Controller, Route } from "irony";
 import { OPTIONS, POST } from "irony";
+import { Param, PathParam, HeaderParam, QueryParam, BodyParam } from "irony";
 import { NotImplementedError } from "irony";
 
 /* TS2529 Duplicate identifier 'Promise'. 
 Compiler reserves name 'Promise' in top level scope of a module containing async functions*/
-import { Promise as Promiz, FileSystemHelper } from "irony";
+import { FileSystemHelper } from "irony";
 
 import { IHttpResponseSender } from "odata-rdf-interface";
 import { GetHandler, PostHandler } from "odata-rdf-interface";
@@ -14,11 +15,28 @@ import { ResponseSender } from "../system/responsesender";
 
 import * as fs from "fs";
 
+const CONTROLLER_ROUTE = "/api/odata";
+
 @Trace
-@Route("/api/odata")
+@Route(CONTROLLER_ROUTE)
 export class ODataController extends Controller {
 
   private discoSchema = require("../disco-schema.json");
+
+  private getHandler = new GetHandler(
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    this.context.settings.rootUrl + CONTROLLER_ROUTE.substr(1) + "/",
+    new Schema(this.discoSchema),
+    this.context.dataProvider,
+    "http://disco-network.org/resource/",
+    this.context.logger);
+
+  private postHandler = new PostHandler(
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    this.context.settings.rootUrl + CONTROLLER_ROUTE.substr(1) + "/",
+    new Schema(this.discoSchema),
+    this.context.dataProvider,
+    "http://disco-network.org/resource/");
 
   @OPTIONS
   @Route("/\*")
@@ -32,7 +50,7 @@ export class ODataController extends Controller {
   }
 
   @Route("/\\$batch")
-  public batch(): Promiz<string> {
+  public batch(): Promise<string> {
     this.context.logger.log("ODataController BATCH called!");
 
     throw new NotImplementedError();
@@ -48,7 +66,7 @@ export class ODataController extends Controller {
     let filename = "disco-metadata.xml";
     let filepath = FileSystemHelper.locateFolderOf(filename);
 
-    let promise = new Promiz<string>((resolve: (data: string) => void, reject: (reason: string) => void) => {
+    let promise = new Promise<string>((resolve: (data: string) => void, reject: (reason: string) => void) => {
       fs.readFile(filepath + "/" + filename, (error: NodeJS.ErrnoException, data: Buffer) => {
         if (error) {
           reject(error.message);
@@ -62,61 +80,38 @@ export class ODataController extends Controller {
   }
 
   @Route("/:entity*")
-  public async entityset(): Promiz<any> {
-    this.context.logger.log("ODataController ENTITYSET called!");
+  public entityset( @PathParam("entity") entitySetName: string): Promise<any> {
 
-    const entitySetName: string = this.request.params["entity"];
-    this.context.logger.log("OData entity set:", entitySetName);
-    const query: string = this.request.query;
-    this.context.logger.log("OData query:", query);
+    this.context.logger.debug(`OData entity set: ${entitySetName}`);
+    this.context.logger.debug(`OData query: ${this.request.query}`);
 
     const responseSender: IHttpResponseSender = new ResponseSender();
 
-    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
-    const url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
-    const engine = new GetHandler(
-      url,
-      new Schema(this.discoSchema),
-      this.context.dataProvider,
-      "http://disco-network.org/resource/",
-      this.context.logger);
-    engine.query({
+    this.getHandler.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
-      body: (typeof this.request.body === "string") ? this.request.body : "",
+      body: "",
     }, responseSender);
-
-    this.context.logger.debug(`Request body: ${this.request.body}`);
 
     return (responseSender as ResponseSender).promise;
   }
 
   @POST
   @Route("/:entity")
-  public async postEntitySet(): Promiz<any> {
-    this.context.logger.log("ODataController ENTITYSET called!");
+  public postEntitySet(
+    @PathParam("entity") entitySetName: string,
+    @BodyParam body: string
+    ): Promise<any> {
 
-    const entitySetName: string = this.request.params["entity"];
-    this.context.logger.log("OData entity set:", entitySetName);
-    const query: string = this.request.query;
-    this.context.logger.log("OData query:", query);
+    this.context.logger.debug(`OData entity set: ${entitySetName}`);
+    this.context.logger.debug(`OData query: ${this.request.query}`);
+    this.context.logger.debug(`Request body: ${body}`);
 
     const responseSender: IHttpResponseSender = new ResponseSender();
 
-    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
-    const url = this.request.protocol + "://" + this.request.get("Host") + "/api/odata/";
-
-    const engine = new PostHandler(
-      url,
-      new Schema(this.discoSchema),
-      this.context.dataProvider,
-      "http://disco-network.org/resource/");
-
-    engine.query({
+    this.postHandler.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
-      body: (typeof this.request.body === "string") ? this.request.body : "",
+      body: (typeof body === "string") ? body : "",
     }, responseSender);
-
-    this.context.logger.debug(`Request body: ${this.request.body}`);
 
     return (responseSender as ResponseSender).promise;
   }

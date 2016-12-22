@@ -41,7 +41,8 @@
     "build": "gulp build",
     "postinstall": "gulp build",
     "server": "node ./build/lib/server.js",
-    "store": "cd ../apache-jena-fuseki-*/ && ./fuseki-server --file ../disco-node/build/db/init.ttl /api"
+    "store": "cd ../apache-jena-fuseki-*/ && ./fuseki-server --file ../disco-node/build/db/init.ttl /api",
+    "explorer": "cd ../disco-explorer/ && npm run server"
   },
   "keywords": [
     "OData",

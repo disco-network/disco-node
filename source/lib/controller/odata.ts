@@ -1,5 +1,5 @@
 import { Trace, Controller, Route } from "irony";
-import { OPTIONS, POST } from "irony";
+import { OPTIONS, POST, PATCH } from "irony";
 import { Param, PathParam, HeaderParam, QueryParam, BodyParam } from "irony";
 import { NotImplementedError } from "irony";
 
@@ -7,8 +7,8 @@ import { NotImplementedError } from "irony";
 Compiler reserves name 'Promise' in top level scope of a module containing async functions*/
 import { FileSystemHelper } from "irony";
 
-import { IHttpResponseSender } from "odata-rdf-interface";
-import { GetHandler, PostHandler } from "odata-rdf-interface";
+import { IHttpResponseSender, IHttpRequest } from "odata-rdf-interface";
+import { GetHandler, PostHandler, PatchHandler } from "odata-rdf-interface";
 import { Schema } from "odata-rdf-interface";
 
 import { ResponseSender } from "../system/responsesender";
@@ -21,12 +21,13 @@ const CONTROLLER_ROUTE = "/api/odata";
 @Route(CONTROLLER_ROUTE)
 export class ODataController extends Controller {
 
-  private discoSchema = require("../disco-schema.json");
+  private discoSchemaSpec = require("../disco-schema.json");
+  private discoSchema = new Schema(this.discoSchemaSpec);
 
   private getHandler = new GetHandler(
     // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
     this.context.settings.rootUrl + CONTROLLER_ROUTE.substr(1) + "/",
-    new Schema(this.discoSchema),
+    this.discoSchema,
     this.context.dataProvider,
     "http://disco-network.org/resource/",
     this.context.logger);
@@ -34,7 +35,14 @@ export class ODataController extends Controller {
   private postHandler = new PostHandler(
     // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
     this.context.settings.rootUrl + CONTROLLER_ROUTE.substr(1) + "/",
-    new Schema(this.discoSchema),
+    this.discoSchema,
+    this.context.dataProvider,
+    "http://disco-network.org/resource/");
+
+  private patchHandler = new PatchHandler(
+    // TODO: how to define the RDF uri and how should it be rewritten to the current hostname of a disco-node?
+    this.context.settings.rootUrl + CONTROLLER_ROUTE.substr(1) + "/",
+    this.discoSchema,
     this.context.dataProvider,
     "http://disco-network.org/resource/");
 
@@ -85,34 +93,57 @@ export class ODataController extends Controller {
     this.context.logger.debug(`OData entity set: ${entitySetName}`);
     this.context.logger.debug(`OData query: ${this.request.query}`);
 
-    const responseSender: IHttpResponseSender = new ResponseSender();
+    const responseSender = new ResponseSender();
 
     this.getHandler.query({
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: "",
     }, responseSender);
 
-    return (responseSender as ResponseSender).promise;
+    return responseSender.promise;
   }
 
   @POST
   @Route("/:entity")
   public postEntitySet(
     @PathParam("entity") entitySetName: string,
-    @BodyParam body: string
+    @BodyParam() body: string
     ): Promise<any> {
 
     this.context.logger.debug(`OData entity set: ${entitySetName}`);
     this.context.logger.debug(`OData query: ${this.request.query}`);
     this.context.logger.debug(`Request body: ${body}`);
 
-    const responseSender: IHttpResponseSender = new ResponseSender();
+    const responseSender = new ResponseSender();
 
-    this.postHandler.query({
+    this.postHandler.query(this.createRequestObject(body), responseSender);
+
+    return responseSender.promise;
+  }
+
+  @PATCH
+  @Route("/:entity")
+  public patchEntitySet(
+    @PathParam("entity") entitySetName: string,
+    @BodyParam() body: string
+  ): Promise<any> {
+
+    this.context.logger.debug(`incoming PATCH request`);
+    this.context.logger.debug(`OData entity set: ${entitySetName}`);
+    this.context.logger.debug(`OData query: ${this.request.query}`);
+    this.context.logger.debug(`Request body: ${body}`);
+
+    const responseSender = new ResponseSender();
+
+    this.patchHandler.query(this.createRequestObject(body), responseSender);
+
+    return responseSender.promise;
+  }
+
+  private createRequestObject(body: string): IHttpRequest {
+    return {
       relativeUrl: this.request.url.substring(this.request.url.lastIndexOf("/api/odata/") + 10),
       body: (typeof body === "string") ? body : "",
-    }, responseSender);
-
-    return (responseSender as ResponseSender).promise;
+    };
   }
 }

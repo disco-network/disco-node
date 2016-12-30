@@ -72,8 +72,14 @@ gulp.task("build-seeder", function () {
   return build(["source/db/**/*.ts", "typings/**.d.ts", "!./node_modules/**"], "./source", "db");
 });
 
+gulp.task("build-fuseki-conf", function () {
+  var conf = fs.readFileSync("./fuseki-conf.ttl", "utf8");
+  conf = conf.replace(/<file:.\/([^>]*)>/g, "<file:" + __dirname + "/$1>");
+  fs.writeFileSync(path.join(__dirname, "build", "db", "fuseki-conf.ttl"), conf);
+});
+
 gulp.task("build-db", function () {
-  return runSequence("build-seeder", "build-turtle");
+  return runSequence("build-seeder", "build-turtle", "build-fuseki-conf");
 });
 
 gulp.task("build-package.json", function () {

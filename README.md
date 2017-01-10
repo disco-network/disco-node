@@ -11,7 +11,7 @@ The [`disco-node`](https://github.com/disco-network/disco-node) repository is wh
 
 ## Prerequisites
 
-You will need [`nodejs`](https://nodejs.org/), at least v4.4.7, to run [`disco-node`](https://github.com/disco-network/disco-node).
+You will need [`nodejs`](https://nodejs.org/), at least v4.4.7, to run [`disco-node`](https://github.com/disco-network/disco-node). [Here](https://nodejs.org/en/download/package-manager/) is how to install it via the package manager of your OS (at least some Linux distros, OSX and Windows).
 
 Create your workspace:
 ```shell
